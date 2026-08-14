@@ -76,12 +76,23 @@ function initFirebase(config) {
 
 // ── AUTH ──
 function signInWithGoogle() {
-  if (!_auth) { showToast('Firebase ยังไม่ได้ตั้งค่า', 'error'); return; }
+  if (!_auth) {
+    showToast('Firebase ยังไม่ได้ตั้งค่า — กด 🔥 ตั้งค่า Firebase ก่อน', 'error');
+    openFirebaseSetup();
+    return;
+  }
   const provider = new firebase.auth.GoogleAuthProvider();
-  // Use redirect (works on localhost and file://) instead of popup
-  _auth.signInWithRedirect(provider).catch(err => {
-    console.error('SignIn error:', err);
-    showToast('Login ไม่สำเร็จ: ' + (err.message || err.code), 'error');
+  provider.setCustomParameters({ prompt: 'select_account' });
+
+  // Popup works on HTTPS (Vercel), fallback to redirect if blocked
+  _auth.signInWithPopup(provider).catch(err => {
+    if (err.code === 'auth/popup-blocked' || err.code === 'auth/popup-closed-by-user') {
+      showToast('Popup ถูกบล็อก — กำลัง redirect...', 'info');
+      _auth.signInWithRedirect(provider);
+    } else {
+      console.error('SignIn error:', err.code, err.message);
+      showToast('Login ไม่สำเร็จ: ' + (err.code || err.message), 'error');
+    }
   });
 }
 
