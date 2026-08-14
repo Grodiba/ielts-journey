@@ -40,10 +40,10 @@ function initFirebase(config) {
     _db = firebase.firestore();
     _auth = firebase.auth();
 
-    // Enable offline persistence
-    _db.enablePersistence({ synchronizeTabs: true }).catch(err => {
-      if (err.code === 'failed-precondition') console.warn('Firestore persistence: multiple tabs open');
-      else if (err.code === 'unimplemented') console.warn('Firestore persistence: browser not supported');
+    // Enable offline persistence (multi-tab)
+    _db.enableMultiTabIndexedDbPersistence().catch(err => {
+      // Fallback to single-tab persistence
+      _db.enableIndexedDbPersistence().catch(() => {});
     });
 
     // Auth state listener
