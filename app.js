@@ -1225,6 +1225,8 @@ function saveExamDate() {
   if (!val) { showToast('เลือกวันที่ก่อน', 'error'); return; }
   state.examDate = val;
   saveState();
+  // Force immediate sync — don't wait 3s debounce for critical data
+  if (typeof forceSyncToCloud === 'function') forceSyncToCloud();
   closeExamModal();
   showToast('📅 ตั้งวันสอบแล้ว! 💪', 'success');
   initDashboard();

@@ -87,20 +87,29 @@ async function loadFromFirestore(uid) {
                          .collection('progress').doc('state').get();
     if (doc.exists) {
       const cloudData = doc.data();
-      // Merge: cloud wins, but combine errorEntries
-      const localErrors  = state.errorEntries  || [];
-      const cloudErrors  = cloudData.errorEntries || [];
+      // Smart merge: cloud wins UNLESS cloud value is null and local has a value
+      const merged = { ...state };
+      Object.keys(cloudData).forEach(key => {
+        if (cloudData[key] != null) {
+          merged[key] = cloudData[key];
+        }
+        // If cloud has null but local has value → keep local (e.g. examDate just set)
+      });
+      // Special merge for errorEntries array
+      const localErrors = state.errorEntries || [];
+      const cloudErrors = cloudData.errorEntries || [];
       const mergedErrors = [...cloudErrors];
       localErrors.forEach(le => {
         if (!mergedErrors.find(ce => ce.id === le.id)) mergedErrors.push(le);
       });
-      mergedErrors.sort((a, b) => b.id - a.id);
+      if (mergedErrors.length) merged.errorEntries = mergedErrors.sort((a,b) => b.id - a.id);
 
-      state = { ...state, ...cloudData, errorEntries: mergedErrors };
+      state = merged;
       saveState();
       navigate(state.activeSection || 'dashboard');
       showToast('☁️ โหลดข้อมูลจาก Cloud แล้ว', 'success');
     } else {
+      // First login — push everything local up
       await pushToFirestore(uid);
       showToast('☁️ บันทึกข้อมูลขึ้น Cloud แล้ว', 'success');
     }
@@ -133,6 +142,17 @@ function onStateSaved() {
       updateSyncStatus('synced');
     } catch { updateSyncStatus('error'); }
   }, 3000);
+}
+
+// ── FORCE SYNC (immediate, for critical fields like examDate) ──
+async function forceSyncToCloud() {
+  if (!_currentUser || !_db) return;
+  clearTimeout(_syncTimeout);
+  try {
+    updateSyncStatus('syncing');
+    await pushToFirestore(_currentUser.uid);
+    updateSyncStatus('synced');
+  } catch { updateSyncStatus('error'); }
 }
 
 // ── SYNC STATUS UI ──
