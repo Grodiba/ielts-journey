@@ -30,7 +30,10 @@ const defaultState = {
   currentSpeakingLevel: 'A2',
   activeSection: 'dashboard',
   vocabSRS: {},
-  placementTestResult: null
+  placementTestResult: null,
+  dailyWordTarget: 12,
+  wordsLearnedTodayCount: 0,
+  wordsLearnedTodayDate: null
 };
 
 let state = loadState();
@@ -162,6 +165,7 @@ function initDashboard() {
   if (placementBanner) placementBanner.style.display = state.placementTestResult ? 'none' : 'flex';
 
   updateVocabReviewDueCount();
+  updateDailyWordGoalUI();
 }
 
 // ── LEVEL PATH ──
@@ -792,6 +796,7 @@ function initVocabulary() {
   renderVocabDayTabs();
   loadVocabWord();
   updateVocabReviewDueCount();
+  updateDailyWordGoalUI();
 }
 
 function renderVocabLevelChips() {
@@ -1021,12 +1026,81 @@ function updateVocabReviewDueCount() {
   return count;
 }
 
+// ── DAILY NEW-WORD GOAL — separate from SRS review load; tracks first-time-learned words per calendar day ──
+function ensureDailyWordCountFresh() {
+  const today = new Date().toDateString();
+  if (state.wordsLearnedTodayDate !== today) {
+    state.wordsLearnedTodayDate = today;
+    state.wordsLearnedTodayCount = 0;
+  }
+}
+
+function incrementDailyWordCount() {
+  ensureDailyWordCountFresh();
+  state.wordsLearnedTodayCount++;
+}
+
+function setDailyWordTarget(val) {
+  state.dailyWordTarget = parseInt(val, 10) || 12;
+  saveState();
+  updateDailyWordGoalUI();
+}
+
+function updateDailyWordGoalUI() {
+  ensureDailyWordCountFresh();
+  const count = state.wordsLearnedTodayCount || 0;
+  const target = state.dailyWordTarget || 12;
+  const pct = Math.min(100, Math.round((count / target) * 100));
+
+  const countEl = document.getElementById('dailyWordGoalCount');
+  const targetEl = document.getElementById('dailyWordGoalTarget');
+  const barEl = document.getElementById('dailyWordGoalBar');
+  const selectEl = document.getElementById('dailyWordTargetSelect');
+  if (countEl) countEl.textContent = count;
+  if (targetEl) targetEl.textContent = target;
+  if (barEl) barEl.style.width = `${pct}%`;
+  if (selectEl) selectEl.value = String(target);
+
+  const vocabGoalText = document.getElementById('vocabDailyGoalText');
+  if (vocabGoalText) vocabGoalText.textContent = `${count}/${target} คำ`;
+}
+
+// Finds the next day-set (same level, or the next level if the current one is exhausted)
+// that still has unlearned words, so the "learn more today" flow can hand it off.
+function findNextUnlearnedVocabSet() {
+  const sameLevel = VOCAB_SETS.filter(v => v.level === currentVocabLevel).sort((a, b) => a.day - b.day);
+  const hasUnlearned = vs => vs.words.some((_, i) => !state.vocabLearned.includes(`${vs.level}_${vs.day}_${i}`));
+
+  const nextInLevel = sameLevel.find(vs => vs.day > currentVocabDay && hasUnlearned(vs));
+  if (nextInLevel) return nextInLevel;
+
+  const levelIdx = LEVELS.findIndex(l => l.id === currentVocabLevel);
+  for (let i = levelIdx + 1; i < LEVELS.length; i++) {
+    const setsInLevel = VOCAB_SETS.filter(v => v.level === LEVELS[i].id).sort((a, b) => a.day - b.day);
+    const found = setsInLevel.find(hasUnlearned);
+    if (found) return found;
+  }
+  return null;
+}
+
+function continueToNextVocabSet() {
+  const nextSet = findNextUnlearnedVocabSet();
+  if (!nextSet) { exitVocabQuiz(); return; }
+  if (nextSet.level !== currentVocabLevel) {
+    setVocabLevel(nextSet.level);
+  }
+  setVocabDay(nextSet.day);
+  startVocabQuiz();
+}
+
 function openVocabQuizPanel() {
   document.getElementById('vocabCard').style.display = 'none';
   document.getElementById('vocabQuizPanel').style.display = 'block';
   document.getElementById('vocabQuizQuestion').style.display = 'block';
   document.getElementById('vocabQuizResult').style.display = 'none';
   document.getElementById('vocabQuizResultActions').style.display = 'none';
+  const continueBox = document.getElementById('continueNextSetBox');
+  if (continueBox) continueBox.style.display = 'none';
 }
 
 function startVocabQuiz() {
@@ -1087,6 +1161,7 @@ function checkVocabQuizAnswer() {
     const alreadyLearned = state.vocabLearned.includes(key);
     if (!alreadyLearned) {
       state.vocabLearned.push(key);
+      incrementDailyWordCount();
       addXP(15);
     } else if (vocabQuizMode === 'review') {
       // Review is naturally rate-limited by the SRS due date, so a smaller
@@ -1130,6 +1205,22 @@ function finishVocabQuiz() {
   `;
   showToast(`🧠 ${modeLabel}เสร็จ: ${vocabQuizScore}/${total} ถูก`, pct >= 50 ? 'success' : 'info');
   updateVocabReviewDueCount();
+  updateDailyWordGoalUI();
+
+  const continueBox = document.getElementById('continueNextSetBox');
+  const continueText = document.getElementById('continueNextSetText');
+  if (continueBox && continueText) {
+    ensureDailyWordCountFresh();
+    const count = state.wordsLearnedTodayCount || 0;
+    const target = state.dailyWordTarget || 12;
+    const nextSet = findNextUnlearnedVocabSet();
+    if (vocabQuizMode === 'day' && count < target && nextSet) {
+      continueText.innerHTML = `🎯 วันนี้เรียนไปแล้ว <strong>${count}/${target}</strong> คำ — ยังไม่ครบเป้าหมาย ลองเรียนชุดถัดไปต่อไหม? (<strong>${nextSet.level} Day ${nextSet.day}: ${nextSet.theme}</strong>)`;
+      continueBox.style.display = 'block';
+    } else {
+      continueBox.style.display = 'none';
+    }
+  }
 }
 
 function exitVocabQuiz() {

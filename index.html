@@ -118,6 +118,23 @@
         <button class="btn btn-emerald" onclick="startVocabReview()">🔁 ทบทวนเลย</button>
       </div>
 
+      <!-- Daily New-Word Goal -->
+      <div class="card card-sm mb-xl">
+        <div class="flex-between mb-sm flex-wrap gap-sm">
+          <div class="fw-700">🎯 เป้าหมายคำศัพท์ใหม่วันนี้</div>
+          <div class="flex gap-sm items-center">
+            <span class="fs-sm text-muted"><span id="dailyWordGoalCount">0</span> / <span id="dailyWordGoalTarget">12</span> คำ</span>
+            <select class="input-field" id="dailyWordTargetSelect" style="width:auto;padding:4px 8px" onchange="setDailyWordTarget(this.value)">
+              <option value="8">8 คำ/วัน</option>
+              <option value="12">12 คำ/วัน</option>
+              <option value="15">15 คำ/วัน</option>
+              <option value="20">20 คำ/วัน</option>
+            </select>
+          </div>
+        </div>
+        <div class="progress-track"><div class="progress-fill" id="dailyWordGoalBar" style="width:0%"></div></div>
+      </div>
+
       <!-- Current Level Banner -->
       <div class="card card-indigo mb-xl" style="background:linear-gradient(135deg,rgba(28,176,246,0.1),rgba(47,189,92,0.08))">
         <div class="flex-between flex-wrap gap-md">
@@ -275,6 +292,10 @@
         <p class="section-subtitle">แต่งประโยคเอง ไม่ใช่แค่จำ</p>
       </div>
 
+      <div class="flex-between mb-lg flex-wrap gap-sm">
+        <div class="fs-sm text-muted">🎯 เป้าหมายวันนี้: <strong id="vocabDailyGoalText">0/12 คำ</strong></div>
+      </div>
+
       <div class="chip-bar mb-lg" id="vocabLevelChips"></div>
 
       <div class="flex-between mb-lg flex-wrap gap-md">
@@ -307,6 +328,10 @@
           <div id="vocabQuizFeedback" style="display:none;margin-top:var(--sp-md)"></div>
         </div>
         <div id="vocabQuizResult" style="display:none"></div>
+        <div class="card card-sm mt-lg" id="continueNextSetBox" style="display:none;background:rgba(47,189,92,0.08);border-color:rgba(47,189,92,0.2)">
+          <div class="fs-sm" id="continueNextSetText"></div>
+          <button class="btn btn-emerald btn-sm mt-md" id="continueNextSetBtn" onclick="continueToNextVocabSet()">เรียนชุดถัดไปต่อเลย →</button>
+        </div>
         <div class="flex gap-sm mt-lg" id="vocabQuizResultActions" style="display:none">
           <button class="btn btn-primary" onclick="startVocabQuiz()">🔄 ทดสอบใหม่</button>
           <button class="btn btn-ghost" onclick="exitVocabQuiz()">กลับไปเรียน</button>
