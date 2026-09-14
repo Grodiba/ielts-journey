@@ -9,13 +9,6 @@
 </head>
 <body>
 
-<!-- Background -->
-<div class="bg-orbs">
-  <div class="orb orb-1"></div>
-  <div class="orb orb-2"></div>
-  <div class="orb orb-3"></div>
-</div>
-
 <!-- Menu Toggle (mobile) -->
 <button class="menu-toggle" id="menuToggle" aria-label="Menu">☰</button>
 <div class="sidebar-overlay" id="sidebarOverlay"></div>
@@ -59,7 +52,7 @@
     </button>
 
     <!-- Firebase Setup Notice -->
-    <div id="firebaseSetupNotice" style="display:none;margin:0 var(--sp-lg) var(--sp-sm);padding:10px 14px;background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.3);border-radius:var(--r-md);">
+    <div id="firebaseSetupNotice" style="display:none;margin:0 var(--sp-lg) var(--sp-sm);padding:10px 14px;background:rgba(255,200,0,0.1);border:1px solid rgba(255,200,0,0.3);border-radius:var(--r-md);">
       <div style="font-size:11px;font-weight:700;color:var(--amber-light);margin-bottom:4px">☁️ Cloud Sync ยังไม่เชื่อม</div>
       <div style="font-size:11px;color:var(--text-muted);margin-bottom:8px">ข้อมูลเก็บเฉพาะในเครื่องนี้</div>
       <button onclick="openFirebaseSetup()" class="btn btn-amber" style="width:100%;justify-content:center;padding:7px">
@@ -105,11 +98,11 @@
       </div>
 
       <!-- Current Level Banner -->
-      <div class="card card-indigo mb-xl" style="background:linear-gradient(135deg,rgba(99,102,241,0.1),rgba(16,185,129,0.08))">
+      <div class="card card-indigo mb-xl" style="background:linear-gradient(135deg,rgba(28,176,246,0.1),rgba(47,189,92,0.08))">
         <div class="flex-between flex-wrap gap-md">
           <div>
             <div class="fs-xs text-muted fw-700" style="letter-spacing:1px;text-transform:uppercase;margin-bottom:4px">🎯 ระดับที่กำลังเรียน</div>
-            <div class="font-display fw-800" id="currentLevelBadge" style="font-size:26px;background:var(--grad-indigo);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">A2 — Elementary</div>
+            <div class="font-display fw-800" id="currentLevelBadge" style="font-size:26px;color:var(--indigo-light)">A2 — Elementary</div>
             <div class="fs-sm text-muted mt-md" id="currentLevelGoal" style="max-width:520px"></div>
           </div>
           <button class="btn btn-primary" onclick="navigate('levelpath')">🗺️ ดู Level Path</button>
@@ -235,6 +228,10 @@
       <div class="card card-indigo mb-xl" id="vocabCard">
         <div style="text-align:center;margin-bottom:var(--sp-lg)">
           <div class="fs-xs text-muted fw-700" style="letter-spacing:1px;margin-bottom:8px" id="vocabTheme">Theme</div>
+          <div class="vocab-image-frame is-empty" id="vocabImageFrame">
+            <img id="vocabImageEl" alt="" onerror="this.closest('.vocab-image-frame').classList.add('is-empty')"/>
+          </div>
+          <div class="vocab-image-credit is-empty" id="vocabImageCredit">📷 Wikipedia</div>
           <div class="vocab-word-big" id="vocabWord"></div>
           <div class="fs-sm text-muted" id="vocabThai"></div>
         </div>
@@ -244,7 +241,7 @@
           <div id="vocabChunk" class="fw-600"></div>
         </div>
 
-        <div class="card card-sm mb-lg" style="background:rgba(16,185,129,0.08);border-color:rgba(16,185,129,0.2)">
+        <div class="card card-sm mb-lg" style="background:rgba(47,189,92,0.08);border-color:rgba(47,189,92,0.2)">
           <div class="fs-xs text-emerald fw-700 mb-sm">ตัวอย่างประโยค</div>
           <div class="sentence-level-display" id="vocabExample"></div>
         </div>
@@ -313,7 +310,7 @@
               <button class="btn btn-ghost btn-sm" onclick="closeExercisePanel()">✕</button>
             </div>
           </div>
-          <div class="card card-xs mb-lg" style="background:rgba(99,102,241,0.08);border-color:rgba(99,102,241,0.2)">
+          <div class="card card-xs mb-lg" style="background:rgba(28,176,246,0.08);border-color:rgba(28,176,246,0.2)">
             <div class="fs-xs text-indigo fw-700 mb-sm">📖 INTRO</div>
             <div class="fs-sm text-secondary" id="exerciseIntro"></div>
           </div>
@@ -336,7 +333,7 @@
             <button class="btn btn-ghost btn-sm" onclick="closeGrammarDetail()">✕</button>
           </div>
 
-          <div class="card card-sm mb-lg" style="background:rgba(99,102,241,0.1);border-color:rgba(99,102,241,0.2)">
+          <div class="card card-sm mb-lg" style="background:rgba(28,176,246,0.1);border-color:rgba(28,176,246,0.2)">
             <div class="fs-xs text-indigo fw-700 mb-sm">📐 RULE</div>
             <div class="fs-sm text-secondary" id="grammarRule" style="white-space:pre-line;line-height:1.8"></div>
           </div>
@@ -351,7 +348,7 @@
             <div id="grammarExamples2" style="display:flex;flex-direction:column;gap:8px"></div>
           </div>
 
-          <div id="grammarTip" class="card card-sm" style="background:rgba(245,158,11,0.1);border-color:rgba(245,158,11,0.25);color:var(--amber-light)"></div>
+          <div id="grammarTip" class="card card-sm" style="background:rgba(255,200,0,0.1);border-color:rgba(255,200,0,0.25);color:var(--amber-light)"></div>
         </div>
 
         <div class="card mb-lg">
@@ -464,7 +461,7 @@
         <div id="levelUpNextBox" style="display:none;margin-top:var(--sp-lg);text-align:center"></div>
       </div>
 
-      <div class="card card-sm" style="border-color:rgba(168,85,247,0.3);background:rgba(168,85,247,0.06)">
+      <div class="card card-sm" style="border-color:rgba(147,51,234,0.3);background:rgba(147,51,234,0.06)">
         <div class="flex gap-md items-center">
           <span style="font-size:24px">💡</span>
           <div>
@@ -484,7 +481,7 @@
         <p class="section-subtitle">บันทึกทุกข้อผิดพลาด — แล้วเรียนรู้จากมัน</p>
       </div>
 
-      <div class="card card-sm mb-xl" style="background:linear-gradient(135deg,rgba(244,63,94,0.08),rgba(16,185,129,0.05))">
+      <div class="card card-sm mb-xl" style="background:linear-gradient(135deg,rgba(255,75,75,0.08),rgba(47,189,92,0.05))">
         <div class="flex gap-xl flex-wrap">
           <div><span style="color:var(--rose-light)">❌ ประโยคผิด</span></div>
           <div><span style="color:var(--emerald-light)">✅ ประโยคถูก</span></div>
@@ -522,7 +519,7 @@
         </div>
       </div>
 
-      <div id="todayErrorsSection" style="display:none" class="card card-sm mb-lg" style="border-color:rgba(245,158,11,0.3)">
+      <div id="todayErrorsSection" style="display:none" class="card card-sm mb-lg" style="border-color:rgba(255,200,0,0.3)">
         <div class="fw-700 text-amber mb-md">📋 ทบทวนวันนี้ (<span id="todayErrorCount">0</span> รายการ)</div>
         <div id="todayErrors"></div>
       </div>

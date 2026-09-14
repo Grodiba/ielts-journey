@@ -259,7 +259,7 @@ function renderExerciseList() {
     const idx = EXPANSION_SETS.indexOf(ex);
     const isActive = idx === activeBuilderExIdx;
     const isDone = state.builderStepsState[ex.id]?.filter(s => s === 'completed').length === ex.steps.length;
-    return `<button class="chip ${isActive ? 'active' : ''}" onclick="loadExercise(${idx})" style="${isDone ? 'border-color:rgba(16,185,129,0.4);color:var(--emerald-light)' : ''}">
+    return `<button class="chip ${isActive ? 'active' : ''}" onclick="loadExercise(${idx})" style="${isDone ? 'border-color:rgba(47,189,92,0.4);color:var(--emerald-light)' : ''}">
       ${isDone ? '✅ ' : ''}${ex.starterWord}
     </button>`;
   }).join('');
@@ -431,7 +431,7 @@ function renderSpeakingGrid() {
   if (!grid) return;
   const filtered = SPEAKING_TOPICS.filter(t => t.level === activeSpeakingLevel);
   grid.innerHTML = filtered.map(t => `
-    <div class="card card-sm" style="cursor:pointer;transition:all 0.2s;${state.speakingDone.includes(t.id) ? 'border-color:rgba(16,185,129,0.4)' : ''}"
+    <div class="card card-sm" style="cursor:pointer;transition:all 0.2s;${state.speakingDone.includes(t.id) ? 'border-color:rgba(47,189,92,0.4)' : ''}"
          onclick="startSpeakingSession('${t.id}')">
       <div style="font-size:28px;margin-bottom:8px">${t.icon}</div>
       <div class="fw-700 fs-sm mb-sm">${t.title}</div>
@@ -616,6 +616,59 @@ function setVocabDay(day) {
   loadVocabWord();
 }
 
+// ── VOCAB IMAGES (real photos via Wikipedia, cached locally) ──
+const VOCAB_IMAGE_CACHE_KEY = 'vocab_image_cache_v1';
+function getVocabImageCache() {
+  try { return JSON.parse(localStorage.getItem(VOCAB_IMAGE_CACHE_KEY)) || {}; } catch { return {}; }
+}
+function setVocabImageCache(cache) {
+  try { localStorage.setItem(VOCAB_IMAGE_CACHE_KEY, JSON.stringify(cache)); } catch {}
+}
+
+async function fetchVocabImageUrl(word) {
+  const cache = getVocabImageCache();
+  if (Object.prototype.hasOwnProperty.call(cache, word)) return cache[word];
+
+  const title = word.replace(/^(a|an|the)\s+/i, '').trim();
+  let url = null;
+  try {
+    const res = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(title)}?redirect=true`);
+    if (res.ok) {
+      const data = await res.json();
+      if (data.type !== 'disambiguation' && data.thumbnail && data.thumbnail.source) {
+        url = data.thumbnail.source;
+      }
+    }
+  } catch {
+    // offline, blocked, or no matching article — fall back to no image
+  }
+  cache[word] = url;
+  setVocabImageCache(cache);
+  return url;
+}
+
+let vocabImageRequestId = 0;
+function loadVocabImage(word) {
+  const frame = document.getElementById('vocabImageFrame');
+  const img = document.getElementById('vocabImageEl');
+  const credit = document.getElementById('vocabImageCredit');
+  if (!frame || !img) return;
+  frame.classList.add('is-empty');
+  if (credit) credit.classList.add('is-empty');
+  img.src = '';
+
+  const requestId = ++vocabImageRequestId;
+  fetchVocabImageUrl(word).then(url => {
+    if (requestId !== vocabImageRequestId) return; // user already moved to another word
+    if (url) {
+      img.src = url;
+      img.alt = word;
+      frame.classList.remove('is-empty');
+      if (credit) credit.classList.remove('is-empty');
+    }
+  });
+}
+
 function loadVocabWord() {
   const vs = VOCAB_SETS.find(v => v.level === currentVocabLevel && v.day === currentVocabDay);
   if (!vs) return;
@@ -627,6 +680,7 @@ function loadVocabWord() {
   document.getElementById('vocabThai').textContent = word.thai;
   document.getElementById('vocabChunk').textContent = word.chunk;
   document.getElementById('vocabExample').textContent = word.sentence;
+  loadVocabImage(word.word);
 
   const learned = vs.words.filter((_, i) => state.vocabLearned.includes(`${currentVocabLevel}_${currentVocabDay}_${i}`)).length;
   const badge = document.getElementById('vocabProgressBadge');
@@ -649,7 +703,7 @@ function loadVocabWord() {
   const dotsEl = document.getElementById('vocabDots');
   if (dotsEl) {
     dotsEl.innerHTML = vs.words.map((_, i) => `
-      <div onclick="goToVocab(${i})" style="width:8px;height:8px;border-radius:50%;cursor:pointer;background:${i === currentVocabIdx ? 'var(--indigo)' : 'var(--bg-glass)'};border:1px solid ${i === currentVocabIdx ? 'var(--indigo)' : 'var(--border)'}"></div>
+      <div onclick="goToVocab(${i})" style="width:8px;height:8px;border-radius:50%;cursor:pointer;background:${i === currentVocabIdx ? 'var(--indigo)' : 'var(--border)'};border:1px solid ${i === currentVocabIdx ? 'var(--indigo)' : 'var(--border-strong)'}"></div>
     `).join('');
   }
 
@@ -890,10 +944,10 @@ function checkExercises() {
     if (ex.type === 'mcq' || ex.type === 'error') {
       isCorrect = userAnswer === ex.answer;
       const correctOpt = document.getElementById(`opt-${i}-${ex.answer}`);
-      if (correctOpt) { correctOpt.style.borderColor = 'var(--emerald)'; correctOpt.style.background = 'rgba(16,185,129,0.1)'; }
+      if (correctOpt) { correctOpt.style.borderColor = 'var(--emerald)'; correctOpt.style.background = 'rgba(47,189,92,0.1)'; }
       if (!isCorrect && userAnswer !== undefined) {
         const wrongOpt = document.getElementById(`opt-${i}-${userAnswer}`);
-        if (wrongOpt) { wrongOpt.style.borderColor = 'var(--rose)'; wrongOpt.style.background = 'rgba(244,63,94,0.1)'; }
+        if (wrongOpt) { wrongOpt.style.borderColor = 'var(--rose)'; wrongOpt.style.background = 'rgba(255,75,75,0.1)'; }
       }
     } else {
       const inputEl = document.getElementById(`textEx-${i}`);
@@ -907,14 +961,14 @@ function checkExercises() {
     if (feedbackEl) {
       feedbackEl.style.display = 'block';
       feedbackEl.innerHTML = `
-        <div class="card card-xs" style="background:${isCorrect ? 'rgba(16,185,129,0.1)' : 'rgba(244,63,94,0.08)'};border-color:${isCorrect ? 'rgba(16,185,129,0.3)' : 'rgba(244,63,94,0.3)'}">
+        <div class="card card-xs" style="background:${isCorrect ? 'rgba(47,189,92,0.1)' : 'rgba(255,75,75,0.08)'};border-color:${isCorrect ? 'rgba(47,189,92,0.3)' : 'rgba(255,75,75,0.3)'}">
           <div class="fs-sm fw-700 mb-sm" style="color:${isCorrect ? 'var(--emerald-light)' : 'var(--rose-light)'}">${isCorrect ? '✅ ถูกต้อง!' : '❌ ไม่ถูกต้อง'}</div>
           ${!isCorrect && (ex.type === 'gap' || ex.type === 'build') ? `<div class="fs-sm text-amber mb-sm">✏️ คำตอบ: <strong>${ex.answer}</strong></div>` : ''}
           <div class="fs-sm text-secondary">${ex.exp}</div>
         </div>
       `;
     }
-    if (qCard) qCard.style.borderColor = isCorrect ? 'rgba(16,185,129,0.4)' : 'rgba(244,63,94,0.3)';
+    if (qCard) qCard.style.borderColor = isCorrect ? 'rgba(47,189,92,0.4)' : 'rgba(255,75,75,0.3)';
   });
 
   const score = Math.round((correct / exData.exercises.length) * 100);
