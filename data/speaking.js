@@ -85,7 +85,7 @@ const SPEAKING_TOPICS = [
     tips: ['พูดถึงเป้าหมายระยะสั้นและระยะยาว', 'อธิบายว่ากำลังทำอะไรอยู่ตอนนี้เพื่อไปถึงเป้าหมาย', 'ใช้ future forms ให้หลากหลาย', 'แสดงความมุ่งมั่น']
   },
 
-  // ══════════════════ B2 (seed) ══════════════════
+  // ══════════════════ B2 ══════════════════
   {
     id: 'b2-technology', level: 'B2', title: 'Technology in Society', icon: '💻',
     timerMin: 15,
@@ -102,8 +102,32 @@ const SPEAKING_TOPICS = [
     vocabulary: ['balance', 'workload', 'overwhelmed', 'sustainable', 'prioritize'],
     tips: ['ให้เหตุผลรอบด้าน', 'ยกตัวอย่างที่เป็นรูปธรรม', 'เสนอวิธีแก้ปัญหา', 'ใช้ linking words ขั้นสูง']
   },
+  {
+    id: 'b2-media', level: 'B2', title: 'Media & News Consumption', icon: '📰',
+    timerMin: 15,
+    prompt: 'How do you consume news and media? Do you think people can trust what they read online?',
+    starters: ['I usually get my news from...', 'One issue I\'ve noticed is...', 'I think it\'s important to...', 'Overall, I would say...'],
+    vocabulary: ['credible', 'bias', 'misinformation', 'coverage', 'objective'],
+    tips: ['พูดถึงแหล่งข่าวที่ใช้ประจำ', 'ยกตัวอย่างปัญหาความน่าเชื่อถือ', 'เสนอวิธีตรวจสอบข้อมูล', 'สรุปด้วยความเห็นส่วนตัว']
+  },
+  {
+    id: 'b2-health', level: 'B2', title: 'Health & Wellbeing', icon: '🧘',
+    timerMin: 15,
+    prompt: 'What does a healthy lifestyle mean to you? What changes have you made or would like to make?',
+    starters: ['To me, a healthy lifestyle means...', 'I\'ve tried to improve...', 'One challenge I face is...', 'In the future, I hope to...'],
+    vocabulary: ['wellbeing', 'sedentary', 'nutrient', 'resilience', 'holistic'],
+    tips: ['อธิบายความหมายของสุขภาพดีในมุมมองตัวเอง', 'ยกตัวอย่างสิ่งที่ทำอยู่/อยากทำ', 'พูดถึงอุปสรรค', 'จบด้วยเป้าหมาย']
+  },
+  {
+    id: 'b2-science', level: 'B2', title: 'Science & Innovation', icon: '🔬',
+    timerMin: 15,
+    prompt: 'What recent scientific development do you find most interesting? Why?',
+    starters: ['A development that interests me is...', 'What makes it significant is...', 'It could potentially...', 'On the other hand,...'],
+    vocabulary: ['breakthrough', 'innovative', 'artificial intelligence', 'automation', 'ethical'],
+    tips: ['เลือกหัวข้อวิทยาศาสตร์ที่สนใจจริง', 'อธิบายว่าทำไมสำคัญ', 'พูดถึงผลกระทบที่อาจเกิดขึ้น', 'พิจารณาข้อกังวลเชิงจริยธรรมถ้ามี']
+  },
 
-  // ══════════════════ C1 (seed) ══════════════════
+  // ══════════════════ C1 ══════════════════
   {
     id: 'c1-decision', level: 'C1', title: 'A Difficult Decision', icon: '🧭',
     timerMin: 15,
@@ -120,8 +144,32 @@ const SPEAKING_TOPICS = [
     vocabulary: ['multifaceted', 'underlying', 'substantiate', 'coherent', 'nuance'],
     tips: ['ใช้ inversion เพื่อเน้นประเด็นสำคัญ', 'อ้างอิงมุมมองที่หลากหลาย', 'สรุปด้วยจุดยืนที่ชัดเจน', 'ใช้คำศัพท์เชิงวิชาการ']
   },
+  {
+    id: 'c1-business', level: 'C1', title: 'Business Ethics', icon: '💼',
+    timerMin: 15,
+    prompt: 'Should companies prioritize profit or social responsibility? Discuss with reasoning.',
+    starters: ['Arguably, the most important factor is...', 'One could argue that...', 'That said,...', 'Ultimately, I believe...'],
+    vocabulary: ['stakeholder', 'accountability', 'volatile', 'diversify', 'competent'],
+    tips: ['นำเสนอทั้งสองมุมมองก่อนสรุป', 'ยกตัวอย่างบริษัทจริงถ้าทำได้', 'ใช้ hedging language เมื่อไม่ฟันธง', 'ใช้ linking words ขั้นสูง']
+  },
+  {
+    id: 'c1-politics', level: 'C1', title: 'Politics & Society', icon: '🏛️',
+    timerMin: 15,
+    prompt: 'How much influence should citizens have over government decisions? Discuss the balance between representation and expertise.',
+    starters: ['It could be argued that...', 'On the one hand,...', 'On the other hand,...', 'In my view,...'],
+    vocabulary: ['legislation', 'accountability', 'referendum', 'bureaucracy', 'advocate'],
+    tips: ['ใช้ inversion เพื่อเน้นประเด็นสำคัญ', 'ยกตัวอย่างเชิงระบบการเมืองที่หลากหลาย', 'รักษาความเป็นกลาง', 'สรุปด้วยจุดยืนที่ชัดเจน']
+  },
+  {
+    id: 'c1-arts', level: 'C1', title: 'Arts & Creativity', icon: '🎨',
+    timerMin: 15,
+    prompt: 'What role does art play in society? Can art change how people think?',
+    starters: ['Art has always played a role in...', 'A striking example is...', 'Some might argue that...', 'Nevertheless,...'],
+    vocabulary: ['narrative', 'aesthetic', 'symbolism', 'evoke', 'contemporary'],
+    tips: ['ยกตัวอย่างงานศิลปะที่เจาะจง', 'อธิบายผลกระทบทางความคิด/สังคม', 'ใช้คำศัพท์เชิงวิเคราะห์', 'เชื่อมโยงกับประสบการณ์ส่วนตัวถ้าเป็นไปได้']
+  },
 
-  // ══════════════════ C2 (seed) ══════════════════
+  // ══════════════════ C2 ══════════════════
   {
     id: 'c2-ai-ethics', level: 'C2', title: 'The Ethics of Artificial Intelligence', icon: '🤖',
     timerMin: 20,
@@ -137,6 +185,30 @@ const SPEAKING_TOPICS = [
     starters: ['In an era of unprecedented interconnectedness,...', 'What is often overlooked is...', 'This is, in many ways, a double-edged sword.', 'In the same vein,...'],
     vocabulary: ['multifaceted', 'integration', 'paradox', 'discern', 'a far cry from'],
     tips: ['สร้างข้อโต้แย้งที่มีหลายชั้นความคิด', 'ใช้ cleft sentences เพื่อเน้นประเด็น', 'อ้างอิงตัวอย่างเชิงวัฒนธรรมที่หลากหลาย', 'ปิดท้ายด้วยมุมมองที่ลึกซึ้ง']
+  },
+  {
+    id: 'c2-philosophy', level: 'C2', title: 'Philosophical Dilemmas', icon: '🧠',
+    timerMin: 20,
+    prompt: 'Is it ever justifiable to sacrifice individual rights for the greater good? Explore this dilemma.',
+    starters: ['This dilemma sits at the heart of...', 'A utilitarian would argue that...', 'Conversely,...', 'What is often overlooked is...'],
+    vocabulary: ['utilitarian', 'autonomy', 'intrinsic value', 'discourse', 'paradigm'],
+    tips: ['สร้างข้อโต้แย้งหลายชั้นความคิด', 'อ้างอิงแนวคิดปรัชญาที่เกี่ยวข้อง', 'ใช้ cleft sentences เพื่อเน้นประเด็น', 'หลีกเลี่ยงข้อสรุปที่ง่ายเกินไป']
+  },
+  {
+    id: 'c2-language', level: 'C2', title: 'The Evolution of Language', icon: '🗣️',
+    timerMin: 20,
+    prompt: 'How is language evolving in the digital age? Is this evolution enriching or degrading communication?',
+    starters: ['Language has always evolved, but...', 'It is arguably the case that...', 'That being said,...', 'The crux of the matter is...'],
+    vocabulary: ['discourse', 'connotation', 'rhetoric', 'nuance', 'paradigm'],
+    tips: ['ยกตัวอย่างการเปลี่ยนแปลงภาษาจริง (slang, emoji, ฯลฯ)', 'มองทั้งมุมบวกและลบ', 'ใช้ discourse markers ขั้นสูง', 'ปิดท้ายด้วยมุมมองที่ลึกซึ้ง']
+  },
+  {
+    id: 'c2-rhetoric', level: 'C2', title: 'The Art of Persuasion', icon: '🎙️',
+    timerMin: 20,
+    prompt: 'What makes an argument truly persuasive? Discuss techniques and their ethical implications.',
+    starters: ['At its core, persuasion relies on...', 'A case in point is...', 'Notwithstanding its power,...', 'Ultimately,...'],
+    vocabulary: ['rhetoric', 'satire', 'irony', 'juxtaposition', 'discourse'],
+    tips: ['ยกตัวอย่างเทคนิคทางวาทศิลป์ที่เจาะจง', 'พิจารณาข้อกังวลเชิงจริยธรรมของการโน้มน้าวใจ', 'ใช้ rhetorical devices ในการพูดจริง', 'สรุปด้วยมุมมองที่สมดุล']
   }
 ];
 
@@ -179,28 +251,31 @@ const LEVEL_CHECKPOINTS = {
   B2: {
     name: 'Level Up: B2 → C1',
     tasks: [
-      'เรียน Grammar Clinic ครบทุกหัวข้อของ B2',
-      'เรียนคำศัพท์ B2 ครบทุกวัน',
+      'เรียน Grammar Clinic ครบทั้ง 10 หัวข้อของ B2',
+      'เรียนคำศัพท์ B2 ครบทุกวัน (6 วัน)',
       'ทำ Sentence Builder ครบทุก exercise ของ B2',
-      'ฝึก Speaking practice ทั้ง 2 หัวข้อของ B2'
+      'ฝึก Speaking practice อย่างน้อย 4 หัวข้อของ B2',
+      'บันทึก Error Notebook สะสมอย่างน้อย 35 รายการ'
     ]
   },
   C1: {
     name: 'Level Up: C1 → C2',
     tasks: [
-      'เรียน Grammar Clinic ครบทุกหัวข้อของ C1',
-      'เรียนคำศัพท์ C1 ครบทุกวัน',
+      'เรียน Grammar Clinic ครบทั้ง 10 หัวข้อของ C1',
+      'เรียนคำศัพท์ C1 ครบทุกวัน (6 วัน)',
       'ทำ Sentence Builder ครบทุก exercise ของ C1',
-      'ฝึก Speaking practice ทั้ง 2 หัวข้อของ C1'
+      'ฝึก Speaking practice อย่างน้อย 4 หัวข้อของ C1',
+      'บันทึก Error Notebook สะสมอย่างน้อย 45 รายการ'
     ]
   },
   C2: {
     name: 'Mastery — C2 Complete',
     tasks: [
-      'เรียน Grammar Clinic ครบทุกหัวข้อของ C2',
-      'เรียนคำศัพท์ C2 ครบทุกวัน',
+      'เรียน Grammar Clinic ครบทั้ง 10 หัวข้อของ C2',
+      'เรียนคำศัพท์ C2 ครบทุกวัน (6 วัน)',
       'ทำ Sentence Builder ครบทุก exercise ของ C2',
-      'ฝึก Speaking practice ทั้ง 2 หัวข้อของ C2'
+      'ฝึก Speaking practice ครบทั้ง 5 หัวข้อของ C2',
+      'บันทึก Error Notebook สะสมอย่างน้อย 60 รายการ — ยินดีด้วย คุณมาถึงจุดสูงสุดแล้ว! 🎉'
     ]
   }
 };

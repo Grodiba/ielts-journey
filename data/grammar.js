@@ -1,5 +1,5 @@
 // ── English Journey — Grammar Clinic Data ──
-// Topics grouped by CEFR level: A2 (10), B1 (10), B2/C1/C2 (4 each, seed)
+// Topics grouped by CEFR level: A2, B1, B2, C1, C2 — 10 topics each
 
 const GRAMMAR_TOPICS = [
   // ══════════════════ A2 ══════════════════
@@ -166,7 +166,7 @@ const GRAMMAR_TOPICS = [
     tip: '💡 because/so เชื่อม cause-effect | but/although/however เชื่อม contrast — although อยู่ต้นประโยค, but อยู่กลาง'
   },
 
-  // ══════════════════ B2 (seed) ══════════════════
+  // ══════════════════ B2 ══════════════════
   {
     id: 'second-conditional', level: 'B2', order: 1,
     title: 'Second Conditional — Unreal Present/Future', icon: '🌙',
@@ -199,8 +199,56 @@ const GRAMMAR_TOPICS = [
     examples2: ['The lights are off; they must be out.', 'She might not know about the meeting.', 'He can\'t be at home — I just saw his car at work.', 'It could be a scam; be careful.'],
     tip: '💡 must be = ความมั่นใจสูง | might/could be = ไม่แน่ใจ | can\'t be = มั่นใจว่าเป็นไปไม่ได้'
   },
+  {
+    id: 'used-to-would', level: 'B2', order: 5,
+    title: 'Past Habits — used to / would', icon: '🕰️',
+    rule: 'used to + base verb = อดีตที่เคยทำแต่ตอนนี้ไม่ทำแล้ว (นิสัย/สภาพ)\nwould + base verb = อดีตที่เคยทำซ้ำๆ (เฉพาะ action verbs, ไม่ใช้กับ state verbs)',
+    examples: ['I used to live in a small town.', 'When I was a child, I would spend every summer at my grandparents\' house.', 'She didn\'t use to like coffee, but now she drinks it every day.', 'We used to be neighbors.'],
+    examples2: ['He used to play the piano, but he stopped years ago.', 'Every weekend, we would go fishing with my father.', 'Did you use to live in Chiang Mai?', 'I would always forget my keys as a teenager.'],
+    tip: '💡 would ใช้กับ action verbs ที่ทำซ้ำๆ ในอดีตเท่านั้น — ห้ามใช้กับ state verbs เช่น "I would live" ผิด ต้องใช้ "I used to live"'
+  },
+  {
+    id: 'future-continuous-perfect', level: 'B2', order: 6,
+    title: 'Future Continuous & Future Perfect', icon: '⏩',
+    rule: 'Future Continuous: will be + V-ing = กำลังทำอยู่ ณ จุดหนึ่งในอนาคต\nFuture Perfect: will have + V3 = จะเสร็จสิ้นก่อนจุดหนึ่งในอนาคต',
+    examples: ['This time next week, I will be traveling in Japan.', 'By the end of this year, I will have finished my degree.', 'She will be working late tonight.', 'By 2030, scientists will have developed new treatments for many diseases.'],
+    examples2: ['At 8 PM tonight, we will be having dinner with my parents.', 'By the time you arrive, I will have already cooked dinner.', 'This time tomorrow, I will be sitting on a plane.', 'They will have completed the project by next month.'],
+    tip: '💡 Future Continuous เน้นว่า "กำลังทำอยู่" ในอนาคต | Future Perfect เน้นว่า "เสร็จแล้ว" ก่อนเวลาหนึ่งในอนาคต'
+  },
+  {
+    id: 'quantifiers', level: 'B2', order: 7,
+    title: 'Quantifiers — few / a few / little / a little / most', icon: '🔢',
+    rule: 'a few / a little = มีบ้าง (positive) | few / little (ไม่มี a) = แทบไม่มี (negative)\na few/few + countable noun | a little/little + uncountable noun | most (of) + noun = ส่วนใหญ่',
+    examples: ['I have a few friends who speak English fluently.', 'There is little hope of finishing this on time.', 'She has a little experience in marketing.', 'Most people prefer working from home nowadays.'],
+    examples2: ['Few students passed the difficult exam.', 'We have a few minutes before the meeting starts.', 'There is very little water left in the bottle.', 'Most of the information online is not reliable.'],
+    tip: '💡 a few/a little = มีนิดหน่อย (แง่บวก) | few/little (ไม่มี a) = แทบไม่มีเลย (แง่ลบ) — ความหมายตรงข้ามกัน!'
+  },
+  {
+    id: 'question-tags', level: 'B2', order: 8,
+    title: 'Question Tags', icon: '❓',
+    rule: 'ประโยคบวก + tag ลบ | ประโยคลบ + tag บวก\nใช้ auxiliary verb เดียวกับประโยคหลัก (be/do/have/modal)',
+    examples: ['You are coming to the party, aren\'t you?', 'She doesn\'t like spicy food, does she?', 'They have finished the project, haven\'t they?', 'You can swim, can\'t you?'],
+    examples2: ['It\'s a beautiful day, isn\'t it?', 'He didn\'t call you, did he?', 'We should leave now, shouldn\'t we?', 'You haven\'t seen this movie, have you?'],
+    tip: '💡 บวก→ลบ, ลบ→บวก เสมอ | ใช้ verb ตัวเดียวกับประโยคหลัก (is→isn\'t, do→don\'t, have→haven\'t)'
+  },
+  {
+    id: 'reported-questions', level: 'B2', order: 9,
+    title: 'Reported Speech — Questions & Commands', icon: '🗨️',
+    rule: 'Reported yes/no question: asked if/whether + subject + verb (ไม่กลับเป็นคำถาม)\nReported wh-question: asked + wh-word + subject + verb\nReported command: told/asked + object + to + verb',
+    examples: ['"Do you like coffee?" → She asked if I liked coffee.', '"Where do you live?" → He asked where I lived.', '"Close the door," she said. → She told me to close the door.', '"Please help me," he said. → He asked me to help him.'],
+    examples2: ['"Are you coming?" → She asked whether I was coming.', '"What time is it?" → He asked what time it was.', '"Don\'t be late," she said. → She told me not to be late.', '"Can you drive?" → He asked if I could drive.'],
+    tip: '💡 คำถามที่รายงานใหม่ ไม่ใช้ do/does/did และไม่สลับ word order เหมือนคำถามปกติ'
+  },
+  {
+    id: 'the-comparative', level: 'B2', order: 10,
+    title: 'The...The... Comparative Structures', icon: '📈',
+    rule: 'The + comparative..., the + comparative... = ยิ่ง...ยิ่ง...\nใช้แสดงความสัมพันธ์ที่เปลี่ยนไปพร้อมกัน',
+    examples: ['The more you practice, the better you become.', 'The harder you work, the more successful you will be.', 'The earlier we leave, the sooner we will arrive.', 'The more money he earns, the more he spends.'],
+    examples2: ['The older I get, the wiser I become.', 'The bigger the city, the more expensive the rent.', 'The less you worry, the happier you will be.', 'The more languages you speak, the more opportunities you have.'],
+    tip: '💡 โครงสร้างนี้ใช้ comparative form ทั้งสองฝั่งเสมอ (more, better, harder, ฯลฯ) ไม่ใช้ "than"'
+  },
 
-  // ══════════════════ C1 (seed) ══════════════════
+  // ══════════════════ C1 ══════════════════
   {
     id: 'third-conditional', level: 'C1', order: 1,
     title: 'Third & Mixed Conditionals', icon: '⏮️',
@@ -233,8 +281,56 @@ const GRAMMAR_TOPICS = [
     examples2: ['It is estimated that millions of species remain undiscovered.', 'The suspect is alleged to have stolen the documents.', 'It is widely known that stress affects health.', 'The building is rumoured to be haunted.'],
     tip: '💡 It is + said/believed/thought/reported + that... หรือ Subject + is/are + said/believed + to + V'
   },
+  {
+    id: 'participle-clauses', level: 'C1', order: 5,
+    title: 'Participle Clauses', icon: '🧷',
+    rule: 'ใช้ V-ing หรือ V3 แทน relative clause เพื่อให้ประโยคกระชับขึ้น\nActive meaning → V-ing | Passive meaning → V3',
+    examples: ['The woman standing by the door is my manager. (= who is standing)', 'Written in 1997, the novel became an instant classic. (= which was written)', 'Feeling exhausted, she decided to go to bed early.', 'The book left on the table belongs to my brother.'],
+    examples2: ['Not knowing what to say, he remained silent.', 'Having finished the report, she went home.', 'The man arrested by the police denied the charges.', 'Exhausted by the long journey, they fell asleep immediately.'],
+    tip: '💡 V-ing = ประธานเป็นคน "ทำ" | V3 = ประธานถูก "กระทำ" — ใช้แทน relative clause ให้ประโยคดูเป็นธรรมชาติและกระชับขึ้น'
+  },
+  {
+    id: 'emphatic-structures', level: 'C1', order: 6,
+    title: 'Emphatic Structures — do/does/did & so/such', icon: '❗',
+    rule: 'do/does/did + base verb = เน้นย้ำ (ใช่จริงๆ)\nso + adjective/adverb + that... | such + (a/an) + adjective + noun + that... = เน้นระดับความมาก',
+    examples: ['I do believe you are right.', 'She does care about her students.', 'The exam was so difficult that nobody finished it.', 'It was such a beautiful sunset that we took hundreds of photos.'],
+    examples2: ['He did apologize, even though it was late.', 'I do enjoy spending time with my family.', 'The traffic was so bad that we missed our flight.', 'It was such an interesting book that I finished it in one day.'],
+    tip: '💡 do/does/did ใช้เน้นความจริง (ไม่ใช่เพื่อคำถาม/ปฏิเสธ) | so + adj/adv + that ต่างจาก such + noun phrase + that ตรงมี noun หรือไม่'
+  },
+  {
+    id: 'modals-past-speculation', level: 'C1', order: 7,
+    title: 'Modals of Past Speculation — must have / might have / could have', icon: '🕵️',
+    rule: 'must have + V3 = มั่นใจว่าเกิดขึ้นแล้วในอดีต\nmight/could have + V3 = อาจจะเกิดขึ้น\ncan\'t/couldn\'t have + V3 = มั่นใจว่าไม่ได้เกิดขึ้น',
+    examples: ['She must have left already; her car is gone.', 'He might have forgotten about the meeting.', 'They can\'t have arrived yet — the flight isn\'t due for an hour.', 'I could have made a mistake in the calculation.'],
+    examples2: ['The lights are off; they must have gone to bed.', 'She could have missed the bus.', 'He couldn\'t have finished the report already — he only started an hour ago.', 'They might have taken a different route.'],
+    tip: '💡 must/might/could/can\'t + have + V3 ใช้คาดเดาเหตุการณ์ในอดีต — ต่างจาก must/might/can\'t be ที่คาดเดาปัจจุบัน'
+  },
+  {
+    id: 'ellipsis-substitution', level: 'C1', order: 8,
+    title: 'Ellipsis & Substitution', icon: '✂️',
+    rule: 'ตัดคำที่ซ้ำออกเพื่อไม่ให้ประโยคยืดเยื้อ (ellipsis) หรือใช้คำแทน เช่น so, neither, one(s), do so',
+    examples: ['A: Are you coming? B: I hope so.', 'She doesn\'t like coffee, and neither do I.', 'I need a pen. Do you have one?', 'He wanted to leave early, and so did she.'],
+    examples2: ['A: Is she happy? B: I think so.', 'I can\'t swim, and neither can my brother.', 'These shoes are too small; I need a bigger pair.', 'He said he would help, and he did so immediately.'],
+    tip: '💡 so/neither ใช้แทนประโยคก่อนหน้าเพื่อหลีกเลี่ยงการพูดซ้ำ | one/ones ใช้แทน noun ที่กล่าวไปแล้ว'
+  },
+  {
+    id: 'complex-noun-phrases', level: 'C1', order: 9,
+    title: 'Complex Noun Phrases & Nominalization', icon: '🧱',
+    rule: 'Nominalization = เปลี่ยน verb/adjective ให้เป็น noun เพื่อให้ภาษาดูเป็นทางการ/วิชาการมากขึ้น\n(decide→decision, analyze→analysis, aware→awareness)',
+    examples: ['The company\'s decision to expand surprised many analysts. (decide → decision)', 'Growing awareness of climate change has led to policy changes. (aware → awareness)', 'The rapid growth of the industry attracted new investors. (grow → growth)', 'Their failure to meet the deadline caused delays. (fail → failure)'],
+    examples2: ['The implementation of the new policy took several months. (implement → implementation)', 'Public awareness of the issue has increased significantly.', 'The government\'s investment in education has grown steadily.', 'Her analysis of the data revealed an important pattern.'],
+    tip: '💡 Nominalization ทำให้ประโยคดูทางการ/วิชาการมากขึ้น — พบบ่อยในงานเขียนวิชาการและข่าว'
+  },
+  {
+    id: 'concession-clauses', level: 'C1', order: 10,
+    title: 'Advanced Concession — despite / in spite of / even though / while', icon: '🌗',
+    rule: 'despite/in spite of + noun/V-ing | even though/although + clause | while/whereas = contrast ระหว่างสองสิ่ง',
+    examples: ['Despite the heavy rain, the event continued as planned.', 'In spite of feeling nervous, she gave an excellent presentation.', 'Even though he studied hard, he didn\'t pass the exam.', 'While some people prefer the city, others prefer the countryside.'],
+    examples2: ['Despite his lack of experience, he got the job.', 'In spite of the criticism, she remained confident in her decision.', 'Even though the results were disappointing, the team stayed motivated.', 'Whereas her sister is outgoing, she is quite reserved.'],
+    tip: '💡 despite/in spite of + noun หรือ V-ing (ไม่ตามด้วย clause) | even though/although + subject + verb (clause เต็ม)'
+  },
 
-  // ══════════════════ C2 (seed) ══════════════════
+  // ══════════════════ C2 ══════════════════
   {
     id: 'subjunctive', level: 'C2', order: 1,
     title: 'Subjunctive Mood — Demands & Wishes', icon: '🕊️',
@@ -266,6 +362,54 @@ const GRAMMAR_TOPICS = [
     examples: ['The plan was risky. Nevertheless, it succeeded.', 'In light of recent events, the policy has been revised.', 'The results were disappointing; that being said, we learned valuable lessons.', 'Notwithstanding the criticism, she continued her research.'],
     examples2: ['The evidence was inconclusive; nonetheless, the jury reached a verdict.', 'Given the circumstances, the decision seems reasonable.', 'That said, there is still room for improvement.', 'In view of the budget constraints, the project was postponed.'],
     tip: '💡 คำเหล่านี้ใช้ในบริบททางการ/วิชาการ — ทำให้น้ำเสียงดูรอบคอบและมีน้ำหนักมากขึ้น'
+  },
+  {
+    id: 'fronting', level: 'C2', order: 5,
+    title: 'Fronting & Marked Word Order', icon: '🎬',
+    rule: 'ย้ายส่วนสำคัญของประโยคมาไว้ต้นประโยคเพื่อเน้นความหมายหรือสร้าง rhetorical effect มักตามด้วย inversion',
+    examples: ['Gone are the days when people wrote letters by hand.', 'Such was the impact of the discovery that it changed the entire field.', 'Little did she know that the decision would change her life.', 'Only by working together can we solve this problem.'],
+    examples2: ['Never before had the company faced such a crisis.', 'So great was the demand that supplies ran out within hours.', 'Rarely has such an achievement been recognized so quickly.', 'Not once did he complain about the difficult conditions.'],
+    tip: '💡 Fronting มักตามด้วย inversion (auxiliary ก่อน subject) — ใช้เพื่อสร้างเอฟเฟกต์ทางวรรณศิลป์หรือเน้นย้ำอย่างหนักแน่น'
+  },
+  {
+    id: 'absolute-constructions', level: 'C2', order: 6,
+    title: 'Absolute Constructions', icon: '🔗',
+    rule: 'Noun + participle (V-ing/V3) ใช้แทน clause เต็มเพื่อเชื่อมความคิดอย่างกระชับ โดยไม่ต้องมี subject ซ้ำ',
+    examples: ['The meeting having ended, everyone went home.', 'Weather permitting, the festival will take place outdoors.', 'All things considered, the project was a success.', 'Her work finished, she finally allowed herself to relax.'],
+    examples2: ['The results being inconclusive, further research is needed.', 'Time permitting, we will discuss the third proposal as well.', 'The deadline approaching, the team worked around the clock.', 'All factors taken into account, the decision seems reasonable.'],
+    tip: '💡 Absolute construction มี noun ของตัวเอง (ไม่ใช่ subject เดียวกับประโยคหลัก) — พบบ่อยในภาษาเขียนที่เป็นทางการ'
+  },
+  {
+    id: 'collocation-precision', level: 'C2', order: 7,
+    title: 'Collocational Precision & Register Shifts', icon: '🎯',
+    rule: 'การเลือกคำที่ "เข้าคู่กันตามธรรมชาติ" (collocation) และปรับ register (ทางการ/ไม่ทางการ) ให้เหมาะกับบริบท',
+    examples: ['The committee reached a consensus after lengthy deliberation. (formal)', 'They finally agreed after a lot of back-and-forth. (informal, same meaning)', 'The proposal drew widespread criticism from experts.', 'The findings shed light on a previously overlooked issue.'],
+    examples2: ['The company underwent a significant restructuring.', 'Her argument was met with considerable skepticism.', 'The policy has far-reaching implications for the industry.', 'The negotiations reached a stalemate after months of talks.'],
+    tip: '💡 การใช้ collocation ที่แม่นยำ (reach a consensus, draw criticism, shed light on) ทำให้ภาษาดูเป็นธรรมชาติแบบเจ้าของภาษา'
+  },
+  {
+    id: 'modal-perfect-nuance', level: 'C2', order: 8,
+    title: 'Nuanced Modal Perfect — needn\'t have / should have / could have', icon: '🔮',
+    rule: 'needn\'t have + V3 = ทำไปแล้วแต่ไม่จำเป็น | should have + V3 = ควรทำแต่ไม่ได้ทำ (เสียใจ) | could have + V3 = มีความสามารถ/โอกาสแต่ไม่ได้ทำ',
+    examples: ['You needn\'t have brought a gift, but thank you.', 'I should have called before visiting.', 'She could have won the competition, but she gave up too early.', 'We needn\'t have rushed; the meeting was postponed.'],
+    examples2: ['He should have told me about the change of plans.', 'They could have warned us about the traffic.', 'You needn\'t have worried; everything worked out fine.', 'I should have listened to your advice.'],
+    tip: '💡 needn\'t have = ทำแล้วแต่ไม่จำเป็น (ต่างจาก didn\'t need to ที่ไม่รู้ผลลัพธ์) | should/could have = ความเสียดาย/พลาดโอกาสในอดีต'
+  },
+  {
+    id: 'rhetorical-devices', level: 'C2', order: 9,
+    title: 'Rhetorical Devices — Questions, Parallelism & Tricolon', icon: '🎙️',
+    rule: 'ใช้เทคนิคทางวาทศิลป์เพื่อโน้มน้าวใจ: rhetorical question (ไม่ต้องการคำตอบ), parallelism (โครงสร้างคู่ขนาน), tricolon (สามส่วนที่คล้ายกัน)',
+    examples: ['Is it not our duty to protect future generations?', 'We must learn, we must adapt, and we must grow.', 'Government of the people, by the people, for the people.', 'What could be more important than our children\'s future?'],
+    examples2: ['How can we remain silent in the face of such injustice?', 'She came, she saw, she conquered.', 'It was the best of times, it was the worst of times.', 'Isn\'t it time we took real action instead of making more promises?'],
+    tip: '💡 Rhetorical devices ใช้เพิ่มพลังในการโน้มน้าวใจ — พบบ่อยในสุนทรพจน์ บทความความเห็น และงานเขียนเชิงโน้มน้าว'
+  },
+  {
+    id: 'academic-hedging-boosting', level: 'C2', order: 10,
+    title: 'Boosters & Hedges in Academic Argumentation', icon: '⚖️',
+    rule: 'Hedges (ลดความมั่นใจ): may, might, seem to, tend to, somewhat\nBoosters (เพิ่มความมั่นใจ): clearly, undoubtedly, it is evident that, definitely',
+    examples: ['It is evident that early intervention improves outcomes. (booster)', 'The results may suggest a correlation, though further study is needed. (hedge)', 'Undoubtedly, this policy will have long-term consequences. (booster)', 'The data seem to indicate a general trend, though exceptions exist. (hedge)'],
+    examples2: ['Clearly, the evidence supports this conclusion. (booster)', 'This approach might prove more effective in certain contexts. (hedge)', 'It is undeniable that technology has reshaped communication. (booster)', 'The findings tend to support the initial hypothesis, albeit with some limitations. (hedge)'],
+    tip: '💡 นักวิชาการใช้ hedges เมื่อไม่มั่นใจ 100% และใช้ boosters เมื่อหลักฐานแน่นหนา — การเลือกใช้ให้เหมาะสมสร้างความน่าเชื่อถือ'
   }
 ];
 
@@ -479,7 +623,8 @@ const GRAMMAR_EXERCISES = {
       { type: 'mcq', q: 'If I _____ more time, I would learn to paint.', options: ['have', 'had', 'will have', 'would have'], answer: 1, exp: '✅ had — if-clause ของ 2nd conditional ใช้ past simple' },
       { type: 'gap', q: 'If she _____ (be) taller, she would join the basketball team.', answer: 'were', exp: '✅ were — "If I/she/he were" ใช้กับเงื่อนไขสมมติ' },
       { type: 'mcq', q: 'What would you do if you _____ a million dollars?', options: ['find', 'found', 'will find', 'would find'], answer: 1, exp: '✅ found — if-clause ใช้ past simple' },
-      { type: 'error', q: 'Find the error: "If I would have more money, I would travel more."', options: ['ตัด would ออกจาก if-clause → "If I had more money..."', '"travel" should be "traveling"', '"money" should be "moneys"', 'ไม่มีข้อผิดพลาด'], answer: 0, exp: '✅ If I had more money — ห้ามใช้ would ใน if-clause' }
+      { type: 'error', q: 'Find the error: "If I would have more money, I would travel more."', options: ['ตัด would ออกจาก if-clause → "If I had more money..."', '"travel" should be "traveling"', '"money" should be "moneys"', 'ไม่มีข้อผิดพลาด'], answer: 0, exp: '✅ If I had more money — ห้ามใช้ would ใน if-clause' },
+      { type: 'build', q: 'เรียงคำให้ถูก: [rich / more / were / travel / would / I / if / I]', answer: 'If I were rich, I would travel more.', exp: '✅ If + past simple, ... would + base verb (Second Conditional)' }
     ]
   },
   'present-perfect-continuous': {
@@ -488,7 +633,8 @@ const GRAMMAR_EXERCISES = {
       { type: 'mcq', q: 'I _____ (wait) for you for 30 minutes!', options: ['wait', 'have waited', 'have been waiting', 'waited'], answer: 2, exp: '✅ have been waiting — เน้นระยะเวลาต่อเนื่อง' },
       { type: 'gap', q: 'She _____ (study) Japanese since last year.', answer: 'has been studying', exp: '✅ has been studying — since + Present Perfect Continuous' },
       { type: 'mcq', q: 'How long _____ you _____ (learn) the piano?', options: ['have / been learning', 'do / learn', 'are / learning', 'did / learn'], answer: 0, exp: '✅ have...been learning — ถามระยะเวลาที่ทำต่อเนื่อง' },
-      { type: 'error', q: 'Find the error: "I am living here since 2015."', options: ['"am living" should be "have been living"', '"here" should be "there"', '"2015" should be "in 2015"', 'ไม่มีข้อผิดพลาด'], answer: 0, exp: '✅ have been living — since + Present Perfect Continuous' }
+      { type: 'error', q: 'Find the error: "I am living here since 2015."', options: ['"am living" should be "have been living"', '"here" should be "there"', '"2015" should be "in 2015"', 'ไม่มีข้อผิดพลาด'], answer: 0, exp: '✅ have been living — since + Present Perfect Continuous' },
+      { type: 'build', q: 'เรียงคำให้ถูก: [for / been / I / two / learning / years / have / English]', answer: 'I have been learning English for two years.', exp: '✅ have been + V-ing + for + duration' }
     ]
   },
   'reported-speech': {
@@ -497,7 +643,8 @@ const GRAMMAR_EXERCISES = {
       { type: 'mcq', q: '"I am busy," she said. → She said she _____ busy.', options: ['is', 'was', 'were', 'be'], answer: 1, exp: '✅ was — am → was (backshift)' },
       { type: 'gap', q: '"I will help you," he said. → He said he _____ (will) help me.', answer: 'would', exp: '✅ would — will → would' },
       { type: 'mcq', q: '"I can\'t swim," Tom said. → Tom said he _____ swim.', options: ['can\'t', 'couldn\'t', 'doesn\'t', 'didn\'t'], answer: 1, exp: '✅ couldn\'t — can\'t → couldn\'t' },
-      { type: 'error', q: 'Find the error: "She said that she is tired."', options: ['"is" should be "was"', '"said" should be "says"', '"that" should be "which"', 'ไม่มีข้อผิดพลาด'], answer: 0, exp: '✅ was — backshift ใน reported speech' }
+      { type: 'error', q: 'Find the error: "She said that she is tired."', options: ['"is" should be "was"', '"said" should be "says"', '"that" should be "which"', 'ไม่มีข้อผิดพลาด'], answer: 0, exp: '✅ was — backshift ใน reported speech' },
+      { type: 'build', q: 'เรียงคำให้ถูก: [said / tired / she / was / she / that]', answer: 'She said that she was tired.', exp: '✅ said (that) + subject + verb (backshifted)' }
     ]
   },
   'modals-deduction': {
@@ -506,7 +653,8 @@ const GRAMMAR_EXERCISES = {
       { type: 'mcq', q: 'He hasn\'t eaten all day. He _____ be hungry.', options: ['can\'t', 'must', 'might not', 'couldn\'t'], answer: 1, exp: '✅ must be — มั่นใจสูงจากหลักฐาน' },
       { type: 'gap', q: 'She isn\'t here yet; she _____ (might) be stuck in traffic.', answer: 'might', exp: '✅ might — ไม่แน่ใจ, เป็นไปได้' },
       { type: 'mcq', q: 'That _____ be him — he is on vacation this week.', options: ['must', 'might', 'can\'t', 'could'], answer: 2, exp: '✅ can\'t be — มั่นใจว่าเป็นไปไม่ได้' },
-      { type: 'error', q: 'Find the error: "He must to be tired after the long trip."', options: ['"must to" should be "must"', '"tired" should be "tiring"', '"the" should be "a"', 'ไม่มีข้อผิดพลาด'], answer: 0, exp: '✅ must + base verb (ไม่มี to)' }
+      { type: 'error', q: 'Find the error: "He must to be tired after the long trip."', options: ['"must to" should be "must"', '"tired" should be "tiring"', '"the" should be "a"', 'ไม่มีข้อผิดพลาด'], answer: 0, exp: '✅ must + base verb (ไม่มี to)' },
+      { type: 'build', q: 'เรียงคำให้ถูก: [be / must / asleep / she]', answer: 'She must be asleep.', exp: '✅ must be + adjective (การคาดเดาอย่างมั่นใจ)' }
     ]
   },
   'third-conditional': {
@@ -515,7 +663,8 @@ const GRAMMAR_EXERCISES = {
       { type: 'mcq', q: 'If I _____ known, I would have told you.', options: ['have', 'had', 'would have', 'has'], answer: 1, exp: '✅ had known — if-clause ของ 3rd conditional ใช้ past perfect' },
       { type: 'gap', q: 'She would have called if she _____ (have) your number.', answer: 'had had', exp: '✅ had had — past perfect ของ have' },
       { type: 'mcq', q: 'If he had left earlier, he _____ the train.', options: ['would catch', 'would have caught', 'caught', 'catches'], answer: 1, exp: '✅ would have caught — main clause ของ 3rd conditional' },
-      { type: 'error', q: 'Find the error: "If I would have known, I would have come."', options: ['ตัด would ออก → "If I had known, I would have come."', '"come" should be "came"', '"known" should be "know"', 'ไม่มีข้อผิดพลาด'], answer: 0, exp: '✅ If I had known — ห้ามใช้ would ใน if-clause' }
+      { type: 'error', q: 'Find the error: "If I would have known, I would have come."', options: ['ตัด would ออก → "If I had known, I would have come."', '"come" should be "came"', '"known" should be "know"', 'ไม่มีข้อผิดพลาด'], answer: 0, exp: '✅ If I had known — ห้ามใช้ would ใน if-clause' },
+      { type: 'build', q: 'เรียงคำให้ถูก: [studied / I / passed / would / harder / have / had / I / if]', answer: 'If I had studied harder, I would have passed.', exp: '✅ If + past perfect, ... would have + V3 (Third Conditional)' }
     ]
   },
   'inversion': {
@@ -524,7 +673,8 @@ const GRAMMAR_EXERCISES = {
       { type: 'mcq', q: '_____ have I felt so proud.', options: ['Ever', 'Never', 'Always', 'Not'], answer: 1, exp: '✅ Never — negative adverbial + auxiliary + subject' },
       { type: 'gap', q: 'Not only _____ (he/apologize) but he also brought flowers.', answer: 'did he apologize', exp: '✅ did he apologize — inversion หลัง Not only' },
       { type: 'mcq', q: 'Rarely _____ such dedication among new employees.', options: ['we see', 'do we see', 'we saw', 'did we saw'], answer: 1, exp: '✅ do we see — inversion หลัง Rarely' },
-      { type: 'error', q: 'Find the error: "Never I have seen such chaos."', options: ['ต้องสลับเป็น "Never have I seen such chaos."', '"chaos" should be "chaoses"', '"seen" should be "see"', 'ไม่มีข้อผิดพลาด'], answer: 0, exp: '✅ Never have I seen — auxiliary มาก่อน subject' }
+      { type: 'error', q: 'Find the error: "Never I have seen such chaos."', options: ['ต้องสลับเป็น "Never have I seen such chaos."', '"chaos" should be "chaoses"', '"seen" should be "see"', 'ไม่มีข้อผิดพลาด'], answer: 0, exp: '✅ Never have I seen — auxiliary มาก่อน subject' },
+      { type: 'build', q: 'เรียงคำให้ถูก: [have / seen / never / I / such / beauty]', answer: 'Never have I seen such beauty.', exp: '✅ Never + auxiliary + subject + verb (inversion)' }
     ]
   },
   'causative': {
@@ -533,7 +683,8 @@ const GRAMMAR_EXERCISES = {
       { type: 'mcq', q: 'I need to _____ my phone _____ .', options: ['have / repair', 'have / repaired', 'have / repairing', 'had / repair'], answer: 1, exp: '✅ have...repaired — have + object + V3' },
       { type: 'gap', q: 'She _____ (have) her nails done every month.', answer: 'has', exp: '✅ has her nails done' },
       { type: 'mcq', q: 'We are getting our roof _____ next month.', options: ['fix', 'fixed', 'fixing', 'to fix'], answer: 1, exp: '✅ fixed — get + object + V3' },
-      { type: 'error', q: 'Find the error: "He had cut his hair by the barber."', options: ['ควรเป็น "He had his hair cut by the barber."', '"barber" should be "barbers"', '"cut" should be "cutting"', 'ไม่มีข้อผิดพลาด'], answer: 0, exp: '✅ had his hair cut — have + object + V3' }
+      { type: 'error', q: 'Find the error: "He had cut his hair by the barber."', options: ['ควรเป็น "He had his hair cut by the barber."', '"barber" should be "barbers"', '"cut" should be "cutting"', 'ไม่มีข้อผิดพลาด'], answer: 0, exp: '✅ had his hair cut — have + object + V3' },
+      { type: 'build', q: 'เรียงคำให้ถูก: [my / cut / I / hair / had / yesterday]', answer: 'I had my hair cut yesterday.', exp: '✅ have + object + V3 (ให้คนอื่นทำให้)' }
     ]
   },
   'advanced-passive': {
@@ -542,7 +693,8 @@ const GRAMMAR_EXERCISES = {
       { type: 'mcq', q: 'It _____ that the economy will improve next year.', options: ['says', 'is said', 'is saying', 'said'], answer: 1, exp: '✅ is said — It is said that...' },
       { type: 'gap', q: 'She _____ (think) to be the best candidate for the job.', answer: 'is thought', exp: '✅ is thought — subject + is/are + thought + to + V' },
       { type: 'mcq', q: 'The ancient city _____ have been destroyed by an earthquake.', options: ['is said to', 'is saying to', 'says to', 'said to'], answer: 0, exp: '✅ is said to — subject + is said to + have + V3' },
-      { type: 'error', q: 'Find the error: "It is believe that he will win."', options: ['"is believe" should be "is believed"', '"win" should be "wins"', '"that" should be "which"', 'ไม่มีข้อผิดพลาด'], answer: 0, exp: '✅ is believed — passive form (be + V3)' }
+      { type: 'error', q: 'Find the error: "It is believe that he will win."', options: ['"is believe" should be "is believed"', '"win" should be "wins"', '"that" should be "which"', 'ไม่มีข้อผิดพลาด'], answer: 0, exp: '✅ is believed — passive form (be + V3)' },
+      { type: 'build', q: 'เรียงคำให้ถูก: [that / said / is / it / soon / will / rise / prices]', answer: 'It is said that prices will rise soon.', exp: '✅ It is said that + clause' }
     ]
   },
   'subjunctive': {
@@ -551,7 +703,8 @@ const GRAMMAR_EXERCISES = {
       { type: 'mcq', q: 'The board recommended that he _____ the position immediately.', options: ['takes', 'take', 'took', 'taking'], answer: 1, exp: '✅ take — subjunctive ใช้ base verb เสมอ' },
       { type: 'gap', q: 'It is important that she _____ (be) informed right away.', answer: 'be', exp: '✅ be — subjunctive ของ verb "to be" คือ base form "be"' },
       { type: 'mcq', q: 'The committee insisted that the rule _____ enforced.', options: ['is', 'was', 'be', 'being'], answer: 2, exp: '✅ be enforced — subjunctive passive: base verb "be"' },
-      { type: 'error', q: 'Find the error: "I suggest that he goes home early."', options: ['"goes" should be "go"', '"suggest" should be "suggests"', '"early" should be "earlier"', 'ไม่มีข้อผิดพลาด'], answer: 0, exp: '✅ go — subjunctive ไม่ผันตาม subject เลย' }
+      { type: 'error', q: 'Find the error: "I suggest that he goes home early."', options: ['"goes" should be "go"', '"suggest" should be "suggests"', '"early" should be "earlier"', 'ไม่มีข้อผิดพลาด'], answer: 0, exp: '✅ go — subjunctive ไม่ผันตาม subject เลย' },
+      { type: 'build', q: 'เรียงคำให้ถูก: [rest / that / recommended / the / he / doctor]', answer: 'The doctor recommended that he rest.', exp: '✅ recommend that + subject + base verb (subjunctive)' }
     ]
   },
   'cleft-sentences': {
@@ -560,7 +713,8 @@ const GRAMMAR_EXERCISES = {
       { type: 'mcq', q: '_____ was John who finally admitted the mistake.', options: ['This', 'It', 'That', 'There'], answer: 1, exp: '✅ It was John who... — cleft sentence structure' },
       { type: 'gap', q: '_____ (What) I need most right now is some rest.', answer: 'What', exp: '✅ What I need... is... — cleft sentence เน้นสิ่งที่ต้องการ' },
       { type: 'mcq', q: 'It was her determination _____ impressed the judges.', options: ['which', 'that', 'what', 'who'], answer: 1, exp: '✅ that — It was...that... (accept "which" too in informal use)' },
-      { type: 'error', q: 'Find the error: "What I need is to more sleep."', options: ['"to more sleep" should be "more sleep"', '"need" should be "needs"', '"is" should be "was"', 'ไม่มีข้อผิดพลาด'], answer: 0, exp: '✅ What I need is more sleep — ไม่ต้องใช้ "to" ตรงนี้' }
+      { type: 'error', q: 'Find the error: "What I need is to more sleep."', options: ['"to more sleep" should be "more sleep"', '"need" should be "needs"', '"is" should be "was"', 'ไม่มีข้อผิดพลาด'], answer: 0, exp: '✅ What I need is more sleep — ไม่ต้องใช้ "to" ตรงนี้' },
+      { type: 'build', q: 'เรียงคำให้ถูก: [need / is / I / most / time / what / more]', answer: 'What I need most is more time.', exp: '✅ What + clause + is + [emphasized part]' }
     ]
   },
   'hedging': {
@@ -569,7 +723,8 @@ const GRAMMAR_EXERCISES = {
       { type: 'mcq', q: '_____ that the new policy will reduce costs.', options: ['It is', 'It could be argued', 'It must be', 'It will be'], answer: 1, exp: '✅ It could be argued — hedging language แสดงความไม่ฟันธง' },
       { type: 'gap', q: 'The data _____ (seem) to support this theory.', answer: 'seems', exp: '✅ seems (or "seem" if data treated as plural) — nuanced/tentative claim' },
       { type: 'mcq', q: 'This method _____ to produce more consistent results.', options: ['tend', 'tends', 'tending', 'tended'], answer: 1, exp: '✅ tends — 3rd person singular subject (this method)' },
-      { type: 'error', q: 'Find the error: "It must be that he is right, but I am not completely sure."', options: ['ขัดแย้งในตัว — ควรใช้ "It could be that he is right" แทน', '"right" should be "rightly"', '"sure" should be "surely"', 'ไม่มีข้อผิดพลาด'], answer: 0, exp: '✅ "It could be that..." สอดคล้องกับความไม่แน่ใจมากกว่า "must be"' }
+      { type: 'error', q: 'Find the error: "It must be that he is right, but I am not completely sure."', options: ['ขัดแย้งในตัว — ควรใช้ "It could be that he is right" แทน', '"right" should be "rightly"', '"sure" should be "surely"', 'ไม่มีข้อผิดพลาด'], answer: 0, exp: '✅ "It could be that..." สอดคล้องกับความไม่แน่ใจมากกว่า "must be"' },
+      { type: 'build', q: 'เรียงคำให้ถูก: [argued / it / that / could / helps / exercise / be / mental / health]', answer: 'It could be argued that exercise helps mental health.', exp: '✅ It could be argued that + claim (hedging language)' }
     ]
   },
   'discourse-markers': {
@@ -578,7 +733,188 @@ const GRAMMAR_EXERCISES = {
       { type: 'mcq', q: 'The project faced many delays. _____ , it was completed on time.', options: ['Because', 'Nevertheless', 'So', 'Since'], answer: 1, exp: '✅ Nevertheless — contrast เชิงทางการ' },
       { type: 'gap', q: '_____ (In light of) the new evidence, the case was reopened.', answer: 'In light of', exp: '✅ In light of — เมื่อพิจารณาจาก' },
       { type: 'mcq', q: 'The service was slow; _____ , the food was excellent.', options: ['therefore', 'that being said', 'because', 'so'], answer: 1, exp: '✅ that being said — เชื่อม contrast อย่างสุภาพ' },
-      { type: 'error', q: 'Find the error: "Notwithstanding of the delay, we finished on time."', options: ['"Notwithstanding of" should be "Notwithstanding"', '"delay" should be "delays"', '"finished" should be "finish"', 'ไม่มีข้อผิดพลาด'], answer: 0, exp: '✅ Notwithstanding the delay — ไม่ต้องใช้ "of"' }
+      { type: 'error', q: 'Find the error: "Notwithstanding of the delay, we finished on time."', options: ['"Notwithstanding of" should be "Notwithstanding"', '"delay" should be "delays"', '"finished" should be "finish"', 'ไม่มีข้อผิดพลาด'], answer: 0, exp: '✅ Notwithstanding the delay — ไม่ต้องใช้ "of"' },
+      { type: 'build', q: 'เรียงคำให้ถูก: [it / risky / the / plan / succeeded / nevertheless / was]', answer: 'The plan was risky; nevertheless, it succeeded.', exp: '✅ [statement]; nevertheless, [contrasting result]' }
+    ]
+  },
+  'used-to-would': {
+    intro: 'used to + base verb = อดีตที่เคยทำ/เคยเป็นแต่ตอนนี้ไม่แล้ว | would + base verb = การกระทำซ้ำๆ ในอดีต (ไม่ใช้กับ state verbs)',
+    exercises: [
+      { type: 'mcq', q: 'I _____ live in Chiang Mai, but I moved to Bangkok last year.', options: ['use to', 'used to', 'would', 'am using to'], answer: 1, exp: '✅ used to — สภาพในอดีตที่ไม่เป็นแล้ว' },
+      { type: 'gap', q: 'Every summer, we _____ (would/visit) our grandparents.', answer: 'would visit', exp: '✅ would visit — การกระทำซ้ำๆ ในอดีต' },
+      { type: 'mcq', q: '_____ you use to play football when you were young?', options: ['Did', 'Do', 'Were', 'Was'], answer: 0, exp: '✅ Did you use to — คำถามของ used to ใช้ did + use to (ไม่มี d)' },
+      { type: 'error', q: 'Find the error: "I would have a bicycle when I was a child."', options: ['"would have" should be "used to have" (state verb ใช้ would ไม่ได้)', '"bicycle" should be "bicycles"', '"child" should be "children"', 'ไม่มีข้อผิดพลาด'], answer: 0, exp: '✅ used to have — would ใช้กับ action verb ที่ทำซ้ำเท่านั้น ไม่ใช้กับ state verb เช่น have (possession)' },
+      { type: 'build', q: 'เรียงคำให้ถูก: [play / we / the / piano / used / to]', answer: 'We used to play the piano.', exp: '✅ used to + base verb' }
+    ]
+  },
+  'future-continuous-perfect': {
+    intro: 'Future Continuous (will be + V-ing) = กำลังทำอยู่ในอนาคต | Future Perfect (will have + V3) = จะเสร็จก่อนเวลาหนึ่งในอนาคต',
+    exercises: [
+      { type: 'mcq', q: 'This time tomorrow, I _____ on a beach in Phuket.', options: ['will lie', 'will be lying', 'will have lain', 'lie'], answer: 1, exp: '✅ will be lying — Future Continuous (กำลังทำ ณ เวลานั้น)' },
+      { type: 'gap', q: 'By next year, she _____ (finish) her degree.', answer: 'will have finished', exp: '✅ will have finished — Future Perfect' },
+      { type: 'mcq', q: 'By 8 PM, we _____ dinner already.', options: ['will have', 'will have had', 'will be having', 'have'], answer: 1, exp: '✅ will have had — Future Perfect (เสร็จก่อนเวลานั้น)' },
+      { type: 'error', q: 'Find the error: "By 2030, they will finished the building."', options: ['"will finished" should be "will have finished"', '"By 2030" should be "In 2030"', '"building" should be "buildings"', 'ไม่มีข้อผิดพลาด'], answer: 0, exp: '✅ will have finished — Future Perfect: will have + V3' },
+      { type: 'build', q: 'เรียงคำให้ถูก: [be / this / next / working / week / I / will]', answer: 'I will be working next week.', exp: '✅ will be + V-ing (Future Continuous)' }
+    ]
+  },
+  'quantifiers': {
+    intro: 'a few/a little = มีบ้าง (positive) | few/little (ไม่มี a) = แทบไม่มี (negative) | most (of) = ส่วนใหญ่',
+    exercises: [
+      { type: 'mcq', q: 'I have _____ friends in this city — I know almost nobody.', options: ['a few', 'few', 'a little', 'much'], answer: 1, exp: '✅ few — แทบไม่มีเลย (negative meaning)' },
+      { type: 'gap', q: 'There is _____ (a little) sugar left in the jar.', answer: 'a little', exp: '✅ a little — มีอยู่บ้างแม้จะไม่มาก' },
+      { type: 'mcq', q: '_____ of the students passed the exam.', options: ['Most', 'Much', 'A little', 'Few'], answer: 0, exp: '✅ Most of the students — countable noun ใช้ most (of)' },
+      { type: 'error', q: 'Find the error: "I have a little friends who can help me."', options: ['"a little" should be "a few" (friends = countable)', '"friends" should be "friend"', '"help" should be "helps"', 'ไม่มีข้อผิดพลาด'], answer: 0, exp: '✅ a few friends — friends นับได้ ต้องใช้ a few ไม่ใช่ a little' },
+      { type: 'build', q: 'เรียงคำให้ถูก: [minutes / a / have / before / meeting / few / the / we / starts]', answer: 'We have a few minutes before the meeting starts.', exp: '✅ a few + countable noun' }
+    ]
+  },
+  'question-tags': {
+    intro: 'ประโยคบวก → tag ลบ | ประโยคลบ → tag บวก ใช้ auxiliary เดียวกับประโยคหลัก',
+    exercises: [
+      { type: 'mcq', q: 'You like coffee, _____?', options: ['do you', 'don\'t you', 'aren\'t you', 'doesn\'t you'], answer: 1, exp: '✅ don\'t you — ประโยคบวกใช้ tag ลบ' },
+      { type: 'gap', q: 'She isn\'t coming to the party, _____ she?', answer: 'is', exp: '✅ is — ประโยคลบใช้ tag บวก' },
+      { type: 'mcq', q: 'They have finished the project, _____?', options: ['haven\'t they', 'didn\'t they', 'don\'t they', 'aren\'t they'], answer: 0, exp: '✅ haven\'t they — ใช้ have เหมือนประโยคหลัก' },
+      { type: 'error', q: 'Find the error: "You can swim, can you?"', options: ['"can you" should be "can\'t you" (ประโยคบวกต้องใช้ tag ลบ)', '"swim" should be "swimming"', '"You" should be "You\'re"', 'ไม่มีข้อผิดพลาด'], answer: 0, exp: '✅ can\'t you — ประโยคบวก (You can swim) ต้องตามด้วย tag ลบ' },
+      { type: 'build', q: 'เรียงคำให้ถูก: [beautiful / a / it\'s / isn\'t / day / it]', answer: 'It\'s a beautiful day, isn\'t it?', exp: '✅ ประโยคบวก + tag ลบ' }
+    ]
+  },
+  'reported-questions': {
+    intro: 'Reported yes/no question: asked if/whether + subject + verb | Reported wh-question: asked + wh-word + subject + verb (ไม่กลับเป็นคำถาม)',
+    exercises: [
+      { type: 'mcq', q: '"Do you like tea?" she asked. → She asked if I _____ tea.', options: ['like', 'liked', 'do like', 'am liking'], answer: 1, exp: '✅ liked — backshift + ไม่ใช้ do ในคำถามที่ถูกรายงาน' },
+      { type: 'gap', q: '"Where do you live?" he asked. → He asked where I _____ (live).', answer: 'lived', exp: '✅ lived — backshift ในคำถามที่ถูกรายงาน' },
+      { type: 'mcq', q: '"Close the door," she said. → She told me _____ the door.', options: ['close', 'to close', 'closing', 'closed'], answer: 1, exp: '✅ told me to close — command ที่รายงาน: tell + object + to + verb' },
+      { type: 'error', q: 'Find the error: "She asked me did I like the film."', options: ['"did I like" should be "if I liked" (ไม่กลับเป็นคำถาม)', '"asked" should be "asks"', '"film" should be "films"', 'ไม่มีข้อผิดพลาด'], answer: 0, exp: '✅ She asked me if I liked the film — reported question ไม่ใช้ word order แบบคำถาม' },
+      { type: 'build', q: 'เรียงคำให้ถูก: [what / he / time / asked / it / was]', answer: 'He asked what time it was.', exp: '✅ wh-question ที่รายงาน: wh-word + subject + verb (ไม่กลับลำดับ)' }
+    ]
+  },
+  'the-comparative': {
+    intro: 'The + comparative..., the + comparative... = ยิ่ง...ยิ่ง...',
+    exercises: [
+      { type: 'mcq', q: 'The more you practice, _____ you become.', options: ['the better', 'better', 'the best', 'more better'], answer: 0, exp: '✅ the better — the + comparative คู่กัน' },
+      { type: 'gap', q: 'The harder you work, _____ (the/more) successful you will be.', answer: 'the more', exp: '✅ the more — ต้องมี "the" คู่กับ comparative' },
+      { type: 'mcq', q: '_____ we leave, the sooner we will arrive.', options: ['The earlier', 'Earlier', 'The early', 'More early'], answer: 0, exp: '✅ The earlier — comparative form + the' },
+      { type: 'error', q: 'Find the error: "The more money he earns, more he spends."', options: ['ขาด "the" หน้า more ตัวที่สอง → "the more he spends"', '"earns" should be "earn"', '"money" should be "moneys"', 'ไม่มีข้อผิดพลาด'], answer: 0, exp: '✅ The more...the more... — ต้องมี "the" ทั้งสองฝั่งเสมอ' },
+      { type: 'build', q: 'เรียงคำให้ถูก: [wiser / older / the / I / the / I / become / get]', answer: 'The older I get, the wiser I become.', exp: '✅ The + comparative, the + comparative' }
+    ]
+  },
+  'participle-clauses': {
+    intro: 'ใช้ V-ing (active) หรือ V3 (passive) แทน relative clause เพื่อให้ประโยคกระชับขึ้น',
+    exercises: [
+      { type: 'mcq', q: 'The man _____ by the door is my uncle.', options: ['stand', 'standing', 'stood', 'to stand'], answer: 1, exp: '✅ standing — active participle แทน "who is standing"' },
+      { type: 'gap', q: '_____ (Write) in 1997, the novel became a classic.', answer: 'Written', exp: '✅ Written — passive participle แทน "which was written"' },
+      { type: 'mcq', q: 'Which sentence correctly uses a participle clause?', options: ['The man arrested by the police denied the charges.', 'The man arresting by the police denied the charges.', 'The man arrest by the police denied the charges.', 'The man was arrest by the police denied the charges.'], answer: 0, exp: '✅ arrested — passive meaning ต้องใช้ V3' },
+      { type: 'error', q: 'Find the error: "Feeling exhausted, the bed was where she went."', options: ['ประธานของ participle clause ต้องตรงกับประธานประโยคหลัก → "Feeling exhausted, she went to bed."', '"exhausted" should be "exhausting"', '"bed" should be "beds"', 'ไม่มีข้อผิดพลาด'], answer: 0, exp: '✅ Feeling exhausted, she went to bed. — ประธานของ participle clause ต้องเป็นคนเดียวกับประธานประโยคหลัก (dangling participle)' },
+      { type: 'build', q: 'เรียงคำให้ถูก: [finished / having / home / the / report / went / she]', answer: 'Having finished the report, she went home.', exp: '✅ Having + V3 = ทำเสร็จก่อนแล้วค่อยทำอีกอย่าง' }
+    ]
+  },
+  'emphatic-structures': {
+    intro: 'do/does/did + base verb เน้นย้ำความจริง | so + adj/adv + that / such + noun phrase + that เน้นระดับความมาก',
+    exercises: [
+      { type: 'mcq', q: 'I _____ believe you are telling the truth.', options: ['am', 'do', 'did', 'was'], answer: 1, exp: '✅ do believe — do เพิ่มความเน้นย้ำ (emphasis)' },
+      { type: 'gap', q: 'The exam was _____ (so) difficult that nobody finished it.', answer: 'so', exp: '✅ so — so + adjective + that' },
+      { type: 'mcq', q: 'It was _____ beautiful sunset that we took many photos.', options: ['so', 'such', 'such a', 'so a'], answer: 2, exp: '✅ such a — such + a/an + adjective + noun' },
+      { type: 'error', q: 'Find the error: "It was so a boring movie that I fell asleep."', options: ['"so a boring" should be "such a boring"', '"fell" should be "fall"', '"movie" should be "movies"', 'ไม่มีข้อผิดพลาด'], answer: 0, exp: '✅ such a boring movie — such ใช้กับ noun phrase (a/an + adj + noun), so ใช้กับ adj/adv เดี่ยวๆ' },
+      { type: 'build', q: 'เรียงคำให้ถูก: [care / she / students / about / her / does]', answer: 'She does care about her students.', exp: '✅ does + base verb เน้นย้ำ' }
+    ]
+  },
+  'modals-past-speculation': {
+    intro: 'must have + V3 = มั่นใจว่าเกิดขึ้นแล้ว | might/could have + V3 = อาจจะเกิดขึ้น | can\'t/couldn\'t have + V3 = มั่นใจว่าไม่ได้เกิดขึ้น',
+    exercises: [
+      { type: 'mcq', q: 'Her car is gone; she _____ left already.', options: ['must', 'must have', 'can', 'could'], answer: 1, exp: '✅ must have left — คาดเดาอดีตอย่างมั่นใจ' },
+      { type: 'gap', q: 'They _____ (might/take) a different route — they haven\'t arrived yet.', answer: 'might have taken', exp: '✅ might have taken — คาดเดาอดีตอย่างไม่แน่ใจ' },
+      { type: 'mcq', q: 'He only started an hour ago; he _____ finished already.', options: ['must have', 'can\'t have', 'might have', 'should have'], answer: 1, exp: '✅ can\'t have finished — มั่นใจว่าเป็นไปไม่ได้' },
+      { type: 'error', q: 'Find the error: "She must left her phone at home."', options: ['"must left" should be "must have left"', '"phone" should be "phones"', '"home" should be "the home"', 'ไม่มีข้อผิดพลาด'], answer: 0, exp: '✅ must have left — modal + have + V3 สำหรับคาดเดาอดีต' },
+      { type: 'build', q: 'เรียงคำให้ถูก: [might / meeting / the / about / forgotten / he / have]', answer: 'He might have forgotten about the meeting.', exp: '✅ might have + V3' }
+    ]
+  },
+  'ellipsis-substitution': {
+    intro: 'so/neither/one(s)/do so ใช้แทนคำหรือประโยคที่กล่าวไปแล้ว เพื่อไม่ให้พูดซ้ำ',
+    exercises: [
+      { type: 'mcq', q: 'A: Is she coming? B: I hope _____.', options: ['it', 'so', 'that', 'this'], answer: 1, exp: '✅ so — แทนทั้งประโยคก่อนหน้า' },
+      { type: 'gap', q: 'He doesn\'t eat meat, and _____ (neither) does his sister.', answer: 'neither', exp: '✅ neither — neither + auxiliary + subject' },
+      { type: 'mcq', q: 'I need a new pen; can I borrow _____?', options: ['it', 'one', 'so', 'that one only'], answer: 1, exp: '✅ one — แทน noun (a pen) ที่กล่าวถึงแบบไม่เจาะจง' },
+      { type: 'error', q: 'Find the error: "She can\'t drive, and I can\'t neither."', options: ['"I can\'t neither" should be "neither can I"', '"drive" should be "driving"', '"can\'t" should be "don\'t"', 'ไม่มีข้อผิดพลาด'], answer: 0, exp: '✅ neither can I — neither + auxiliary + subject (สลับลำดับ)' },
+      { type: 'build', q: 'เรียงคำให้ถูก: [help / said / did / and / he / so / he / would]', answer: 'He said he would help, and he did so.', exp: '✅ did so แทน verb phrase ก่อนหน้า' }
+    ]
+  },
+  'complex-noun-phrases': {
+    intro: 'Nominalization = เปลี่ยน verb/adjective เป็น noun เพื่อให้ภาษาดูเป็นทางการ/วิชาการมากขึ้น',
+    exercises: [
+      { type: 'mcq', q: 'The company\'s _____ to expand surprised analysts. (decide)', options: ['decide', 'deciding', 'decision', 'decisive'], answer: 2, exp: '✅ decision — nominalization ของ decide' },
+      { type: 'gap', q: 'Growing _____ (aware) of climate change has led to policy changes.', answer: 'awareness', exp: '✅ awareness — nominalization ของ aware' },
+      { type: 'mcq', q: 'Their _____ to meet the deadline caused delays. (fail)', options: ['fail', 'failing', 'failure', 'failed'], answer: 2, exp: '✅ failure — nominalization ของ fail' },
+      { type: 'error', q: 'Find the error: "The rapid grow of the industry attracted investors."', options: ['"grow" should be "growth"', '"rapid" should be "rapidly"', '"attracted" should be "attract"', 'ไม่มีข้อผิดพลาด'], answer: 0, exp: '✅ growth — nominalization ของ grow' },
+      { type: 'build', q: 'เรียงคำให้ถูก: [the / took / of / months / implementation / policy / several / the / new]', answer: 'The implementation of the new policy took several months.', exp: '✅ nominalization (implement → implementation) ทำให้ประโยคดูเป็นทางการ' }
+    ]
+  },
+  'concession-clauses': {
+    intro: 'despite/in spite of + noun/V-ing | even though/although + clause | while/whereas เชื่อม contrast',
+    exercises: [
+      { type: 'mcq', q: '_____ the heavy rain, the event continued as planned.', options: ['Despite', 'Although', 'Even though', 'While'], answer: 0, exp: '✅ Despite + noun phrase (the heavy rain)' },
+      { type: 'gap', q: '_____ (Even though) he studied hard, he didn\'t pass.', answer: 'Even though', exp: '✅ Even though + clause เต็ม' },
+      { type: 'mcq', q: 'She got the job _____ her lack of experience.', options: ['although', 'despite', 'even though', 'while'], answer: 1, exp: '✅ despite + noun phrase (her lack of experience)' },
+      { type: 'error', q: 'Find the error: "Despite he was tired, he finished the race."', options: ['"Despite he was tired" should be "Despite being tired" or "Although he was tired"', '"finished" should be "finish"', '"race" should be "races"', 'ไม่มีข้อผิดพลาด'], answer: 0, exp: '✅ despite ตามด้วย noun/V-ing เท่านั้น ไม่ตามด้วย clause เต็ม — ใช้ although แทนถ้าต้องการ clause' },
+      { type: 'build', q: 'เรียงคำให้ถูก: [confident / criticism / in / she / of / remained / spite / the]', answer: 'In spite of the criticism, she remained confident.', exp: '✅ In spite of + noun phrase' }
+    ]
+  },
+  'fronting': {
+    intro: 'ย้ายส่วนสำคัญมาไว้ต้นประโยคเพื่อเน้นความหมาย มักตามด้วย inversion',
+    exercises: [
+      { type: 'mcq', q: '_____ did she know that the decision would change her life.', options: ['Little', 'A little', 'Few', 'Much'], answer: 0, exp: '✅ Little did she know — fronting + inversion แสดงว่าไม่คาดคิดมาก่อน' },
+      { type: 'gap', q: '_____ (Only) by working together can we solve this problem.', answer: 'Only', exp: '✅ Only — fronting เพื่อเน้นย้ำ' },
+      { type: 'mcq', q: 'Which sentence uses fronting correctly?', options: ['Gone are the days when people wrote letters.', 'Gone the days are when people wrote letters.', 'The days gone are when people wrote letters.', 'Are gone the days when people wrote letters.'], answer: 0, exp: '✅ Gone are the days — fronting + inversion (be + subject)' },
+      { type: 'error', q: 'Find the error: "Never before the company had faced such a crisis."', options: ['ต้องสลับเป็น "Never before had the company faced such a crisis."', '"crisis" should be "crises"', '"before" should be "after"', 'ไม่มีข้อผิดพลาด'], answer: 0, exp: '✅ Never before had the company faced — fronting ต้องตามด้วย inversion (auxiliary ก่อน subject)' },
+      { type: 'build', q: 'เรียงคำให้ถูก: [can / together / only / we / working / this / by / solve / problem]', answer: 'Only by working together can we solve this problem.', exp: '✅ Fronting: Only by... + inversion (can we)' }
+    ]
+  },
+  'absolute-constructions': {
+    intro: 'Noun + participle (V-ing/V3) ใช้แทน clause เต็มโดยไม่ต้องมี subject ซ้ำ พบบ่อยในภาษาเขียนที่เป็นทางการ',
+    exercises: [
+      { type: 'mcq', q: '_____ having ended, everyone went home.', options: ['The meeting', 'Because the meeting', 'When the meeting', 'If the meeting'], answer: 0, exp: '✅ The meeting having ended — absolute construction (noun + participle)' },
+      { type: 'gap', q: 'Weather _____ (permit), the festival will take place outdoors.', answer: 'permitting', exp: '✅ permitting — absolute construction: noun + V-ing' },
+      { type: 'mcq', q: 'Which is an absolute construction?', options: ['All things considered, it was a success.', 'Although all things were considered, it was a success.', 'Because all things were considered, it was a success.', 'If all things are considered, it was a success.'], answer: 0, exp: '✅ All things considered — noun (all things) + participle (considered)' },
+      { type: 'error', q: 'Find the error: "The deadline approach, the team worked around the clock."', options: ['"approach" should be "approaching" (participle, not base verb)', '"worked" should be "works"', '"clock" should be "clocks"', 'ไม่มีข้อผิดพลาด'], answer: 0, exp: '✅ The deadline approaching — absolute construction ต้องใช้ participle (V-ing/V3) ไม่ใช่ base verb' },
+      { type: 'build', q: 'เรียงคำให้ถูก: [relax / finished / her / to / allowed / work / herself / she]', answer: 'Her work finished, she allowed herself to relax.', exp: '✅ Her work finished (noun + V3) = absolute construction' }
+    ]
+  },
+  'collocation-precision': {
+    intro: 'การเลือกคำที่เข้าคู่กันตามธรรมชาติ (collocation) ทำให้ภาษาดูเป็นธรรมชาติแบบเจ้าของภาษา',
+    exercises: [
+      { type: 'mcq', q: 'The committee finally _____ a consensus after hours of debate.', options: ['made', 'reached', 'did', 'took'], answer: 1, exp: '✅ reached a consensus — collocation ที่ถูกต้อง' },
+      { type: 'gap', q: 'The proposal _____ (draw) widespread criticism from experts.', answer: 'drew', exp: '✅ drew — draw criticism เป็น collocation ที่แม่นยำ' },
+      { type: 'mcq', q: 'The findings _____ light on a previously overlooked issue.', options: ['shed', 'threw', 'gave', 'made'], answer: 0, exp: '✅ shed light on — fixed collocation' },
+      { type: 'error', q: 'Find the error: "The negotiations reached a stalemate after month of talks."', options: ['"month" should be "months"', '"reached" should be "reach"', '"stalemate" should be "stalemates"', 'ไม่มีข้อผิดพลาด'], answer: 0, exp: '✅ after months of talks — ระยะเวลาหลายเดือนต้องใช้พหูพจน์' },
+      { type: 'build', q: 'เรียงคำให้ถูก: [months / negotiations / stalemate / a / reached / after / of / the]', answer: 'The negotiations reached a stalemate after months.', exp: '✅ reach a stalemate — collocation ที่แม่นยำ' }
+    ]
+  },
+  'modal-perfect-nuance': {
+    intro: 'needn\'t have + V3 = ทำไปแล้วแต่ไม่จำเป็น | should have + V3 = ควรทำแต่ไม่ได้ทำ (เสียใจ) | could have + V3 = มีโอกาสแต่ไม่ได้ทำ',
+    exercises: [
+      { type: 'mcq', q: 'You _____ brought a gift, but thank you anyway.', options: ['needn\'t have', 'shouldn\'t have', 'couldn\'t have', 'mustn\'t have'], answer: 0, exp: '✅ needn\'t have — ทำไปแล้วแต่จริงๆ ไม่จำเป็น' },
+      { type: 'gap', q: 'I _____ (should/call) before visiting; I\'m sorry for the surprise.', answer: 'should have called', exp: '✅ should have called — ควรทำแต่ไม่ได้ทำ (เสียดาย)' },
+      { type: 'mcq', q: 'She had the talent to win, but she gave up. She _____ won the competition.', options: ['must have', 'needn\'t have', 'could have', 'can\'t have'], answer: 2, exp: '✅ could have won — มีความสามารถ/โอกาสแต่ไม่ได้ทำ' },
+      { type: 'error', q: 'Find the error: "We needn\'t rushed; the meeting was postponed."', options: ['"needn\'t rushed" should be "needn\'t have rushed"', '"postponed" should be "postpone"', '"meeting" should be "meetings"', 'ไม่มีข้อผิดพลาด'], answer: 0, exp: '✅ needn\'t have rushed — needn\'t have + V3' },
+      { type: 'build', q: 'เรียงคำให้ถูก: [told / should / me / you / have]', answer: 'You should have told me.', exp: '✅ should have + V3 = ควรทำแต่ไม่ได้ทำ (เสียดาย)' }
+    ]
+  },
+  'rhetorical-devices': {
+    intro: 'ใช้เทคนิควาทศิลป์เพื่อโน้มน้าวใจ: rhetorical question, parallelism (โครงสร้างคู่ขนาน), tricolon (สามส่วนคล้ายกัน)',
+    exercises: [
+      { type: 'mcq', q: 'Which is a rhetorical question?', options: ['What time is the meeting?', 'Is it not our duty to protect the environment?', 'Where did you put my keys?', 'How much does this cost?'], answer: 1, exp: '✅ Is it not our duty...? — ถามเพื่อโน้มน้าว ไม่ต้องการคำตอบจริง' },
+      { type: 'gap', q: 'We must learn, we must adapt, and we must _____ (grow).', answer: 'grow', exp: '✅ grow — tricolon: สามส่วนที่มีโครงสร้างคู่ขนาน' },
+      { type: 'mcq', q: 'Which sentence uses parallelism correctly?', options: ['She likes to swim, running, and biking.', 'She likes swimming, running, and biking.', 'She likes to swim, to run, and biking.', 'She likes swim, run, and bike.'], answer: 1, exp: '✅ swimming, running, and biking — โครงสร้างคู่ขนานเดียวกันทั้งหมด (V-ing)' },
+      { type: 'error', q: 'Find the error: "She came, she saw, and conquering."', options: ['"conquering" should be "she conquered" (parallelism ต้องคู่ขนานกันทั้งหมด)', '"came" should be "come"', '"saw" should be "sees"', 'ไม่มีข้อผิดพลาด'], answer: 0, exp: '✅ She came, she saw, she conquered. — tricolon ต้องมีโครงสร้างคู่ขนานทั้ง 3 ส่วน' },
+      { type: 'build', q: 'เรียงคำให้ถูก: [important / could / children\'s / than / be / our / future / what / more]', answer: 'What could be more important than our children\'s future?', exp: '✅ Rhetorical question เพื่อโน้มน้าวใจ' }
+    ]
+  },
+  'academic-hedging-boosting': {
+    intro: 'Hedges (may, might, seem to, tend to) ลดความมั่นใจ | Boosters (clearly, undoubtedly, it is evident that) เพิ่มความมั่นใจ',
+    exercises: [
+      { type: 'mcq', q: '_____, the evidence supports this conclusion. (very confident)', options: ['Perhaps', 'Clearly', 'It might be', 'Somewhat'], answer: 1, exp: '✅ Clearly — booster แสดงความมั่นใจสูง' },
+      { type: 'gap', q: 'The results _____ (seem) to indicate a general trend, though exceptions exist.', answer: 'seem', exp: '✅ seem — hedge language แสดงความไม่ฟันธง 100%' },
+      { type: 'mcq', q: 'Which is a hedge (not fully confident)?', options: ['It is undeniable that...', 'Undoubtedly,...', 'This approach might prove effective...', 'Clearly,...'], answer: 2, exp: '✅ might — hedge language แสดงความไม่มั่นใจเต็มที่' },
+      { type: 'error', q: 'Find the error: "The data undoubtedly might suggest a link."', options: ['ใช้ booster (undoubtedly) กับ hedge (might) พร้อมกัน ขัดแย้งกัน — ควรเลือกอย่างใดอย่างหนึ่ง', '"data" should be "datas"', '"suggest" should be "suggests"', 'ไม่มีข้อผิดพลาด'], answer: 0, exp: '✅ เลือกใช้อย่างใดอย่างหนึ่ง: "The data undoubtedly suggests a link." (booster) หรือ "The data might suggest a link." (hedge)' },
+      { type: 'build', q: 'เรียงคำให้ถูก: [evident / that / early / is / intervention / it / improves / outcomes]', answer: 'It is evident that early intervention improves outcomes.', exp: '✅ It is evident that... = booster language' }
     ]
   }
 };

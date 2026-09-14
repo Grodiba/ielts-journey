@@ -175,7 +175,7 @@ const VOCAB_SETS = [
     ]
   },
 
-  // ══════════════════ B2 (2 days, seed) ══════════════════
+  // ══════════════════ B2 ══════════════════
   {
     level: 'B2', day: 1, theme: 'Opinions & Debates',
     words: [
@@ -202,8 +202,60 @@ const VOCAB_SETS = [
       { word: 'integration', thai: 'การผสมกลมกลืน', chunk: 'social integration', sentence: 'Social integration is important for immigrants.' }
     ]
   },
+  {
+    level: 'B2', day: 3, theme: 'Professional Life',
+    words: [
+      { word: 'competent', thai: 'มีความสามารถเพียงพอ', chunk: 'a competent professional', sentence: 'She is a highly competent manager.' },
+      { word: 'delegate', thai: 'มอบหมายงาน', chunk: 'delegate a task to someone', sentence: 'A good leader knows how to delegate tasks effectively.' },
+      { word: 'initiative', thai: 'ความคิดริเริ่ม', chunk: 'take the initiative', sentence: 'He took the initiative to solve the problem himself.' },
+      { word: 'redundant', thai: 'ถูกเลิกจ้าง/ไม่จำเป็น', chunk: 'be made redundant', sentence: 'Hundreds of workers were made redundant last year.' },
+      { word: 'negotiate', thai: 'เจรจาต่อรอง', chunk: 'negotiate a deal/salary', sentence: 'She negotiated a higher salary before accepting the offer.' },
+      { word: 'proactive', thai: 'เชิงรุก/กระตือรือร้น', chunk: 'take a proactive approach', sentence: 'We need to take a more proactive approach to problem-solving.' },
+      { word: 'burnout', thai: 'ภาวะหมดไฟ', chunk: 'suffer from burnout', sentence: 'Many employees suffer from burnout due to overwork.' },
+      { word: 'versatile', thai: 'รอบด้าน/ปรับตัวได้หลากหลาย', chunk: 'a versatile employee', sentence: 'He is a versatile employee who can handle many roles.' }
+    ]
+  },
+  {
+    level: 'B2', day: 4, theme: 'Health & Wellbeing',
+    words: [
+      { word: 'wellbeing', thai: 'สุขภาวะ', chunk: 'improve mental wellbeing', sentence: 'Regular exercise improves both physical and mental wellbeing.' },
+      { word: 'chronic', thai: 'เรื้อรัง', chunk: 'a chronic condition', sentence: 'She has been managing a chronic illness for years.' },
+      { word: 'immune system', thai: 'ระบบภูมิคุ้มกัน', chunk: 'boost your immune system', sentence: 'A balanced diet helps boost your immune system.' },
+      { word: 'sedentary', thai: 'อยู่นิ่งๆ ไม่ค่อยเคลื่อนไหว', chunk: 'a sedentary lifestyle', sentence: 'A sedentary lifestyle increases the risk of heart disease.' },
+      { word: 'nutrient', thai: 'สารอาหาร', chunk: 'essential nutrients', sentence: 'Vegetables provide essential nutrients for the body.' },
+      { word: 'anxiety', thai: 'ความวิตกกังวล', chunk: 'suffer from anxiety', sentence: 'Many students suffer from anxiety before exams.' },
+      { word: 'resilience', thai: 'ความยืดหยุ่นทางใจ', chunk: 'build resilience', sentence: 'Facing challenges early in life can help build resilience.' },
+      { word: 'holistic', thai: 'แบบองค์รวม', chunk: 'a holistic approach to health', sentence: 'Doctors are increasingly taking a holistic approach to health.' }
+    ]
+  },
+  {
+    level: 'B2', day: 5, theme: 'Media & News',
+    words: [
+      { word: 'headline', thai: 'พาดหัวข่าว', chunk: 'make headlines', sentence: 'The scandal made headlines around the world.' },
+      { word: 'bias', thai: 'อคติ/ความลำเอียง', chunk: 'media bias', sentence: 'It\'s important to recognize bias in the news you consume.' },
+      { word: 'credible', thai: 'น่าเชื่อถือ', chunk: 'a credible source', sentence: 'Always check whether a source is credible before sharing news.' },
+      { word: 'misinformation', thai: 'ข้อมูลผิดพลาด/บิดเบือน', chunk: 'spread misinformation', sentence: 'Social media can spread misinformation very quickly.' },
+      { word: 'coverage', thai: 'การนำเสนอข่าว', chunk: 'extensive media coverage', sentence: 'The election received extensive media coverage.' },
+      { word: 'censorship', thai: 'การเซ็นเซอร์', chunk: 'government censorship', sentence: 'Some countries impose strict censorship on the press.' },
+      { word: 'viral', thai: 'แพร่กระจายอย่างรวดเร็ว', chunk: 'go viral', sentence: 'The video went viral within hours of being posted.' },
+      { word: 'objective', thai: 'เป็นกลาง/ปราศจากอคติ', chunk: 'objective reporting', sentence: 'Journalists should aim for objective reporting.' }
+    ]
+  },
+  {
+    level: 'B2', day: 6, theme: 'Science & Innovation',
+    words: [
+      { word: 'breakthrough', thai: 'ความก้าวหน้าครั้งสำคัญ', chunk: 'a scientific breakthrough', sentence: 'Researchers announced a major breakthrough in cancer treatment.' },
+      { word: 'innovative', thai: 'มีนวัตกรรม/สร้างสรรค์', chunk: 'an innovative solution', sentence: 'The company is known for its innovative solutions.' },
+      { word: 'hypothesis', thai: 'สมมติฐาน', chunk: 'test a hypothesis', sentence: 'Scientists conducted experiments to test their hypothesis.' },
+      { word: 'artificial intelligence', thai: 'ปัญญาประดิษฐ์', chunk: 'develop artificial intelligence', sentence: 'Many industries are investing in artificial intelligence.' },
+      { word: 'renewable', thai: 'หมุนเวียนได้/ทดแทนได้', chunk: 'renewable energy', sentence: 'Countries are investing heavily in renewable energy sources.' },
+      { word: 'automation', thai: 'การใช้ระบบอัตโนมัติ', chunk: 'workplace automation', sentence: 'Automation has changed the nature of many jobs.' },
+      { word: 'ethical', thai: 'เชิงจริยธรรม', chunk: 'ethical concerns', sentence: 'There are ethical concerns about genetic engineering.' },
+      { word: 'groundbreaking', thai: 'บุกเบิก/ปฏิวัติวงการ', chunk: 'groundbreaking research', sentence: 'The team published groundbreaking research on renewable materials.' }
+    ]
+  },
 
-  // ══════════════════ C1 (2 days, seed) ══════════════════
+  // ══════════════════ C1 ══════════════════
   {
     level: 'C1', day: 1, theme: 'Abstract Concepts',
     words: [
@@ -230,8 +282,60 @@ const VOCAB_SETS = [
       { word: 'read between the lines', thai: 'อ่านนัยยะที่ซ่อนอยู่', chunk: 'read between the lines', sentence: 'You have to read between the lines to understand his real intention.' }
     ]
   },
+  {
+    level: 'C1', day: 3, theme: 'Business & Economics',
+    words: [
+      { word: 'revenue', thai: 'รายได้', chunk: 'generate revenue', sentence: 'The company generates most of its revenue from subscriptions.' },
+      { word: 'recession', thai: 'ภาวะเศรษฐกิจถดถอย', chunk: 'during a recession', sentence: 'Many businesses struggled during the recession.' },
+      { word: 'monopoly', thai: 'การผูกขาด', chunk: 'hold a monopoly', sentence: 'The corporation holds a virtual monopoly on the market.' },
+      { word: 'subsidy', thai: 'เงินอุดหนุน', chunk: 'a government subsidy', sentence: 'Farmers rely on government subsidies to stay profitable.' },
+      { word: 'inflation', thai: 'เงินเฟ้อ', chunk: 'rising inflation', sentence: 'Rising inflation has affected the cost of living.' },
+      { word: 'stakeholder', thai: 'ผู้มีส่วนได้ส่วนเสีย', chunk: 'key stakeholders', sentence: 'The decision affects all key stakeholders in the company.' },
+      { word: 'volatile', thai: 'ผันผวน', chunk: 'a volatile market', sentence: 'The stock market has been extremely volatile this year.' },
+      { word: 'diversify', thai: 'กระจายความเสี่ยง/หลากหลาย', chunk: 'diversify investments', sentence: 'Investors are advised to diversify their portfolios.' }
+    ]
+  },
+  {
+    level: 'C1', day: 4, theme: 'Psychology & Behavior',
+    words: [
+      { word: 'cognitive', thai: 'เชิงการรับรู้/ความคิด', chunk: 'cognitive development', sentence: 'Reading positively affects children\'s cognitive development.' },
+      { word: 'perception', thai: 'การรับรู้', chunk: 'shape our perception', sentence: 'Culture can shape our perception of beauty.' },
+      { word: 'subconscious', thai: 'จิตใต้สำนึก', chunk: 'the subconscious mind', sentence: 'Many of our habits are controlled by the subconscious mind.' },
+      { word: 'empathy', thai: 'ความเห็นอกเห็นใจ', chunk: 'show empathy', sentence: 'Good leaders show empathy toward their employees.' },
+      { word: 'conform', thai: 'คล้อยตาม/ทำตามบรรทัดฐาน', chunk: 'conform to social norms', sentence: 'Teenagers often feel pressure to conform to social norms.' },
+      { word: 'rational', thai: 'มีเหตุผล', chunk: 'a rational decision', sentence: 'It is difficult to make a rational decision when you are angry.' },
+      { word: 'instinct', thai: 'สัญชาตญาณ', chunk: 'trust your instinct', sentence: 'Sometimes it is better to trust your instinct.' },
+      { word: 'temperament', thai: 'อารมณ์/นิสัยติดตัว', chunk: 'a calm temperament', sentence: 'She has a calm temperament, even under pressure.' }
+    ]
+  },
+  {
+    level: 'C1', day: 5, theme: 'Politics & Governance',
+    words: [
+      { word: 'legislation', thai: 'กฎหมาย/การออกกฎหมาย', chunk: 'pass legislation', sentence: 'Parliament passed new legislation on data privacy.' },
+      { word: 'diplomacy', thai: 'การทูต', chunk: 'through diplomacy', sentence: 'The conflict was resolved through diplomacy.' },
+      { word: 'accountability', thai: 'ความรับผิดชอบที่ตรวจสอบได้', chunk: 'demand accountability', sentence: 'Citizens are demanding greater accountability from officials.' },
+      { word: 'sovereignty', thai: 'อธิปไตย', chunk: 'national sovereignty', sentence: 'The treaty raised concerns about national sovereignty.' },
+      { word: 'referendum', thai: 'การลงประชามติ', chunk: 'hold a referendum', sentence: 'The country held a referendum on the new constitution.' },
+      { word: 'corruption', thai: 'การทุจริต', chunk: 'fight corruption', sentence: 'The new government promised to fight corruption.' },
+      { word: 'bureaucracy', thai: 'ระบบราชการ', chunk: 'cut through bureaucracy', sentence: 'Small businesses often struggle with excessive bureaucracy.' },
+      { word: 'advocate', thai: 'ผู้สนับสนุน/สนับสนุน', chunk: 'advocate for change', sentence: 'She has long been an advocate for education reform.' }
+    ]
+  },
+  {
+    level: 'C1', day: 6, theme: 'Arts & Literature',
+    words: [
+      { word: 'narrative', thai: 'เรื่องเล่า/การเล่าเรื่อง', chunk: 'a compelling narrative', sentence: 'The novel presents a compelling narrative about war and loss.' },
+      { word: 'metaphor', thai: 'อุปมาอุปไมย', chunk: 'use a metaphor', sentence: 'The poet uses a powerful metaphor to describe grief.' },
+      { word: 'protagonist', thai: 'ตัวเอกของเรื่อง', chunk: 'the story\'s protagonist', sentence: 'The protagonist faces a difficult moral choice.' },
+      { word: 'aesthetic', thai: 'เชิงสุนทรียะ/ความงาม', chunk: 'an aesthetic appeal', sentence: 'The building has a striking aesthetic appeal.' },
+      { word: 'contemporary', thai: 'ร่วมสมัย', chunk: 'contemporary art', sentence: 'The museum specializes in contemporary art.' },
+      { word: 'critique', thai: 'บทวิจารณ์/วิจารณ์', chunk: 'write a critique', sentence: 'The professor asked us to write a critique of the film.' },
+      { word: 'symbolism', thai: 'สัญลักษณ์นิยม', chunk: 'rich in symbolism', sentence: 'The film is rich in symbolism and hidden meaning.' },
+      { word: 'evoke', thai: 'กระตุ้น/ปลุกเร้าความรู้สึก', chunk: 'evoke emotion', sentence: 'The music evokes a deep sense of nostalgia.' }
+    ]
+  },
 
-  // ══════════════════ C2 (2 days, seed) ══════════════════
+  // ══════════════════ C2 ══════════════════
   {
     level: 'C2', day: 1, theme: 'Academic & Analytical Language',
     words: [
@@ -256,6 +360,58 @@ const VOCAB_SETS = [
       { word: 'a case in point', thai: 'ตัวอย่างที่ชัดเจน', chunk: '[X] is a case in point', sentence: 'The recent data breach is a case in point.' },
       { word: 'the crux of the matter', thai: 'ประเด็นสำคัญที่สุด', chunk: 'the crux of the matter is...', sentence: 'The crux of the matter is a lack of communication.' },
       { word: 'lend credence to', thai: 'เพิ่มความน่าเชื่อถือให้', chunk: 'lend credence to [a claim]', sentence: 'This new evidence lends credence to the theory.' }
+    ]
+  },
+  {
+    level: 'C2', day: 3, theme: 'Philosophy & Ethics',
+    words: [
+      { word: 'utilitarian', thai: 'แนวคิดประโยชน์นิยม', chunk: 'a utilitarian approach', sentence: 'A utilitarian approach seeks the greatest good for the greatest number.' },
+      { word: 'moral relativism', thai: 'สัมพัทธนิยมทางศีลธรรม', chunk: 'the debate over moral relativism', sentence: 'Philosophers continue to debate the merits of moral relativism.' },
+      { word: 'autonomy', thai: 'อิสระในการตัดสินใจ', chunk: 'individual autonomy', sentence: 'The policy raises questions about individual autonomy.' },
+      { word: 'existential', thai: 'เกี่ยวกับการดำรงอยู่', chunk: 'an existential crisis', sentence: 'The pandemic triggered an existential crisis for many people.' },
+      { word: 'sentient', thai: 'มีความรู้สึกนึกคิด', chunk: 'sentient beings', sentence: 'The philosopher argues that all sentient beings deserve moral consideration.' },
+      { word: 'paradigm', thai: 'กระบวนทัศน์/กรอบความคิด', chunk: 'a paradigm shift', sentence: 'The discovery caused a paradigm shift in the field.' },
+      { word: 'intrinsic value', thai: 'คุณค่าในตัวเอง', chunk: 'have intrinsic value', sentence: 'Nature has intrinsic value beyond its usefulness to humans.' },
+      { word: 'discourse', thai: 'วาทกรรม/บทสนทนาเชิงวิชาการ', chunk: 'public discourse', sentence: 'The issue has dominated public discourse for months.' }
+    ]
+  },
+  {
+    level: 'C2', day: 4, theme: 'Legal & Formal Register',
+    words: [
+      { word: 'litigation', thai: 'การฟ้องร้องคดี', chunk: 'avoid litigation', sentence: 'The company settled to avoid costly litigation.' },
+      { word: 'liable', thai: 'ต้องรับผิดชอบตามกฎหมาย', chunk: 'be held liable', sentence: 'The manufacturer was held liable for the defect.' },
+      { word: 'jurisdiction', thai: 'เขตอำนาจศาล', chunk: 'fall within jurisdiction', sentence: 'The case falls within the court\'s jurisdiction.' },
+      { word: 'stipulate', thai: 'ระบุเงื่อนไขในสัญญา', chunk: 'the contract stipulates that...', sentence: 'The contract stipulates that payment must be made within 30 days.' },
+      { word: 'null and void', thai: 'เป็นโมฆะ', chunk: 'render the agreement null and void', sentence: 'The breach rendered the agreement null and void.' },
+      { word: 'testimony', thai: 'คำให้การ', chunk: 'provide testimony', sentence: 'The witness provided testimony in court.' },
+      { word: 'compliance', thai: 'การปฏิบัติตามกฎ', chunk: 'ensure compliance', sentence: 'The company must ensure compliance with data protection laws.' },
+      { word: 'precedent', thai: 'บรรทัดฐาน/คำพิพากษาก่อนหน้า', chunk: 'set a precedent', sentence: 'The ruling set an important legal precedent.' }
+    ]
+  },
+  {
+    level: 'C2', day: 5, theme: 'Scientific & Technical Precision',
+    words: [
+      { word: 'empirical', thai: 'เชิงประจักษ์', chunk: 'empirical evidence', sentence: 'The theory is supported by strong empirical evidence.' },
+      { word: 'variable', thai: 'ตัวแปร', chunk: 'control for variables', sentence: 'Researchers must control for confounding variables.' },
+      { word: 'methodology', thai: 'ระเบียบวิธีวิจัย', chunk: 'a rigorous methodology', sentence: 'The study used a rigorous methodology.' },
+      { word: 'anomaly', thai: 'ความผิดปกติ/สิ่งที่เบี่ยงเบน', chunk: 'detect an anomaly', sentence: 'The sensor detected an anomaly in the data.' },
+      { word: 'replicate', thai: 'ทำซ้ำผลการทดลอง', chunk: 'replicate the results', sentence: 'Other labs failed to replicate the results.' },
+      { word: 'quantify', thai: 'วัดค่าเป็นตัวเลข', chunk: 'difficult to quantify', sentence: 'The benefits are difficult to quantify precisely.' },
+      { word: 'causation', thai: 'ความสัมพันธ์เชิงเหตุผล', chunk: 'correlation does not imply causation', sentence: 'Correlation does not necessarily imply causation.' },
+      { word: 'peer-reviewed', thai: 'ผ่านการตรวจสอบโดยผู้เชี่ยวชาญ', chunk: 'a peer-reviewed journal', sentence: 'The findings were published in a peer-reviewed journal.' }
+    ]
+  },
+  {
+    level: 'C2', day: 6, theme: 'Literary & Rhetorical Devices',
+    words: [
+      { word: 'allegory', thai: 'เรื่องเปรียบเทียบเชิงสัญลักษณ์', chunk: 'a political allegory', sentence: 'The novel functions as a political allegory.' },
+      { word: 'irony', thai: 'การประชดประชัน/ความย้อนแย้ง', chunk: 'a sense of irony', sentence: 'There is a bitter irony in how the story ends.' },
+      { word: 'juxtaposition', thai: 'การวางเคียงกันเพื่อเปรียบต่าง', chunk: 'a striking juxtaposition', sentence: 'The film uses a striking juxtaposition of wealth and poverty.' },
+      { word: 'rhetoric', thai: 'วาทศิลป์', chunk: 'political rhetoric', sentence: 'The speech was full of persuasive political rhetoric.' },
+      { word: 'connotation', thai: 'ความหมายแฝง', chunk: 'a negative connotation', sentence: 'The word carries a negative connotation in this context.' },
+      { word: 'motif', thai: 'แก่นเรื่องซ้ำ/ลวดลายเชิงความหมาย', chunk: 'a recurring motif', sentence: 'Loss is a recurring motif throughout the novel.' },
+      { word: 'satire', thai: 'การเสียดสี', chunk: 'political satire', sentence: 'The show is known for its sharp political satire.' },
+      { word: 'verisimilitude', thai: 'ความสมจริง', chunk: 'lend verisimilitude', sentence: 'Detailed research lends verisimilitude to historical fiction.' }
     ]
   }
 ];
