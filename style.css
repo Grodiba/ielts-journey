@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════
-   IELTS Journey — Design System
+   English Journey — Design System
    Theme: Deep Indigo + Emerald | Dark Mode
 ═══════════════════════════════════════════════════ */
 
@@ -434,7 +434,6 @@ textarea.input-field { min-height: 80px; }
 @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.7; } }
 
 /* ── VOCAB CARD ── */
-.vocab-input-wrap { position: relative; }
 .vocab-word-big {
   font-family: var(--font-display); font-size: 42px; font-weight: 800;
   text-align: center; margin-bottom: 4px;
@@ -459,20 +458,7 @@ textarea.input-field { min-height: 80px; }
 .grammar-card:hover { border-color: var(--indigo); background: var(--indigo-dim); transform: translateY(-2px); }
 .grammar-card.done { border-color: rgba(16,185,129,0.3); background: rgba(16,185,129,0.06); }
 
-/* ── IELTS SKILLS ── */
-.skill-tabs { display: flex; gap: var(--sp-sm); flex-wrap: wrap; margin-bottom: var(--sp-xl); }
-.skill-tab {
-  padding: 10px 20px; border-radius: var(--r-full);
-  font-size: 13px; font-weight: 700;
-  cursor: pointer; border: 1px solid var(--border);
-  background: var(--bg-glass); color: var(--text-secondary);
-  transition: all 0.2s;
-}
-.skill-tab.active { background: var(--indigo); color: #fff; border-color: transparent; box-shadow: 0 4px 12px rgba(99,102,241,0.35); }
-.skill-tab:hover:not(.active) { color: var(--text-primary); border-color: var(--border-strong); }
-
-/* Writing Task 1 */
-.task1-phrases { display: flex; flex-direction: column; gap: var(--sp-sm); }
+/* Vocabulary hint chips (used in Speaking sessions) */
 .phrase-category { font-size: 11px; font-weight: 700; color: var(--text-muted); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 4px; }
 .phrase-chip {
   display: inline-block; padding: 4px 12px;
@@ -481,13 +467,6 @@ textarea.input-field { min-height: 80px; }
   margin: 2px; cursor: pointer; transition: all 0.2s;
 }
 .phrase-chip:hover { background: var(--indigo); color: #fff; }
-.sample-response {
-  background: var(--bg-glass); border-radius: var(--r-lg);
-  border: 1px solid var(--border); padding: var(--sp-lg);
-  font-size: 14px; line-height: 1.8; color: var(--text-secondary);
-  white-space: pre-wrap;
-}
-.sample-response .highlight { color: var(--amber-light); font-weight: 600; }
 
 /* ── ERROR NOTEBOOK ── */
 .error-entry {
@@ -539,27 +518,6 @@ textarea.input-field { min-height: 80px; }
 .phase-title { font-family: var(--font-display); font-size: 16px; font-weight: 800; margin-bottom: 4px; }
 .phase-subtitle { font-size: 12px; color: var(--text-muted); }
 
-/* Daily schedule blocks */
-.schedule-block {
-  display: flex; align-items: center; gap: var(--sp-md);
-  padding: 10px var(--sp-lg); border-radius: var(--r-md);
-  background: var(--bg-glass); border: 1px solid var(--border);
-}
-.schedule-time {
-  font-family: var(--font-display); font-size: 18px; font-weight: 800;
-  min-width: 60px; text-align: right;
-}
-.schedule-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
-.schedule-label { font-weight: 600; font-size: 14px; }
-.schedule-desc { font-size: 12px; color: var(--text-muted); }
-
-/* ── REMINDERS (Speaking Partner + Exam Booking) ── */
-.reminder-card {
-  border-radius: var(--r-lg); padding: var(--sp-lg);
-  display: flex; gap: var(--sp-md); align-items: flex-start;
-}
-.reminder-icon { font-size: 24px; flex-shrink: 0; }
-
 /* ── MOBILE BOTTOM NAV ── */
 .mobile-nav {
   display: none;
@@ -609,22 +567,6 @@ textarea.input-field { min-height: 80px; }
   .tab-bar { width: 100%; justify-content: center; }
 }
 
-/* ── SPECIAL ELEMENTS ── */
-.streak-flame {
-  font-size: 40px; animation: flicker 1.5s ease-in-out infinite;
-}
-@keyframes flicker {
-  0%,100% { transform: scale(1) rotate(-3deg); }
-  50% { transform: scale(1.1) rotate(3deg); }
-}
-
-.exam-countdown {
-  font-family: var(--font-display); font-weight: 800;
-  background: var(--grad-rose);
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
 /* Do-not list */
 .do-not-item {
   padding: 8px var(--sp-md);
@@ -646,19 +588,3 @@ textarea.input-field { min-height: 80px; }
   font-style: italic;
 }
 
-/* Week 4 schedule table */
-.week-schedule {
-  display: grid; grid-template-columns: 1fr;
-  gap: var(--sp-sm);
-}
-.week-day-row {
-  display: flex; align-items: center; gap: var(--sp-md);
-  padding: 12px var(--sp-lg);
-  border-radius: var(--r-md);
-  border: 1px solid var(--border);
-  transition: all 0.2s;
-}
-.week-day-row:hover { background: var(--bg-glass); }
-.week-day-name {
-  font-weight: 700; min-width: 90px; font-size: 14px;
-}

@@ -1,4 +1,4 @@
-// ── IELTS Journey — Firebase Integration ──
+// ── English Journey — Firebase Integration ──
 // Config embedded directly (Firebase configs are designed to be public)
 
 const FIREBASE_CONFIG = {
@@ -93,7 +93,7 @@ async function loadFromFirestore(uid) {
         if (cloudData[key] != null) {
           merged[key] = cloudData[key];
         }
-        // If cloud has null but local has value → keep local (e.g. examDate just set)
+        // If cloud has null but local has value → keep local
       });
       // Special merge for errorEntries array
       const localErrors = state.errorEntries || [];
@@ -144,7 +144,7 @@ function onStateSaved() {
   }, 3000);
 }
 
-// ── FORCE SYNC (immediate, for critical fields like examDate) ──
+// ── FORCE SYNC (immediate, for critical field changes) ──
 async function forceSyncToCloud() {
   if (!_currentUser || !_db) return;
   clearTimeout(_syncTimeout);

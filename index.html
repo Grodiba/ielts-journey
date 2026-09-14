@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>IELTS Journey — 4 Months to 6.5</title>
-  <meta name="description" content="Personal IELTS learning tracker. Sentence Pattern Training, Speaking Practice, Error Notebook, and structured 4-month plan to achieve IELTS 6.5."/>
+  <title>English Journey — A2 to C2</title>
+  <meta name="description" content="Personal English learning app — build vocabulary and grammar step by step from A2 to C2, with sentence building, speaking practice, and an error notebook."/>
   <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
@@ -24,41 +24,36 @@
   <!-- ── SIDEBAR ── -->
   <nav class="sidebar" id="sidebar">
     <div class="sidebar-logo">
-      <div class="logo-text">IELTS Journey</div>
-      <div class="logo-sub">B1 → IELTS 6.5 in 4 Months</div>
+      <div class="logo-text">English Journey</div>
+      <div class="logo-sub">A2 → C2, Step by Step</div>
     </div>
 
     <div class="nav-section-label">เริ่มต้น</div>
     <button class="nav-item active" id="nav-dashboard" data-section="dashboard">
       <span class="nav-icon">🏠</span> Dashboard
     </button>
-    <button class="nav-item" id="nav-roadmap" data-section="roadmap">
-      <span class="nav-icon">🗺️</span> 4-Month Plan
+    <button class="nav-item" id="nav-levelpath" data-section="levelpath">
+      <span class="nav-icon">🗺️</span> Level Path
     </button>
 
     <div class="nav-section-label">ฝึกทุกวัน</div>
     <button class="nav-item" id="nav-builder" data-section="builder">
       <span class="nav-icon">🔤</span> Sentence Builder
     </button>
-    <button class="nav-item" id="nav-speaking" data-section="speaking">
-      <span class="nav-icon">🗣️</span> Speaking Practice
-    </button>
     <button class="nav-item" id="nav-vocabulary" data-section="vocabulary">
-      <span class="nav-icon">📚</span> Active Vocab
+      <span class="nav-icon">📚</span> Vocabulary
     </button>
     <button class="nav-item" id="nav-grammar" data-section="grammar">
       <span class="nav-icon">📝</span> Grammar Clinic
     </button>
-
-    <div class="nav-section-label">IELTS Skills</div>
-    <button class="nav-item" id="nav-ielts" data-section="ielts">
-      <span class="nav-icon">🔥</span> IELTS Skills
-    </button>
-    <button class="nav-item" id="nav-checkpoints" data-section="checkpoints">
-      <span class="nav-icon">📍</span> Checkpoints
+    <button class="nav-item" id="nav-speaking" data-section="speaking">
+      <span class="nav-icon">🗣️</span> Speaking Practice
     </button>
 
-    <div class="nav-section-label">บันทึก</div>
+    <div class="nav-section-label">ความคืบหน้า</div>
+    <button class="nav-item" id="nav-levelup" data-section="levelup">
+      <span class="nav-icon">🏆</span> Level-Up Quiz
+    </button>
     <button class="nav-item" id="nav-notebook" data-section="notebook">
       <span class="nav-icon">📓</span> Error Notebook
     </button>
@@ -74,14 +69,12 @@
 
     <!-- Firebase Auth -->
     <div style="padding:0 var(--sp-lg) var(--sp-sm)">
-      <!-- Not logged in -->
       <button id="loginBtn" onclick="signInWithGoogle()"
               style="display:none;width:100%;align-items:center;justify-content:center;gap:8px;padding:9px;border-radius:var(--r-md);border:1px solid var(--border);background:var(--bg-glass);cursor:pointer;font-family:var(--font-body);font-size:13px;font-weight:600;color:var(--text-secondary);transition:all 0.2s"
               onmouseover="this.style.borderColor='var(--indigo)'" onmouseout="this.style.borderColor='var(--border)'">
         <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="16" height="16" alt="G"/>
         Sign in with Google
       </button>
-      <!-- Logged in -->
       <div id="userInfo" style="display:none;align-items:center;gap:8px;padding:6px"></div>
     </div>
 
@@ -111,34 +104,19 @@
         <p class="section-subtitle">วันที่ <span id="todayDate"></span> • Streak <span id="streakDisplay">0</span> วัน 🔥</p>
       </div>
 
-      <!-- Goal Banner -->
-      <div class="card card-amber mb-xl" style="background:linear-gradient(135deg,rgba(245,158,11,0.1),rgba(244,63,94,0.08))">
+      <!-- Current Level Banner -->
+      <div class="card card-indigo mb-xl" style="background:linear-gradient(135deg,rgba(99,102,241,0.1),rgba(16,185,129,0.08))">
         <div class="flex-between flex-wrap gap-md">
           <div>
-            <div class="fs-xs text-muted fw-700" style="letter-spacing:1px;text-transform:uppercase;margin-bottom:4px">🎯 เป้าหมาย</div>
-            <div class="font-display fw-800" style="font-size:26px;background:var(--grad-amber);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">IELTS 6.0 – 6.5</div>
-            <div class="fs-sm text-muted" style="margin-top:4px">4 เดือน — Sentence Building → Speaking → IELTS</div>
+            <div class="fs-xs text-muted fw-700" style="letter-spacing:1px;text-transform:uppercase;margin-bottom:4px">🎯 ระดับที่กำลังเรียน</div>
+            <div class="font-display fw-800" id="currentLevelBadge" style="font-size:26px;background:var(--grad-indigo);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">A2 — Elementary</div>
+            <div class="fs-sm text-muted mt-md" id="currentLevelGoal" style="max-width:520px"></div>
           </div>
-          <div class="flex gap-xl">
-            <div style="text-align:center">
-              <div class="font-display fw-800 exam-countdown" style="font-size:40px" id="daysLeftDisplay">—</div>
-              <div class="fs-xs text-muted">วันที่เหลือ</div>
-            </div>
-            <div style="text-align:center">
-              <div class="font-display fw-800" style="font-size:40px;color:var(--emerald-light)" id="currentMonthDisplay">M1</div>
-              <div class="fs-xs text-muted">เดือนปัจจุบัน</div>
-            </div>
-          </div>
+          <button class="btn btn-primary" onclick="navigate('levelpath')">🗺️ ดู Level Path</button>
         </div>
         <div class="divider"></div>
-        <div id="examBookingReminder" style="display:none" class="reminder-card" style="background:var(--rose-dim);border-radius:var(--r-md);margin-top:var(--sp-sm)">
-          <span class="reminder-icon">⚠️</span>
-          <div>
-            <div class="fw-700 text-rose fs-sm">ยังไม่ได้ Book วันสอบ!</div>
-            <div class="fs-xs text-muted">ควร Book IELTS ตอนเริ่มเดือน 3 เพื่อสร้าง deadline จริง</div>
-            <button class="btn btn-sm btn-rose" style="margin-top:8px" onclick="openExamBooking()">ตั้งวันสอบ</button>
-          </div>
-        </div>
+        <div class="chip-bar" id="dashboardFocusChips"></div>
+        <div class="fs-sm text-secondary mt-md">⏰ <span id="dashboardDailyText"></span></div>
       </div>
 
       <!-- Stats Grid -->
@@ -149,32 +127,14 @@
           <div class="fs-xs text-muted">วันติดต่อกัน</div>
         </div>
         <div class="card card-sm" style="text-align:center">
-          <div class="fs-xs text-muted fw-700 mb-sm">📝 ประโยค</div>
+          <div class="fs-xs text-muted fw-700 mb-sm">🔤 ประโยค</div>
           <div class="font-display fw-800" style="font-size:36px;color:var(--indigo-light)" id="sentencesStat">0</div>
           <div class="fs-xs text-muted">สร้างแล้ว</div>
         </div>
         <div class="card card-sm" style="text-align:center">
-          <div class="fs-xs text-muted fw-700 mb-sm">📓 ข้อผิดพลาด</div>
-          <div class="font-display fw-800" style="font-size:36px;color:var(--emerald-light)" id="errorsStat">0</div>
-          <div class="fs-xs text-muted">ในสมุด</div>
-        </div>
-      </div>
-
-      <!-- Today's Schedule -->
-      <div class="card mb-xl">
-        <div class="flex-between mb-lg">
-          <h2>📅 ตารางวันนี้ (2 ชั่วโมง)</h2>
-          <span class="badge badge-indigo">วันที่ <span id="dayNumberDisplay">1</span></span>
-        </div>
-        <div style="display:flex;flex-direction:column;gap:var(--sp-sm)" id="todaySchedule"></div>
-        <div class="divider"></div>
-        <div class="schedule-block" style="border-color:rgba(6,182,212,0.3);background:rgba(6,182,212,0.05)">
-          <div class="schedule-time text-muted">+60</div>
-          <div style="width:10px;height:10px;border-radius:50%;background:var(--cyan);flex-shrink:0"></div>
-          <div>
-            <div class="fw-600 fs-sm" style="color:var(--cyan)">✍️ Writing Bonus</div>
-            <div class="fs-xs text-muted">ถ้ามีแรง 3 ชั่วโมง — เพิ่ม Writing Practice 1 ชั่วโมง</div>
-          </div>
+          <div class="fs-xs text-muted fw-700 mb-sm">📚 คำศัพท์</div>
+          <div class="font-display fw-800" style="font-size:36px;color:var(--emerald-light)" id="vocabStat">0</div>
+          <div class="fs-xs text-muted">จำได้แล้ว</div>
         </div>
       </div>
 
@@ -183,70 +143,25 @@
         <div class="fw-700 mb-md">⚡ เริ่มฝึกเลย</div>
         <div class="flex flex-wrap gap-sm">
           <button class="btn btn-primary" onclick="navigate('builder')">🔤 Sentence Builder</button>
-          <button class="btn btn-emerald" onclick="navigate('speaking')">🗣️ Speaking</button>
-          <button class="btn btn-ghost" onclick="navigate('notebook')">📓 เพิ่ม Error</button>
+          <button class="btn btn-emerald" onclick="navigate('vocabulary')">📚 Vocabulary</button>
           <button class="btn btn-ghost" onclick="navigate('grammar')">📝 Grammar</button>
+          <button class="btn btn-ghost" onclick="navigate('speaking')">🗣️ Speaking</button>
+          <button class="btn btn-ghost" onclick="navigate('notebook')">📓 เพิ่ม Error</button>
         </div>
       </div>
     </section>
 
     <!-- ══════════════════════════════
-         SECTION: ROADMAP
+         SECTION: LEVEL PATH
     ══════════════════════════════ -->
-    <section class="section" id="section-roadmap">
+    <section class="section" id="section-levelpath">
       <div class="section-header">
-        <h1 class="section-title">🗺️ 4-Month Roadmap</h1>
-        <p class="section-subtitle">B1 → IELTS 6.5 — เดินทีละขั้น ไม่กระโดด</p>
+        <h1 class="section-title">🗺️ Level Path</h1>
+        <p class="section-subtitle">A2 → B1 → B2 → C1 → C2 — เดินทีละขั้น ไม่กระโดด</p>
       </div>
 
-      <!-- Phase Cards -->
-      <div class="roadmap-phases mb-xl" id="roadmapPhases"></div>
-
-      <!-- Phase Detail -->
-      <div class="card mb-xl" id="phaseDetail" style="display:none"></div>
-
-      <!-- Daily Schedule Visual -->
-      <div class="card mb-xl">
-        <h2 class="mb-lg">⏰ ตารางวันละ 2 ชั่วโมง</h2>
-        <div style="display:flex;flex-direction:column;gap:var(--sp-sm)" id="scheduleVisual"></div>
-        <div class="card card-sm mt-lg" style="background:rgba(6,182,212,0.06);border-color:rgba(6,182,212,0.25)">
-          <div class="flex gap-md items-center">
-            <span style="font-size:20px">✍️</span>
-            <div>
-              <div class="fw-600" style="color:var(--cyan)">ถ้ามี 3 ชั่วโมง</div>
-              <div class="fs-sm text-muted">เพิ่ม Writing 1 ชั่วโมง — ค่อยๆ เพิ่มจาก paragraph → essay</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Month 4 Weekly -->
-      <div class="card mb-xl">
-        <h2 class="mb-md">📆 ตารางเดือน 4 (Week by Week)</h2>
-        <p class="fs-sm text-muted mb-lg">ช่วงนี้เน้น full mock + error analysis ทุกวันอาทิตย์</p>
-        <div class="week-schedule" id="weekSchedule"></div>
-      </div>
-
-      <!-- Reminders -->
-      <div class="grid grid-2 gap-md">
-        <div class="card card-rose card-sm">
-          <div class="reminder-icon mb-sm">👥</div>
-          <div class="fw-700 mb-sm">หา Speaking Partner</div>
-          <div class="fs-sm text-secondary mb-md">IELTS Speaking วัด real interaction — ฝึกคนเดียวอย่างเดียวอาจ shock ตอนสอบจริง</div>
-          <div class="fs-xs text-muted"><strong>เริ่มเดือน 2</strong> — อย่างน้อยสัปดาห์ละ 1-2 ครั้ง</div>
-          <div class="divider"></div>
-          <div class="fs-xs text-muted">💡 iTalki / Tandem / HelloTalk / IELTS prep group</div>
-        </div>
-        <div class="card card-amber card-sm">
-          <div class="reminder-icon mb-sm">📅</div>
-          <div class="fw-700 mb-sm">Book วันสอบ IELTS</div>
-          <div class="fs-sm text-secondary mb-md">เป้าหมายที่ไม่มี deadline คมชัด มักจะหลุดง่าย — สร้างแรงกดดันจริง</div>
-          <div class="fs-xs text-muted"><strong>ควร Book ตอนเริ่มเดือน 3</strong></div>
-          <div class="divider"></div>
-          <div id="examDateDisplay" class="fs-sm text-amber fw-700">ยังไม่ได้ตั้งวันสอบ</div>
-          <button class="btn btn-sm btn-amber" style="margin-top:8px" onclick="openExamBooking()">ตั้งวันสอบ</button>
-        </div>
-      </div>
+      <div class="roadmap-phases mb-xl" id="levelPathCards"></div>
+      <div class="card mb-xl" id="levelDetail" style="display:none"></div>
     </section>
 
     <!-- ══════════════════════════════
@@ -258,15 +173,10 @@
         <p class="section-subtitle">1 คำ → 4 ประโยค — Pattern Training ทุกวัน</p>
       </div>
 
-      <!-- Context Pack Selector -->
-      <div class="chip-bar mb-lg" id="contextChips"></div>
-
-      <!-- Exercise Selector -->
+      <div class="chip-bar mb-lg" id="builderLevelChips"></div>
       <div class="flex gap-sm flex-wrap mb-xl" id="exerciseList"></div>
 
-      <!-- Active Exercise -->
       <div id="builderExercise" style="display:none">
-        <!-- Starter Word -->
         <div class="card card-indigo mb-xl">
           <div class="flex-between flex-wrap gap-md">
             <div>
@@ -286,10 +196,8 @@
           </div>
         </div>
 
-        <!-- Steps -->
         <div class="expansion-steps mb-xl" id="expansionSteps"></div>
 
-        <!-- Controls -->
         <div class="flex gap-sm flex-wrap">
           <button class="btn btn-primary" id="revealBtn" onclick="revealCurrentModel()">💡 ดูตัวอย่าง</button>
           <button class="btn btn-ghost" id="nextExBtn" onclick="nextExercise()">⏭️ Exercise ถัดไป</button>
@@ -297,143 +205,33 @@
         </div>
       </div>
 
-      <!-- Pattern Reference -->
       <div class="card mt-lg">
         <div class="fw-700 mb-md">💡 Remember: Pattern Training</div>
         <div class="fs-sm text-secondary" style="line-height:1.9">
           เห็นประโยค → เข้าใจ pattern → เปลี่ยนข้อมูล → พูดเอง<br>
-          <code style="color:var(--indigo-light)">I work in application security.</code>
-          &nbsp;→&nbsp; <code style="color:var(--emerald-light)">I work in Bangkok.</code>
-          &nbsp;→&nbsp; <code style="color:var(--amber-light)">I work from home.</code>
+          <code style="color:var(--indigo-light)">I wake up at 7 AM.</code>
+          &nbsp;→&nbsp; <code style="color:var(--emerald-light)">I wake up at 6 AM.</code>
+          &nbsp;→&nbsp; <code style="color:var(--amber-light)">My sister wakes up at 8 AM.</code>
         </div>
       </div>
     </section>
 
     <!-- ══════════════════════════════
-         SECTION: SPEAKING PRACTICE
-    ══════════════════════════════ -->
-    <section class="section" id="section-speaking">
-      <div class="section-header">
-        <h1 class="section-title">🗣️ Speaking Practice</h1>
-        <p class="section-subtitle">วันละ 15–20 นาที • กฎสำคัญ: ห้ามหยุดเพราะนึกศัพท์ไม่ออก</p>
-      </div>
-
-      <!-- No-Stop Rule -->
-      <div class="no-stop-banner mb-xl">
-        🚫 ถ้าไม่รู้คำ — อย่าหยุด! ใช้คำง่ายกว่าแล้วพูดต่อเลย
-      </div>
-
-      <!-- Speaking Mode Tabs -->
-      <div class="tab-bar mb-lg">
-        <button class="tab active" id="speakTab-practice" onclick="setSpeakTab('practice')">🗣️ Free Practice</button>
-        <button class="tab" id="speakTab-qbank" onclick="setSpeakTab('qbank')">❓ Question Bank</button>
-        <button class="tab" id="speakTab-part2" onclick="setSpeakTab('part2')">🃏 Cue Cards</button>
-        <button class="tab" id="speakTab-part3" onclick="setSpeakTab('part3')">💬 Discussion (P3)</button>
-      </div>
-
-      <!-- Free Practice Topic Selector -->
-      <div id="speakPanel-practice">
-        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:var(--sp-md);margin-bottom:var(--sp-xl)" id="topicGrid"></div>
-      </div>
-
-      <!-- Q-Bank (Part 1) -->
-      <div id="speakPanel-qbank" style="display:none">
-        <div class="card card-sm mb-lg" style="background:rgba(16,185,129,0.06)">
-          <div class="fs-sm text-emerald fw-700 mb-sm">💡 วิธีใช้ Question Bank</div>
-          <div class="fs-sm text-secondary">คลิกที่คำถามเพื่อดู Sample Answer + คำอธิบายว่าทำไมตอบอย่างนั้น แล้วลองพูดเองก่อนดูเฉลย</div>
-        </div>
-        <div id="qbankContent"></div>
-      </div>
-
-      <!-- Part 2 Cue Cards -->
-      <div id="speakPanel-part2" style="display:none">
-        <div class="card card-sm mb-lg" style="background:rgba(168,85,247,0.06)">
-          <div class="fs-sm fw-700 mb-sm" style="color:var(--violet)">🃏 วิธีเตรียม Cue Card</div>
-          <div class="fs-sm text-secondary">1. อ่านบัตร → 2. เตรียม 1 นาที (จด bullet points) → 3. พูด 2 นาทีโดยไม่หยุด → 4. ดู Sample Answer เปรียบเทียบ</div>
-        </div>
-        <div id="part2Cards"></div>
-      </div>
-
-      <!-- Part 3 Discussion -->
-      <div id="speakPanel-part3" style="display:none">
-        <div class="card card-sm mb-lg" style="background:rgba(99,102,241,0.06)">
-          <div class="fs-sm text-indigo fw-700 mb-sm">💬 Part 3 Tips</div>
-          <div class="fs-sm text-secondary">Part 3 ต้องการ abstract thinking — พูด 3-4 ประโยค ไม่ใช่แค่ Yes/No | ใช้: I think..., It depends..., On the one hand...</div>
-        </div>
-        <div id="part3Content"></div>
-      </div>
-
-      <!-- Active Speaking Session -->
-      <div id="speakingSession" style="display:none">
-        <div class="card card-emerald mb-lg">
-          <div class="flex-between flex-wrap gap-md mb-lg">
-            <div>
-              <div class="fs-xs text-muted fw-700" style="letter-spacing:1px;margin-bottom:4px">หัวข้อวันนี้</div>
-              <h2 class="font-display" id="sessionTopicTitle"></h2>
-            </div>
-            <button class="btn btn-ghost btn-sm" onclick="endSpeakingSession()">✕ จบ Session</button>
-          </div>
-
-          <!-- Timer Ring -->
-          <div class="flex-center flex-col gap-lg mb-lg">
-            <div class="timer-ring" id="timerRing">
-              <div class="timer-ring-inner">
-                <div class="timer-display" id="timerDisplay">15:00</div>
-              </div>
-            </div>
-            <div class="flex gap-md">
-              <button class="btn btn-emerald" id="timerStartBtn" onclick="toggleTimer()">▶ เริ่ม</button>
-              <button class="btn btn-ghost" onclick="resetTimer()">🔄 Reset</button>
-            </div>
-          </div>
-
-          <!-- No-Stop reminder -->
-          <div class="no-stop-banner" id="noStopReminder" style="display:none">
-            💬 ไม่รู้คำ? พูดง่ายๆ แล้วต่อเลย!
-          </div>
-        </div>
-
-        <!-- Topic Content -->
-        <div class="grid grid-2 gap-md mb-lg">
-          <div class="card card-sm">
-            <div class="fw-700 mb-md">🚀 Sentence Starters</div>
-            <div id="sessionStarters" style="display:flex;flex-direction:column;gap:8px"></div>
-          </div>
-          <div class="card card-sm">
-            <div class="fw-700 mb-md">📚 Vocabulary Hints</div>
-            <div id="sessionVocab" style="display:flex;flex-wrap:wrap;gap:6px"></div>
-          </div>
-        </div>
-
-        <div class="card card-sm">
-          <div class="fw-700 mb-md">💡 Tips</div>
-          <div id="sessionTips" style="display:flex;flex-direction:column;gap:8px"></div>
-        </div>
-
-        <!-- No-Stop Substitutions -->
-        <div class="card card-sm mt-lg">
-          <div class="fw-700 mb-md">🔄 ถ้าไม่รู้คำไทย — พูดแบบนี้แทน</div>
-          <div id="noStopSubs" style="display:flex;flex-direction:column;gap:10px"></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ══════════════════════════════
-         SECTION: ACTIVE VOCABULARY
+         SECTION: VOCABULARY
     ══════════════════════════════ -->
     <section class="section" id="section-vocabulary">
       <div class="section-header">
-        <h1 class="section-title">📚 Active Vocabulary</h1>
-        <p class="section-subtitle">5 คำ/วัน — แต่งประโยคเอง ไม่ใช่แค่จำ</p>
+        <h1 class="section-title">📚 Vocabulary</h1>
+        <p class="section-subtitle">แต่งประโยคเอง ไม่ใช่แค่จำ</p>
       </div>
 
-      <!-- Day Selector -->
+      <div class="chip-bar mb-lg" id="vocabLevelChips"></div>
+
       <div class="flex-between mb-lg flex-wrap gap-md">
         <div class="tab-bar" id="vocabDayTabs"></div>
-        <div class="badge badge-indigo" id="vocabProgressBadge">0/5 คำ</div>
+        <div class="badge badge-indigo" id="vocabProgressBadge">0/8 คำ</div>
       </div>
 
-      <!-- Vocab Card -->
       <div class="card card-indigo mb-xl" id="vocabCard">
         <div style="text-align:center;margin-bottom:var(--sp-lg)">
           <div class="fs-xs text-muted fw-700" style="letter-spacing:1px;margin-bottom:8px" id="vocabTheme">Theme</div>
@@ -465,17 +263,15 @@
         </div>
       </div>
 
-      <!-- Nav -->
       <div class="flex-between">
         <button class="btn btn-ghost" id="prevVocabBtn" onclick="prevVocab()">← ก่อนหน้า</button>
         <div class="flex gap-sm" id="vocabDots"></div>
         <button class="btn btn-ghost" id="nextVocabBtn" onclick="nextVocab()">ถัดไป →</button>
       </div>
 
-      <!-- Do Not List -->
       <div class="card card-sm mt-xl">
         <div class="fw-700 text-rose mb-md">🚨 สิ่งที่ไม่ควรทำ</div>
-        <div class="do-not-item">❌ ท่องศัพท์ 100 คำ/วัน โดยไม่แต่งประโยค</div>
+        <div class="do-not-item">❌ ท่องศัพท์เยอะๆ โดยไม่แต่งประโยค</div>
         <div class="do-not-item">❌ แปลไทย → อังกฤษคำต่อคำ</div>
         <div class="do-not-item">❌ อ่าน Grammar ทั้งเล่มโดยไม่ฝึกเขียน</div>
         <div class="do-not-item">❌ พยายามใช้ศัพท์ยากก่อนรู้ศัพท์พื้นฐาน</div>
@@ -488,24 +284,23 @@
     <section class="section" id="section-grammar">
       <div class="section-header">
         <h1 class="section-title">📝 Grammar Clinic</h1>
-        <p class="section-subtitle">11 หัวข้อ Month 1 — เรียนแล้วฝึกแต่งประโยคทันที</p>
+        <p class="section-subtitle">เรียนแล้วฝึกแต่งประโยคทันที + ทำแบบฝึกหัด</p>
       </div>
 
-      <!-- Progress -->
+      <div class="chip-bar mb-lg" id="grammarLevelChips"></div>
+
       <div class="card card-sm mb-xl">
         <div class="flex-between mb-md">
           <div class="fw-700">ความคืบหน้า Grammar</div>
-          <span class="badge badge-indigo" id="grammarProgressBadge">0 / 11</span>
+          <span class="badge badge-indigo" id="grammarProgressBadge">0 / 10</span>
         </div>
         <div class="progress-track">
           <div class="progress-fill fill-indigo" id="grammarProgress" style="width:0%"></div>
         </div>
       </div>
 
-      <!-- Grid -->
       <div class="grammar-grid mb-xl" id="grammarGrid"></div>
 
-      <!-- Grammar Exercises Panel -->
       <div id="grammarExercisePanel" style="display:none">
         <div class="card card-indigo mb-xl">
           <div class="flex-between flex-wrap gap-md mb-lg">
@@ -531,7 +326,6 @@
         </div>
       </div>
 
-      <!-- Active Topic -->
       <div id="grammarDetail" style="display:none">
         <div class="card card-indigo mb-xl">
           <div class="flex-between mb-lg flex-wrap gap-md">
@@ -542,32 +336,27 @@
             <button class="btn btn-ghost btn-sm" onclick="closeGrammarDetail()">✕</button>
           </div>
 
-          <!-- Rule -->
           <div class="card card-sm mb-lg" style="background:rgba(99,102,241,0.1);border-color:rgba(99,102,241,0.2)">
             <div class="fs-xs text-indigo fw-700 mb-sm">📐 RULE</div>
             <div class="fs-sm text-secondary" id="grammarRule" style="white-space:pre-line;line-height:1.8"></div>
           </div>
 
-          <!-- Examples -->
           <div class="mb-lg">
             <div class="fs-xs text-muted fw-700 mb-md" style="letter-spacing:1px">EXAMPLES</div>
             <div id="grammarExamples" style="display:flex;flex-direction:column;gap:8px"></div>
           </div>
 
-          <!-- AppSec Examples -->
           <div class="mb-lg">
-            <div class="fs-xs text-indigo fw-700 mb-md" style="letter-spacing:1px">💻 APPSEC CONTEXT</div>
-            <div id="grammarAppSec" style="display:flex;flex-direction:column;gap:8px"></div>
+            <div class="fs-xs text-indigo fw-700 mb-md" style="letter-spacing:1px">💡 MORE EXAMPLES</div>
+            <div id="grammarExamples2" style="display:flex;flex-direction:column;gap:8px"></div>
           </div>
 
-          <!-- Tip -->
           <div id="grammarTip" class="card card-sm" style="background:rgba(245,158,11,0.1);border-color:rgba(245,158,11,0.25);color:var(--amber-light)"></div>
         </div>
 
-        <!-- Practice -->
         <div class="card mb-lg">
           <div class="fw-700 mb-md">✏️ ฝึกแต่งประโยค</div>
-          <div class="fs-sm text-muted mb-md">สร้างประโยคโดยใช้ pattern นี้ เกี่ยวกับงาน/ไต้หวัน/ชีวิตคุณ:</div>
+          <div class="fs-sm text-muted mb-md">สร้างประโยคโดยใช้ pattern นี้ เกี่ยวกับชีวิตของคุณ:</div>
           <textarea class="input-field mb-md" id="grammarPracticeInput" placeholder="พิมพ์ประโยคของคุณ..." rows="4"></textarea>
           <div class="flex gap-sm flex-wrap">
             <button class="btn btn-primary" onclick="saveGrammarPractice()">💾 บันทึก</button>
@@ -582,139 +371,105 @@
     </section>
 
     <!-- ══════════════════════════════
-         SECTION: IELTS SKILLS
+         SECTION: SPEAKING PRACTICE
     ══════════════════════════════ -->
-    <section class="section" id="section-ielts">
+    <section class="section" id="section-speaking">
       <div class="section-header">
-        <h1 class="section-title">🔥 IELTS Skills</h1>
-        <p class="section-subtitle">เริ่มจริงจังเดือน 3 — Reading, Listening, Writing Task 1+2, Speaking Part 1-3</p>
+        <h1 class="section-title">🗣️ Speaking Practice</h1>
+        <p class="section-subtitle">กฎสำคัญ: ห้ามหยุดเพราะนึกศัพท์ไม่ออก</p>
       </div>
 
-      <!-- Skill Tabs -->
-      <div class="skill-tabs mb-xl">
-        <button class="skill-tab active" onclick="showIELTSSkill('reading')">📖 Reading</button>
-        <button class="skill-tab" onclick="showIELTSSkill('listening')">👂 Listening</button>
-        <button class="skill-tab" onclick="showIELTSSkill('task1')">📊 Writing Task 1</button>
-        <button class="skill-tab" onclick="showIELTSSkill('task2')">✍️ Writing Task 2</button>
-        <button class="skill-tab" onclick="showIELTSSkill('speaking')">🎤 Speaking Parts</button>
-        <button class="skill-tab" onclick="showIELTSSkill('readpractice')">📄 Reading Practice</button>
-        <button class="skill-tab" onclick="showIELTSSkill('writepractice')">✏️ Writing Practice</button>
+      <div class="no-stop-banner mb-xl">
+        🚫 ถ้าไม่รู้คำ — อย่าหยุด! ใช้คำง่ายกว่าแล้วพูดต่อเลย
       </div>
 
-      <!-- Reading -->
-      <div id="ielts-reading" class="ielts-skill-panel">
-        <div class="card mb-md">
-          <div class="fw-700 mb-sm text-emerald">📖 Reading — 30 นาที/วัน</div>
-          <div class="fs-sm text-muted">เดือน 3: ฝึก skimming, scanning, TFNG, matching headings, multiple choice</div>
-        </div>
-        <div id="readingSkillCards" style="display:flex;flex-direction:column;gap:var(--sp-md)"></div>
-      </div>
+      <div class="chip-bar mb-lg" id="speakingLevelChips"></div>
 
-      <!-- Listening -->
-      <div id="ielts-listening" class="ielts-skill-panel" style="display:none">
-        <div class="card mb-md">
-          <div class="fw-700 mb-sm text-indigo">👂 Listening — 30 นาที/วัน</div>
-          <div class="fs-sm text-muted">จับ keyword, spelling, numbers, names, paraphrasing</div>
-        </div>
-        <div id="listeningSkillCards" style="display:flex;flex-direction:column;gap:var(--sp-md)"></div>
-      </div>
+      <div id="topicGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:var(--sp-md);margin-bottom:var(--sp-xl)"></div>
 
-      <!-- Writing Task 1 -->
-      <div id="ielts-task1" class="ielts-skill-panel" style="display:none">
-        <div class="card card-amber mb-lg">
-          <div class="fw-700 mb-sm text-amber">📊 Writing Task 1 — สำคัญมาก!</div>
-          <div class="fs-sm text-secondary">Task 1 ≠ Task 2 — คนละสไตล์เขียนเลย!</div>
-          <div class="fs-sm text-muted mt-md">Task 1: บรรยายกราฟ/แผนภูมิ | Factual เท่านั้น | 150+ words | 20 นาที</div>
-        </div>
+      <div id="speakingSession" style="display:none">
+        <div class="card card-emerald mb-lg">
+          <div class="flex-between flex-wrap gap-md mb-lg">
+            <div>
+              <div class="fs-xs text-muted fw-700" style="letter-spacing:1px;margin-bottom:4px">หัวข้อวันนี้</div>
+              <h2 class="font-display" id="sessionTopicTitle"></h2>
+            </div>
+            <button class="btn btn-ghost btn-sm" onclick="endSpeakingSession()">✕ จบ Session</button>
+          </div>
 
-        <!-- Task 1 tabs -->
-        <div class="tab-bar mb-lg" id="task1TypeTabs"></div>
+          <div class="flex-center flex-col gap-lg mb-lg">
+            <div class="timer-ring" id="timerRing">
+              <div class="timer-ring-inner">
+                <div class="timer-display" id="timerDisplay">15:00</div>
+              </div>
+            </div>
+            <div class="flex gap-md">
+              <button class="btn btn-emerald" id="timerStartBtn" onclick="toggleTimer()">▶ เริ่ม</button>
+              <button class="btn btn-ghost" onclick="resetTimer()">🔄 Reset</button>
+            </div>
+          </div>
 
-        <div id="task1Content"></div>
-
-        <!-- Do Not List -->
-        <div class="card card-sm mt-lg">
-          <div class="fw-700 text-rose mb-md">🚨 Task 1 — ห้ามทำ</div>
-          <div id="task1DoNot"></div>
+          <div class="no-stop-banner" id="noStopReminder" style="display:none">
+            💬 ไม่รู้คำ? พูดง่ายๆ แล้วต่อเลย!
+          </div>
         </div>
 
-        <!-- Structure Guide -->
-        <div class="card mt-lg">
-          <div class="fw-700 mb-lg">📐 Structure ของ Task 1</div>
-          <div id="task1Structure" style="display:flex;flex-direction:column;gap:var(--sp-md)"></div>
-        </div>
-      </div>
-
-      <!-- Writing Task 2 -->
-      <div id="ielts-task2" class="ielts-skill-panel" style="display:none">
-        <div class="card card-indigo mb-lg">
-          <div class="fw-700 mb-sm text-indigo">✍️ Writing Task 2 — Essay</div>
-          <div class="fs-sm text-secondary">250+ words | 40 นาที | แสดงความเห็น/วิเคราะห์</div>
-        </div>
-        <div id="task2Types" style="display:flex;flex-direction:column;gap:var(--sp-md)" class="mb-lg"></div>
-
-        <!-- Progression -->
-        <div class="card mb-lg">
-          <div class="fw-700 mb-lg">📈 เส้นทางพัฒนา Writing Task 2</div>
-          <div id="task2Progression" style="display:flex;flex-direction:column;gap:var(--sp-sm)"></div>
+        <div class="grid grid-2 gap-md mb-lg">
+          <div class="card card-sm">
+            <div class="fw-700 mb-md">🚀 Sentence Starters</div>
+            <div id="sessionStarters" style="display:flex;flex-direction:column;gap:8px"></div>
+          </div>
+          <div class="card card-sm">
+            <div class="fw-700 mb-md">📚 Vocabulary Hints</div>
+            <div id="sessionVocab" style="display:flex;flex-wrap:wrap;gap:6px"></div>
+          </div>
         </div>
 
         <div class="card card-sm">
-          <div class="fw-700 text-rose mb-md">🚨 ข้อควรระวัง</div>
-          <div id="task2DoNot"></div>
+          <div class="fw-700 mb-md">💡 Tips</div>
+          <div id="sessionTips" style="display:flex;flex-direction:column;gap:8px"></div>
         </div>
-      </div>
 
-      <!-- Reading Practice (actual passages + questions) -->
-      <div id="ielts-readpractice" class="ielts-skill-panel" style="display:none">
-        <div class="card card-sm mb-lg" style="background:rgba(16,185,129,0.06);border-color:rgba(16,185,129,0.25)">
-          <div class="fw-700 text-emerald mb-sm">📄 Reading Practice — IELTS Academic Style</div>
-          <div class="fs-sm text-muted">อ่าน passage → ตอบคำถาม → ดูเฉลยพร้อมคำอธิบาย | เวลาจริง: 60 นาที / 3 passages</div>
+        <div class="card card-sm mt-lg">
+          <div class="fw-700 mb-md">🔄 ถ้าไม่รู้คำไทย — พูดแบบนี้แทน</div>
+          <div id="noStopSubs" style="display:flex;flex-direction:column;gap:10px"></div>
         </div>
-        <div id="readPracticeContent"></div>
-      </div>
-
-      <!-- Writing Practice (prompts + planning guides + samples) -->
-      <div id="ielts-writepractice" class="ielts-skill-panel" style="display:none">
-        <div class="card card-sm mb-lg" style="background:rgba(245,158,11,0.06);border-color:rgba(245,158,11,0.25)">
-          <div class="fw-700 text-amber mb-sm">✏️ Writing Practice — Task 1 + Task 2</div>
-          <div class="fs-sm text-muted">เลือก prompt → วางแผน → เขียน → เปรียบเทียบกับ sample answer</div>
-        </div>
-        <div class="tab-bar mb-lg">
-          <button class="tab active" id="wpTab-task1" onclick="setWritePracticeTab('task1')">📊 Task 1</button>
-          <button class="tab" id="wpTab-task2" onclick="setWritePracticeTab('task2')">✍️ Task 2</button>
-          <button class="tab" id="wpTab-band" onclick="setWritePracticeTab('band')">📊 Band Scores</button>
-        </div>
-        <div id="writePracticeContent"></div>
-      </div>
-
-      <!-- Speaking Parts -->
-      <div id="ielts-speaking" class="ielts-skill-panel" style="display:none">
-        <div class="card mb-md">
-          <div class="fw-700 mb-sm text-violet">🎤 IELTS Speaking — 3 Parts</div>
-          <div class="fs-sm text-muted">เริ่ม Part 1 → Part 2 → Part 3 อย่าโดด</div>
-        </div>
-        <div id="speakingPartsCards" style="display:flex;flex-direction:column;gap:var(--sp-md)"></div>
       </div>
     </section>
 
     <!-- ══════════════════════════════
-         SECTION: CHECKPOINTS
+         SECTION: LEVEL-UP QUIZ
     ══════════════════════════════ -->
-    <section class="section" id="section-checkpoints">
+    <section class="section" id="section-levelup">
       <div class="section-header">
-        <h1 class="section-title">📍 Checkpoints</h1>
-        <p class="section-subtitle">วัดความคืบหน้า 4 จุด — ถ้าผ่านไม่ได้ ให้ปรับแผน ไม่ใช่ฝืน</p>
+        <h1 class="section-title">🏆 Level-Up Quiz</h1>
+        <p class="section-subtitle">ทำครบทุกข้อ เพื่อปลดล็อกระดับถัดไป</p>
       </div>
-      <div id="checkpointCards" style="display:flex;flex-direction:column;gap:var(--sp-xl)"></div>
 
-      <!-- Backup Plan -->
-      <div class="card card-sm mt-xl" style="border-color:rgba(168,85,247,0.3);background:rgba(168,85,247,0.06)">
-        <div class="flex gap-md items-center">
-          <span style="font-size:24px">🔄</span>
+      <div class="checkpoint-card mb-xl" style="border:1px solid var(--border);background:var(--bg-glass)">
+        <div class="flex-between flex-wrap gap-md mb-lg">
           <div>
-            <div class="fw-700 mb-sm" style="color:var(--violet)">แผนสำรอง — 5 เดือน</div>
-            <div class="fs-sm text-secondary">ถ้าพลาดเรียนหลายวันติดกันในเดือน 1-2 อย่าฝืนกดดันตัวเอง<br>ขยับ Month 3 ออกไป 1 เดือน แล้วปรับ checkpoint ตาม — ดีกว่าหมดแรงกลางทาง</div>
+            <div class="badge mb-sm" id="levelUpLevelBadge">A2</div>
+            <h2 class="font-display" id="levelUpTitle">Level Up</h2>
+          </div>
+          <div style="text-align:right">
+            <div class="font-display fw-800" style="font-size:28px;color:var(--indigo-light)" id="levelUpProgress">0 / 5</div>
+            <div class="fs-xs text-muted">tasks done</div>
+          </div>
+        </div>
+        <div class="progress-track mb-lg">
+          <div class="progress-fill fill-indigo" id="levelUpProgressBar" style="width:0%"></div>
+        </div>
+        <div id="levelUpTasks"></div>
+        <div id="levelUpNextBox" style="display:none;margin-top:var(--sp-lg);text-align:center"></div>
+      </div>
+
+      <div class="card card-sm" style="border-color:rgba(168,85,247,0.3);background:rgba(168,85,247,0.06)">
+        <div class="flex gap-md items-center">
+          <span style="font-size:24px">💡</span>
+          <div>
+            <div class="fw-700 mb-sm" style="color:var(--violet)">ไม่ต้องรีบ</div>
+            <div class="fs-sm text-secondary">ไม่มี deadline ตายตัว — ทำจนกว่าจะมั่นใจจริงๆ ก่อนไปต่อระดับถัดไป ความแม่นยำสำคัญกว่าความเร็ว</div>
           </div>
         </div>
       </div>
@@ -729,7 +484,6 @@
         <p class="section-subtitle">บันทึกทุกข้อผิดพลาด — แล้วเรียนรู้จากมัน</p>
       </div>
 
-      <!-- Format Guide -->
       <div class="card card-sm mb-xl" style="background:linear-gradient(135deg,rgba(244,63,94,0.08),rgba(16,185,129,0.05))">
         <div class="flex gap-xl flex-wrap">
           <div><span style="color:var(--rose-light)">❌ ประโยคผิด</span></div>
@@ -738,21 +492,20 @@
         </div>
       </div>
 
-      <!-- Add Form -->
       <div class="card mb-xl">
         <div class="fw-700 mb-lg">➕ เพิ่มรายการใหม่</div>
         <div style="display:flex;flex-direction:column;gap:var(--sp-md)">
           <div>
             <label class="fs-sm fw-700 mb-sm" style="display:block;color:var(--rose-light)">❌ ประโยคที่เขียน/พูดผิด:</label>
-            <input type="text" class="input-field" id="errorWrong" placeholder="เช่น: I assess application."/>
+            <input type="text" class="input-field" id="errorWrong" placeholder="เช่น: She go to school every day."/>
           </div>
           <div>
             <label class="fs-sm fw-700 mb-sm" style="display:block;color:var(--emerald-light)">✅ ประโยคที่ถูกต้อง:</label>
-            <input type="text" class="input-field" id="errorCorrect" placeholder="เช่น: I assess applications."/>
+            <input type="text" class="input-field" id="errorCorrect" placeholder="เช่น: She goes to school every day."/>
           </div>
           <div>
             <label class="fs-sm fw-700 mb-sm" style="display:block;color:var(--indigo-light)">🧠 ทำไมถึงผิด:</label>
-            <textarea class="input-field" id="errorReason" placeholder="เช่น: &quot;application&quot; ต้องเป็น plural เพราะหมายถึงหลายตัว" rows="2"></textarea>
+            <textarea class="input-field" id="errorReason" placeholder="เช่น: he/she/it ต้องเติม -s ใน Present Simple" rows="2"></textarea>
           </div>
           <div class="flex gap-sm">
             <button class="btn btn-primary" onclick="addErrorEntry()">💾 บันทึก</button>
@@ -761,7 +514,6 @@
         </div>
       </div>
 
-      <!-- Filter & Search -->
       <div class="flex-between flex-wrap gap-md mb-lg">
         <input type="text" class="input-field" id="errorSearch" placeholder="🔍 ค้นหา..." style="max-width:280px" oninput="filterErrors()"/>
         <div class="flex gap-sm items-center">
@@ -770,13 +522,11 @@
         </div>
       </div>
 
-      <!-- Today's Review -->
       <div id="todayErrorsSection" style="display:none" class="card card-sm mb-lg" style="border-color:rgba(245,158,11,0.3)">
         <div class="fw-700 text-amber mb-md">📋 ทบทวนวันนี้ (<span id="todayErrorCount">0</span> รายการ)</div>
         <div id="todayErrors"></div>
       </div>
 
-      <!-- All Entries -->
       <div id="errorList" style="display:flex;flex-direction:column;gap:var(--sp-md)">
         <div style="text-align:center;padding:var(--sp-xl);color:var(--text-muted)">
           ยังไม่มีรายการ — เริ่มบันทึกข้อผิดพลาดแรกของคุณ! 📝
@@ -795,29 +545,16 @@
   <button class="mobile-nav-item" id="mnav-builder" data-section="builder">
     <span class="m-icon">🔤</span>Builder
   </button>
-  <button class="mobile-nav-item" id="mnav-speaking" data-section="speaking">
-    <span class="m-icon">🗣️</span>Speaking
+  <button class="mobile-nav-item" id="mnav-vocabulary" data-section="vocabulary">
+    <span class="m-icon">📚</span>Vocab
   </button>
-  <button class="mobile-nav-item" id="mnav-ielts" data-section="ielts">
-    <span class="m-icon">🔥</span>IELTS
+  <button class="mobile-nav-item" id="mnav-grammar" data-section="grammar">
+    <span class="m-icon">📝</span>Grammar
   </button>
   <button class="mobile-nav-item" id="mnav-notebook" data-section="notebook">
     <span class="m-icon">📓</span>Errors
   </button>
 </nav>
-
-<!-- Exam Date Modal -->
-<div id="examModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:500;align-items:center;justify-content:center;padding:20px" hidden>
-  <div class="card" style="max-width:400px;width:100%;background:var(--bg-elevated)">
-    <div class="fw-800 font-display mb-lg">📅 ตั้งวันสอบ IELTS</div>
-    <div class="fs-sm text-muted mb-lg">การตั้งวันสอบล่วงหน้าสร้าง deadline จริงให้ตัวเอง</div>
-    <input type="date" class="input-field mb-md" id="examDateInput"/>
-    <div class="flex gap-sm">
-      <button class="btn btn-amber" onclick="saveExamDate()">💾 บันทึก</button>
-      <button class="btn btn-ghost" onclick="closeExamModal()">ยกเลิก</button>
-    </div>
-  </div>
-</div>
 
 <!-- Toast Container -->
 <div id="toastContainer"></div>
@@ -831,67 +568,8 @@
     <p style="font-size:14px;color:var(--text-secondary);margin-bottom:var(--sp-lg);line-height:1.7">
       Firebase ทำให้ข้อมูลอยู่บน Cloud — ใช้ได้ทุก device ไม่หายแม้ล้าง browser
     </p>
-
-    <!-- Steps -->
-    <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:var(--sp-xl)">
-      <div style="display:flex;gap:12px;align-items:flex-start">
-        <div style="width:24px;height:24px;border-radius:50%;background:var(--indigo-dim);color:var(--indigo-light);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px;flex-shrink:0">1</div>
-        <div>
-          <div style="font-size:13px;font-weight:700">สร้าง Firebase Project</div>
-          <div style="font-size:12px;color:var(--text-muted)">ไปที่ <a href="https://console.firebase.google.com" target="_blank" style="color:var(--indigo-light)">console.firebase.google.com</a> → Add project → ตั้งชื่อ</div>
-        </div>
-      </div>
-      <div style="display:flex;gap:12px;align-items:flex-start">
-        <div style="width:24px;height:24px;border-radius:50%;background:var(--indigo-dim);color:var(--indigo-light);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px;flex-shrink:0">2</div>
-        <div>
-          <div style="font-size:13px;font-weight:700">เพิ่ม Web App</div>
-          <div style="font-size:12px;color:var(--text-muted)">Project Settings → Add app → Web (🌐) → ได้ firebaseConfig</div>
-        </div>
-      </div>
-      <div style="display:flex;gap:12px;align-items:flex-start">
-        <div style="width:24px;height:24px;border-radius:50%;background:var(--indigo-dim);color:var(--indigo-light);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px;flex-shrink:0">3</div>
-        <div>
-          <div style="font-size:13px;font-weight:700">เปิด Authentication + Firestore</div>
-          <div style="font-size:12px;color:var(--text-muted)">Authentication → Sign-in method → เปิด Google | Firestore Database → Create database → Start in test mode</div>
-        </div>
-      </div>
-      <div style="display:flex;gap:12px;align-items:flex-start">
-        <div style="width:24px;height:24px;border-radius:50%;background:var(--emerald-dim);color:var(--emerald-light);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px;flex-shrink:0">4</div>
-        <div>
-          <div style="font-size:13px;font-weight:700">วาง Config ด้านล่าง</div>
-          <div style="font-size:12px;color:var(--text-muted)">คัดลอก firebaseConfig จากหน้า Project Settings แล้ววางตรงนี้</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Config Input -->
-    <div style="margin-bottom:var(--sp-md)">
-      <label style="font-size:13px;font-weight:700;display:block;margin-bottom:8px">📋 วาง Firebase Config ที่นี่:</label>
-      <textarea id="firebaseConfigInput"
-                style="width:100%;min-height:180px;padding:12px;background:var(--bg-glass);border:1px solid var(--border);border-radius:var(--r-md);color:var(--text-primary);font-family:monospace;font-size:12px;line-height:1.6;resize:vertical"
-                placeholder='{
-  "apiKey": "AIza...",
-  "authDomain": "your-project.firebaseapp.com",
-  "projectId": "your-project",
-  "storageBucket": "your-project.appspot.com",
-  "messagingSenderId": "123456",
-  "appId": "1:123456:web:abc"
-}'></textarea>
-    </div>
-
     <div style="display:flex;gap:10px;flex-wrap:wrap">
-      <button class="btn btn-primary" onclick="saveFirebaseSetup()" style="flex:1;justify-content:center">💾 บันทึกและเชื่อมต่อ</button>
-      <button class="btn btn-ghost" onclick="closeFirebaseSetup()">ยกเลิก</button>
-    </div>
-
-    <div style="margin-top:var(--sp-md);padding:10px;background:rgba(16,185,129,0.08);border-radius:var(--r-md);border:1px solid rgba(16,185,129,0.2)">
-      <div style="font-size:11px;color:var(--emerald-light);font-weight:700;margin-bottom:4px">🔒 ปลอดภัย</div>
-      <div style="font-size:11px;color:var(--text-muted)">Config เก็บในเครื่องคุณเท่านั้น ไม่ได้ส่งไปที่อื่น | ข้อมูลเข้าถึงได้เฉพาะบัญชี Google ของคุณ</div>
-    </div>
-
-    <!-- Reset option -->
-    <div style="margin-top:12px;text-align:center">
-      <button onclick="resetFirebaseConfig()" style="background:none;border:none;cursor:pointer;color:var(--text-muted);font-size:11px">🗑️ ลบ config ที่บันทึกไว้</button>
+      <button class="btn btn-ghost" onclick="closeFirebaseSetup()">ปิด</button>
     </div>
   </div>
 </div>
@@ -902,9 +580,11 @@
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 
 <!-- Data Scripts -->
-<script src="data/curriculum.js"></script>
+<script src="data/levels.js"></script>
+<script src="data/grammar.js"></script>
+<script src="data/vocabulary.js"></script>
 <script src="data/sentences.js"></script>
-<script src="data/practice.js"></script>
+<script src="data/speaking.js"></script>
 <script src="firebase.js"></script>
 <script src="app.js"></script>
 </body>
