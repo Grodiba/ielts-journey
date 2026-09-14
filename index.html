@@ -28,6 +28,9 @@
     <button class="nav-item" id="nav-levelpath" data-section="levelpath">
       <span class="nav-icon">🗺️</span> Level Path
     </button>
+    <button class="nav-item" id="nav-placement" data-section="placement">
+      <span class="nav-icon">🎯</span> แบบทดสอบวัดระดับ
+    </button>
 
     <div class="nav-section-label">ฝึกทุกวัน</div>
     <button class="nav-item" id="nav-builder" data-section="builder">
@@ -97,6 +100,24 @@
         <p class="section-subtitle">วันที่ <span id="todayDate"></span> • Streak <span id="streakDisplay">0</span> วัน 🔥</p>
       </div>
 
+      <!-- Placement Test Prompt -->
+      <div class="card card-amber mb-xl flex-between flex-wrap gap-md" id="placementPromptBanner" style="display:none">
+        <div>
+          <div class="fw-800" style="color:var(--amber-light)">🎯 ยังไม่เคยวัดระดับตัวเอง</div>
+          <div class="fs-sm text-secondary">ลองทำแบบทดสอบสั้นๆ (~20 ข้อ) เพื่อดูว่าควรเริ่มระดับไหน และข้ามคำศัพท์ที่รู้อยู่แล้วได้เลย</div>
+        </div>
+        <button class="btn btn-amber" onclick="navigate('placement')">เริ่มทดสอบ</button>
+      </div>
+
+      <!-- Spaced-Repetition Review Reminder -->
+      <div class="card card-emerald mb-xl flex-between flex-wrap gap-md vocab-review-due-wrap" style="display:none">
+        <div>
+          <div class="fw-800" style="color:var(--emerald-light)">🔁 มีคำศัพท์รอทบทวน <span class="vocab-review-due-count">0</span> คำ</div>
+          <div class="fs-sm text-secondary">ทบทวนตอนนี้ช่วยให้จำได้ในระยะยาว — ยิ่งทบทวนสม่ำเสมอ ยิ่งจำแม่น</div>
+        </div>
+        <button class="btn btn-emerald" onclick="startVocabReview()">🔁 ทบทวนเลย</button>
+      </div>
+
       <!-- Current Level Banner -->
       <div class="card card-indigo mb-xl" style="background:linear-gradient(135deg,rgba(28,176,246,0.1),rgba(47,189,92,0.08))">
         <div class="flex-between flex-wrap gap-md">
@@ -155,6 +176,42 @@
 
       <div class="roadmap-phases mb-xl" id="levelPathCards"></div>
       <div class="card mb-xl" id="levelDetail" style="display:none"></div>
+    </section>
+
+    <!-- ══════════════════════════════
+         SECTION: PLACEMENT TEST
+    ══════════════════════════════ -->
+    <section class="section" id="section-placement">
+      <div class="section-header">
+        <h1 class="section-title">🎯 แบบทดสอบวัดระดับ</h1>
+        <p class="section-subtitle">20 ข้อ ครอบคลุม A2 ถึง C2 — ใช้เวลาประมาณ 10 นาที</p>
+      </div>
+
+      <div class="card" id="placementIntro">
+        <div class="fw-700 mb-md">แบบทดสอบนี้จะ:</div>
+        <div class="fs-sm text-secondary" style="line-height:2">
+          • ถามคำถามไวยากรณ์และคำศัพท์ 4 ข้อต่อระดับ (A2, B1, B2, C1, C2)<br/>
+          • วัดว่าคุณควรเริ่มเรียนที่ระดับไหนจริงๆ ไม่ใช่เดาเอง<br/>
+          • คำศัพท์ของระดับที่ต่ำกว่าระดับแนะนำ จะถูกทำเครื่องหมายว่า "รู้แล้ว" ให้อัตโนมัติ — ไม่ต้องเสียเวลาซ้ำ<br/>
+          • หัวข้อไวยากรณ์ที่ตอบถูกในแบบทดสอบ จะถูกนับว่า "เข้าใจแล้ว" ทันที
+        </div>
+        <button class="btn btn-primary mt-lg" onclick="startPlacementTest()">🚀 เริ่มทำแบบทดสอบ</button>
+      </div>
+
+      <div class="card card-indigo" id="placementQuiz" style="display:none">
+        <div class="flex-between mb-lg">
+          <span class="badge badge-indigo" id="placementLevelBadge">A2</span>
+          <span class="badge badge-indigo" id="placementProgress">1 / 20</span>
+        </div>
+        <div id="placementQuestionBody"></div>
+        <div class="flex gap-sm mt-lg">
+          <button class="btn btn-primary" id="placementCheckBtn" onclick="checkPlacementAnswer()">ตรวจ</button>
+          <button class="btn btn-emerald" id="placementNextBtn" style="display:none" onclick="nextPlacementQuestion()">ถัดไป →</button>
+        </div>
+        <div id="placementFeedback" style="display:none;margin-top:var(--sp-md)"></div>
+      </div>
+
+      <div class="card" id="placementResult" style="display:none"></div>
     </section>
 
     <!-- ══════════════════════════════
@@ -222,9 +279,10 @@
 
       <div class="flex-between mb-lg flex-wrap gap-md">
         <div class="tab-bar" id="vocabDayTabs"></div>
-        <div class="flex gap-sm items-center">
+        <div class="flex gap-sm items-center flex-wrap">
           <div class="badge badge-indigo" id="vocabProgressBadge">0/8 คำ</div>
           <button class="btn btn-amber btn-sm" onclick="startVocabQuiz()">🧠 ทดสอบคำศัพท์วันนี้</button>
+          <button class="btn btn-emerald btn-sm vocab-review-due-wrap" style="display:none" onclick="startVocabReview()">🔁 ทบทวน (<span class="vocab-review-due-count">0</span>)</button>
         </div>
       </div>
 
@@ -232,7 +290,7 @@
       <div class="card card-amber mb-xl" id="vocabQuizPanel" style="display:none">
         <div id="vocabQuizQuestion">
           <div class="flex-between mb-lg">
-            <div class="fw-800" style="color:var(--amber-light)">🧠 ทดสอบความจำ</div>
+            <div class="fw-800" style="color:var(--amber-light)" id="vocabQuizPanelTitle">🧠 ทดสอบความจำ</div>
             <div class="flex gap-sm items-center">
               <span class="badge badge-amber" id="vocabQuizProgress">1 / 8</span>
               <button class="btn btn-ghost btn-sm" onclick="exitVocabQuiz()">✕</button>

@@ -28,7 +28,9 @@ const defaultState = {
   currentBuilderExIdx: 0,
   builderStepsState: {},
   currentSpeakingLevel: 'A2',
-  activeSection: 'dashboard'
+  activeSection: 'dashboard',
+  vocabSRS: {},
+  placementTestResult: null
 };
 
 let state = loadState();
@@ -113,7 +115,7 @@ function navigate(section) {
   state.activeSection = section;
   saveState();
   const inits = {
-    dashboard: initDashboard, levelpath: initLevelPath, builder: initBuilder,
+    dashboard: initDashboard, levelpath: initLevelPath, placement: initPlacement, builder: initBuilder,
     vocabulary: initVocabulary, grammar: initGrammar, speaking: initSpeaking,
     levelup: initLevelUp, notebook: initNotebook
   };
@@ -155,6 +157,11 @@ function initDashboard() {
   if (focusEl) focusEl.innerHTML = lvl.focus.map(f => `<span class="chip">${f}</span>`).join('');
   const dailyEl = document.getElementById('dashboardDailyText');
   if (dailyEl) dailyEl.textContent = lvl.daily;
+
+  const placementBanner = document.getElementById('placementPromptBanner');
+  if (placementBanner) placementBanner.style.display = state.placementTestResult ? 'none' : 'flex';
+
+  updateVocabReviewDueCount();
 }
 
 // ── LEVEL PATH ──
@@ -210,6 +217,216 @@ function setCurrentLevel(id) {
   showToast(`🎯 ตั้งระดับที่กำลังเรียนเป็น ${id} แล้ว`, 'success');
   initLevelPath();
   showLevelDetail(id);
+}
+
+// ── PLACEMENT TEST ──
+// 4 questions per level (2 grammar + 2 vocabulary), sampled from the real
+// content so a correct answer can safely auto-credit that exact topic/word.
+let placementQuestions = [];
+let placementIdx = 0;
+let placementScoreByLevel = {};
+let placementSelectedOption = null;
+
+function buildPlacementQuestions() {
+  const questions = [];
+  LEVELS.forEach(lvl => {
+    const topics = GRAMMAR_TOPICS.filter(t => t.level === lvl.id).sort((a, b) => a.order - b.order);
+    [topics[0], topics[4]].filter(Boolean).forEach(topic => {
+      const exData = GRAMMAR_EXERCISES[topic.id];
+      const ex = exData && exData.exercises[0];
+      if (ex) questions.push({ kind: 'grammar', level: lvl.id, topicId: topic.id, ex });
+    });
+    const vSet = VOCAB_SETS.filter(v => v.level === lvl.id).sort((a, b) => a.day - b.day)[0];
+    if (vSet) {
+      [0, 3].forEach(wordIdx => {
+        const word = vSet.words[wordIdx];
+        if (word) questions.push({ kind: 'vocab', level: lvl.id, day: vSet.day, wordIdx, word });
+      });
+    }
+  });
+  return questions;
+}
+
+function initPlacement() {
+  document.getElementById('placementQuiz').style.display = 'none';
+  if (state.placementTestResult) {
+    document.getElementById('placementIntro').style.display = 'none';
+    document.getElementById('placementResult').style.display = 'block';
+    document.getElementById('placementResult').innerHTML = renderPlacementResultHTML(state.placementTestResult.recommended, state.placementTestResult.scoreByLevel);
+  } else {
+    document.getElementById('placementIntro').style.display = 'block';
+    document.getElementById('placementResult').style.display = 'none';
+  }
+}
+
+function startPlacementTest() {
+  placementQuestions = buildPlacementQuestions();
+  placementIdx = 0;
+  placementScoreByLevel = {};
+  placementSelectedOption = null;
+  document.getElementById('placementIntro').style.display = 'none';
+  document.getElementById('placementResult').style.display = 'none';
+  document.getElementById('placementQuiz').style.display = 'block';
+  renderPlacementQuestion();
+}
+
+function renderPlacementQuestion() {
+  const q = placementQuestions[placementIdx];
+  placementSelectedOption = null;
+  document.getElementById('placementProgress').textContent = `${placementIdx + 1} / ${placementQuestions.length}`;
+  document.getElementById('placementLevelBadge').textContent = q.level;
+  document.getElementById('placementFeedback').style.display = 'none';
+  document.getElementById('placementCheckBtn').style.display = 'inline-flex';
+  document.getElementById('placementNextBtn').style.display = 'none';
+
+  const container = document.getElementById('placementQuestionBody');
+  if (q.kind === 'grammar') {
+    const ex = q.ex;
+    if (ex.type === 'mcq' || ex.type === 'error') {
+      container.innerHTML = `
+        <div class="fw-700 mb-md" style="font-size:16px">${ex.q}</div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          ${ex.options.map((opt, oi) => `
+            <label class="placement-option" id="pOpt-${oi}" style="display:flex;align-items:center;gap:10px;padding:10px;border-radius:var(--r-md);cursor:pointer;border:2px solid var(--border);background:var(--bg-surface)">
+              <input type="radio" name="placement-opt" value="${oi}" style="display:none" onchange="selectPlacementAnswer(${oi})">
+              <span class="fs-sm">${opt}</span>
+            </label>
+          `).join('')}
+        </div>`;
+    } else {
+      container.innerHTML = `
+        <div class="fw-700 mb-md" style="font-size:16px">${ex.q}</div>
+        <input type="text" class="input-field" id="placementTextInput" placeholder="พิมพ์คำตอบของคุณ..."/>`;
+    }
+  } else {
+    container.innerHTML = `
+      <div class="fs-sm text-muted mb-sm">คำนี้แปลว่าอะไร?</div>
+      <div class="vocab-word-big" style="font-size:32px">${q.word.thai}</div>
+      <div class="chunk-example mb-md" style="text-align:center">${maskWordInText(q.word.chunk, q.word.word)}</div>
+      <input type="text" class="input-field" id="placementTextInput" placeholder="พิมพ์คำศัพท์ภาษาอังกฤษ..."/>`;
+  }
+}
+
+function selectPlacementAnswer(oi) {
+  placementSelectedOption = oi;
+  document.querySelectorAll('.placement-option').forEach(el => {
+    el.style.borderColor = 'var(--border)';
+    el.style.background = 'var(--bg-surface)';
+  });
+  const el = document.getElementById(`pOpt-${oi}`);
+  if (el) { el.style.borderColor = 'var(--indigo)'; el.style.background = 'var(--indigo-dim)'; }
+}
+
+function checkPlacementAnswer() {
+  const q = placementQuestions[placementIdx];
+  let isCorrect = false;
+
+  if (q.kind === 'grammar') {
+    const ex = q.ex;
+    if (ex.type === 'mcq' || ex.type === 'error') {
+      isCorrect = placementSelectedOption === ex.answer;
+    } else {
+      const val = (document.getElementById('placementTextInput').value || '').trim().toLowerCase();
+      const ans = String(ex.answer).toLowerCase();
+      isCorrect = val === ans || (ans.length > 0 && ans.includes(val) && val.length > 2);
+    }
+    if (isCorrect && !state.grammarDone.includes(q.topicId)) state.grammarDone.push(q.topicId);
+  } else {
+    const val = (document.getElementById('placementTextInput').value || '').trim().toLowerCase();
+    isCorrect = val === q.word.word.toLowerCase();
+    if (isCorrect) {
+      const key = `${q.level}_${q.day}_${q.wordIdx}`;
+      if (!state.vocabLearned.includes(key)) state.vocabLearned.push(key);
+    }
+  }
+
+  if (!placementScoreByLevel[q.level]) placementScoreByLevel[q.level] = { correct: 0, total: 0 };
+  placementScoreByLevel[q.level].total++;
+  if (isCorrect) placementScoreByLevel[q.level].correct++;
+  saveState();
+
+  const feedback = document.getElementById('placementFeedback');
+  feedback.style.display = 'block';
+  feedback.innerHTML = isCorrect
+    ? `<div class="card card-xs" style="background:var(--emerald-dim);border-color:var(--emerald)"><strong style="color:var(--emerald-light)">✅ ถูกต้อง!</strong></div>`
+    : `<div class="card card-xs" style="background:var(--rose-dim);border-color:var(--rose)"><strong style="color:var(--rose-light)">❌ ยังไม่ถูก</strong></div>`;
+  document.getElementById('placementCheckBtn').style.display = 'none';
+  document.getElementById('placementNextBtn').style.display = 'inline-flex';
+}
+
+function nextPlacementQuestion() {
+  placementIdx++;
+  if (placementIdx >= placementQuestions.length) {
+    finishPlacementTest();
+  } else {
+    renderPlacementQuestion();
+  }
+}
+
+function finishPlacementTest() {
+  document.getElementById('placementQuiz').style.display = 'none';
+
+  let recommended = LEVELS[0].id;
+  for (const lvl of LEVELS) {
+    const s = placementScoreByLevel[lvl.id] || { correct: 0, total: 0 };
+    const pct = s.total ? s.correct / s.total : 0;
+    recommended = lvl.id;
+    if (pct < 0.75) break;
+  }
+
+  // Vocabulary strictly below the recommended level is presumed known —
+  // no reason to make someone re-learn what the test just showed they know.
+  const recIdx = getLevelIndex(recommended);
+  VOCAB_SETS.forEach(vs => {
+    if (getLevelIndex(vs.level) < recIdx) {
+      vs.words.forEach((_, i) => {
+        const key = `${vs.level}_${vs.day}_${i}`;
+        if (!state.vocabLearned.includes(key)) state.vocabLearned.push(key);
+      });
+    }
+  });
+
+  state.placementTestResult = { recommended, scoreByLevel: placementScoreByLevel, date: new Date().toDateString() };
+  saveState();
+
+  const resultEl = document.getElementById('placementResult');
+  resultEl.style.display = 'block';
+  resultEl.innerHTML = renderPlacementResultHTML(recommended, placementScoreByLevel);
+  showToast(`🎯 ผลการทดสอบ: แนะนำเริ่มที่ระดับ ${recommended}`, 'success');
+}
+
+function renderPlacementResultHTML(recommended, scoreByLevel) {
+  const recLvl = getLevelById(recommended);
+  const rows = LEVELS.map(lvl => {
+    const s = scoreByLevel[lvl.id] || { correct: 0, total: 0 };
+    const pct = s.total ? Math.round((s.correct / s.total) * 100) : 0;
+    const isRec = lvl.id === recommended;
+    return `
+      <div class="flex-between" style="padding:10px 12px;border-bottom:1px solid var(--border);${isRec ? 'background:var(--amber-dim);border-radius:var(--r-md);border-bottom:none' : ''}">
+        <div class="flex gap-sm items-center">
+          <span>${lvl.icon}</span><span class="fw-700">${lvl.id}</span>
+          ${isRec ? '<span class="badge badge-amber">🎯 แนะนำ</span>' : ''}
+        </div>
+        <div class="fw-800" style="color:${pct >= 75 ? 'var(--emerald-light)' : pct >= 50 ? 'var(--amber-light)' : 'var(--rose-light)'}">${s.correct}/${s.total} (${pct}%)</div>
+      </div>`;
+  }).join('');
+
+  return `
+    <div style="text-align:center;margin-bottom:var(--sp-lg)">
+      <div class="fs-sm text-muted mb-sm">ระดับที่แนะนำ</div>
+      <div class="font-display fw-800" style="font-size:32px;color:${recLvl.color}">${recLvl.icon} ${recLvl.title}</div>
+    </div>
+    ${rows}
+    <div class="fs-xs text-muted mt-md">คำศัพท์ของระดับที่ต่ำกว่าระดับแนะนำถูกทำเครื่องหมายว่า "รู้แล้ว" ให้อัตโนมัติ และหัวข้อไวยากรณ์ที่ตอบถูกถูกนับว่า "เข้าใจแล้ว" ทันที</div>
+    <div class="flex gap-sm mt-lg flex-wrap">
+      <button class="btn btn-primary" onclick="applyPlacementRecommendation('${recommended}')">🎯 ตั้งเป็นระดับของฉัน</button>
+      <button class="btn btn-ghost" onclick="startPlacementTest()">🔄 ทำแบบทดสอบใหม่</button>
+    </div>`;
+}
+
+function applyPlacementRecommendation(levelId) {
+  navigate('levelpath');
+  setCurrentLevel(levelId);
 }
 
 // ── SENTENCE BUILDER ──
@@ -574,6 +791,7 @@ function initVocabulary() {
   renderVocabLevelChips();
   renderVocabDayTabs();
   loadVocabWord();
+  updateVocabReviewDueCount();
 }
 
 function renderVocabLevelChips() {
@@ -747,9 +965,12 @@ function saveVocabSentence() {
 }
 
 // ── VOCAB QUIZ — real recall test, not a self-report click ──
+// Shared by two entry points: "test today's words" (startVocabQuiz) and
+// "review due words" (startVocabReview, spaced repetition across all levels).
 let vocabQuizWords = [];
 let vocabQuizIdx = 0;
 let vocabQuizScore = 0;
+let vocabQuizMode = 'day'; // 'day' | 'review'
 
 function maskWordInText(text, word) {
   const escaped = word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -757,27 +978,87 @@ function maskWordInText(text, word) {
   return re.test(text) ? text.replace(re, '█████') : text;
 }
 
-function startVocabQuiz() {
-  const vs = VOCAB_SETS.find(v => v.level === currentVocabLevel && v.day === currentVocabDay);
-  if (!vs) return;
-  vocabQuizWords = vs.words.map((w, i) => ({ ...w, idx: i }));
-  for (let i = vocabQuizWords.length - 1; i > 0; i--) {
+function shuffleArray(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
-    [vocabQuizWords[i], vocabQuizWords[j]] = [vocabQuizWords[j], vocabQuizWords[i]];
+    [arr[i], arr[j]] = [arr[j], arr[i]];
   }
-  vocabQuizIdx = 0;
-  vocabQuizScore = 0;
+  return arr;
+}
 
+// ── SPACED REPETITION (SRS) — words get reviewed again at growing intervals ──
+const SRS_INTERVAL_DAYS = [1, 2, 4, 7, 14, 30, 60];
+
+function vocabWordKey(w) { return `${w.level}_${w.day}_${w.idx}`; }
+
+function scheduleVocabReview(key, wasCorrect) {
+  if (!state.vocabSRS) state.vocabSRS = {};
+  const entry = state.vocabSRS[key] || { box: -1 };
+  entry.box = wasCorrect ? Math.min(entry.box + 1, SRS_INTERVAL_DAYS.length - 1) : 0;
+  entry.due = new Date(Date.now() + SRS_INTERVAL_DAYS[entry.box] * 86400000).toDateString();
+  state.vocabSRS[key] = entry;
+}
+
+function getDueReviewWords() {
+  const today = new Date();
+  const due = [];
+  VOCAB_SETS.forEach(vs => {
+    vs.words.forEach((w, i) => {
+      const key = `${vs.level}_${vs.day}_${i}`;
+      if (!state.vocabLearned.includes(key)) return;
+      const srs = state.vocabSRS && state.vocabSRS[key];
+      const dueDate = srs ? new Date(srs.due) : new Date(0);
+      if (dueDate <= today) due.push({ ...w, level: vs.level, day: vs.day, idx: i });
+    });
+  });
+  return due;
+}
+
+function updateVocabReviewDueCount() {
+  const count = getDueReviewWords().length;
+  document.querySelectorAll('.vocab-review-due-count').forEach(el => { el.textContent = count; });
+  document.querySelectorAll('.vocab-review-due-wrap').forEach(el => { el.style.display = count > 0 ? '' : 'none'; });
+  return count;
+}
+
+function openVocabQuizPanel() {
   document.getElementById('vocabCard').style.display = 'none';
   document.getElementById('vocabQuizPanel').style.display = 'block';
   document.getElementById('vocabQuizQuestion').style.display = 'block';
   document.getElementById('vocabQuizResult').style.display = 'none';
   document.getElementById('vocabQuizResultActions').style.display = 'none';
+}
+
+function startVocabQuiz() {
+  const vs = VOCAB_SETS.find(v => v.level === currentVocabLevel && v.day === currentVocabDay);
+  if (!vs) return;
+  vocabQuizMode = 'day';
+  vocabQuizWords = shuffleArray(vs.words.map((w, i) => ({ ...w, level: vs.level, day: vs.day, idx: i })));
+  vocabQuizIdx = 0;
+  vocabQuizScore = 0;
+  openVocabQuizPanel();
+  renderVocabQuizQuestion();
+}
+
+function startVocabReview() {
+  const due = getDueReviewWords();
+  if (due.length === 0) {
+    showToast('🎉 วันนี้ไม่มีคำที่ต้องทบทวนแล้ว กลับมาใหม่พรุ่งนี้นะ!', 'success');
+    return;
+  }
+  vocabQuizMode = 'review';
+  vocabQuizWords = shuffleArray(due);
+  vocabQuizIdx = 0;
+  vocabQuizScore = 0;
+  navigate('vocabulary');
+  openVocabQuizPanel();
+  document.getElementById('vocabQuizPanelTitle').textContent = '🔁 ทบทวนคำศัพท์ (Spaced Repetition)';
   renderVocabQuizQuestion();
 }
 
 function renderVocabQuizQuestion() {
   const w = vocabQuizWords[vocabQuizIdx];
+  document.getElementById('vocabQuizPanelTitle').textContent = vocabQuizMode === 'review' ? '🔁 ทบทวนคำศัพท์ (Spaced Repetition)' : '🧠 ทดสอบความจำ';
   document.getElementById('vocabQuizProgress').textContent = `${vocabQuizIdx + 1} / ${vocabQuizWords.length}`;
   document.getElementById('vocabQuizThai').textContent = w.thai;
   document.getElementById('vocabQuizChunkHint').textContent = maskWordInText(w.chunk, w.word);
@@ -799,18 +1080,24 @@ function checkVocabQuizAnswer() {
   const feedback = document.getElementById('vocabQuizFeedback');
   feedback.style.display = 'block';
 
+  const key = vocabWordKey(w);
+  scheduleVocabReview(key, isCorrect);
   if (isCorrect) {
     vocabQuizScore++;
-    const key = `${currentVocabLevel}_${currentVocabDay}_${w.idx}`;
-    if (!state.vocabLearned.includes(key)) {
+    const alreadyLearned = state.vocabLearned.includes(key);
+    if (!alreadyLearned) {
       state.vocabLearned.push(key);
       addXP(15);
+    } else if (vocabQuizMode === 'review') {
+      // Review is naturally rate-limited by the SRS due date, so a smaller
+      // reinforcement reward here can't be farmed by repeating the day quiz.
+      addXP(5);
     }
-    saveState();
     feedback.innerHTML = `<div class="card card-xs" style="background:var(--emerald-dim);border-color:var(--emerald)"><strong style="color:var(--emerald-light)">✅ ถูกต้อง!</strong></div>`;
   } else {
     feedback.innerHTML = `<div class="card card-xs" style="background:var(--rose-dim);border-color:var(--rose)"><strong style="color:var(--rose-light)">❌ ยังไม่ถูก</strong> — คำตอบคือ <strong>${w.word}</strong></div>`;
   }
+  saveState();
   input.disabled = true;
   document.getElementById('vocabQuizCheckBtn').style.display = 'none';
   document.getElementById('vocabQuizNextBtn').style.display = 'inline-flex';
@@ -832,20 +1119,24 @@ function finishVocabQuiz() {
   result.style.display = 'block';
   const total = vocabQuizWords.length;
   const pct = Math.round((vocabQuizScore / total) * 100);
+  const modeLabel = vocabQuizMode === 'review' ? 'ทบทวน' : 'ทดสอบ';
   result.innerHTML = `
     <div style="text-align:center">
       <div class="font-display fw-800" style="font-size:36px;color:${pct >= 80 ? 'var(--emerald-light)' : pct >= 50 ? 'var(--amber-light)' : 'var(--rose-light)'}">${pct}%</div>
       <div class="fw-700 mb-sm">${vocabQuizScore}/${total} คำถูก</div>
       <div class="fs-sm text-muted">${pct >= 80 ? '🎉 เยี่ยมมาก! จำได้แม่นแล้ว' : pct >= 50 ? '👍 พอใช้ได้ ลองทดสอบซ้ำอีกรอบ' : '💪 ยังไม่แม่น กลับไปอ่านคำศัพท์แล้วลองใหม่'}</div>
+      ${vocabQuizMode === 'review' ? '<div class="fs-xs text-muted mt-sm">คำที่ตอบถูกจะเว้นระยะให้ทบทวนนานขึ้น ส่วนคำที่ตอบผิดจะกลับมาให้ทบทวนพรุ่งนี้</div>' : ''}
     </div>
   `;
-  showToast(`🧠 ทดสอบเสร็จ: ${vocabQuizScore}/${total} ถูก`, pct >= 50 ? 'success' : 'info');
+  showToast(`🧠 ${modeLabel}เสร็จ: ${vocabQuizScore}/${total} ถูก`, pct >= 50 ? 'success' : 'info');
+  updateVocabReviewDueCount();
 }
 
 function exitVocabQuiz() {
   document.getElementById('vocabQuizPanel').style.display = 'none';
   document.getElementById('vocabCard').style.display = 'block';
   loadVocabWord();
+  updateVocabReviewDueCount();
 }
 
 // ── GRAMMAR ──
