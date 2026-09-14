@@ -568,6 +568,9 @@ function initVocabulary() {
   currentVocabLevel = state.currentVocabLevel || state.currentCEFRLevel || 'A2';
   currentVocabDay = state.currentVocabDay || 1;
   currentVocabIdx = state.currentVocabIdx || 0;
+  const quizPanel = document.getElementById('vocabQuizPanel');
+  if (quizPanel) quizPanel.style.display = 'none';
+  document.getElementById('vocabCard').style.display = 'block';
   renderVocabLevelChips();
   renderVocabDayTabs();
   loadVocabWord();
@@ -592,6 +595,8 @@ function setVocabLevel(level) {
   state.currentVocabDay = currentVocabDay;
   state.currentVocabIdx = 0;
   saveState();
+  document.getElementById('vocabQuizPanel').style.display = 'none';
+  document.getElementById('vocabCard').style.display = 'block';
   renderVocabLevelChips();
   renderVocabDayTabs();
   loadVocabWord();
@@ -612,6 +617,8 @@ function setVocabDay(day) {
   state.currentVocabDay = day;
   state.currentVocabIdx = 0;
   saveState();
+  document.getElementById('vocabQuizPanel').style.display = 'none';
+  document.getElementById('vocabCard').style.display = 'block';
   renderVocabDayTabs();
   loadVocabWord();
 }
@@ -686,6 +693,12 @@ function loadVocabWord() {
   const badge = document.getElementById('vocabProgressBadge');
   if (badge) badge.textContent = `${learned}/${vs.words.length} คำ`;
 
+  const isWordLearned = state.vocabLearned.includes(`${currentVocabLevel}_${currentVocabDay}_${currentVocabIdx}`);
+  const learnedBadge = document.getElementById('vocabLearnedBadge');
+  const notLearnedHint = document.getElementById('vocabNotLearnedHint');
+  if (learnedBadge) learnedBadge.style.display = isWordLearned ? 'inline-flex' : 'none';
+  if (notLearnedHint) notLearnedHint.style.display = isWordLearned ? 'none' : 'inline';
+
   const key = `vocab_sentence_${currentVocabLevel}_${currentVocabDay}_${currentVocabIdx}`;
   const saved = state.vocabSentences[key];
   const savedBox = document.getElementById('savedVocabSentence');
@@ -733,14 +746,105 @@ function saveVocabSentence() {
   showToast('💾 บันทึกแล้ว! +15 XP', 'success');
 }
 
-function markVocabLearned() {
-  const key = `${currentVocabLevel}_${currentVocabDay}_${currentVocabIdx}`;
-  if (!state.vocabLearned.includes(key)) {
-    state.vocabLearned.push(key);
-    addXP(20);
-    showToast('✅ จำได้แล้ว! +20 XP', 'success');
-    saveState();
+// ── VOCAB QUIZ — real recall test, not a self-report click ──
+let vocabQuizWords = [];
+let vocabQuizIdx = 0;
+let vocabQuizScore = 0;
+
+function maskWordInText(text, word) {
+  const escaped = word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const re = new RegExp(escaped, 'gi');
+  return re.test(text) ? text.replace(re, '█████') : text;
+}
+
+function startVocabQuiz() {
+  const vs = VOCAB_SETS.find(v => v.level === currentVocabLevel && v.day === currentVocabDay);
+  if (!vs) return;
+  vocabQuizWords = vs.words.map((w, i) => ({ ...w, idx: i }));
+  for (let i = vocabQuizWords.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [vocabQuizWords[i], vocabQuizWords[j]] = [vocabQuizWords[j], vocabQuizWords[i]];
   }
+  vocabQuizIdx = 0;
+  vocabQuizScore = 0;
+
+  document.getElementById('vocabCard').style.display = 'none';
+  document.getElementById('vocabQuizPanel').style.display = 'block';
+  document.getElementById('vocabQuizQuestion').style.display = 'block';
+  document.getElementById('vocabQuizResult').style.display = 'none';
+  document.getElementById('vocabQuizResultActions').style.display = 'none';
+  renderVocabQuizQuestion();
+}
+
+function renderVocabQuizQuestion() {
+  const w = vocabQuizWords[vocabQuizIdx];
+  document.getElementById('vocabQuizProgress').textContent = `${vocabQuizIdx + 1} / ${vocabQuizWords.length}`;
+  document.getElementById('vocabQuizThai').textContent = w.thai;
+  document.getElementById('vocabQuizChunkHint').textContent = maskWordInText(w.chunk, w.word);
+  const input = document.getElementById('vocabQuizInput');
+  input.value = '';
+  input.disabled = false;
+  input.focus();
+  document.getElementById('vocabQuizFeedback').style.display = 'none';
+  document.getElementById('vocabQuizCheckBtn').style.display = 'inline-flex';
+  document.getElementById('vocabQuizNextBtn').style.display = 'none';
+}
+
+function checkVocabQuizAnswer() {
+  const w = vocabQuizWords[vocabQuizIdx];
+  const input = document.getElementById('vocabQuizInput');
+  if (input.disabled) return;
+  const val = input.value.trim().toLowerCase().replace(/\s+/g, ' ');
+  const isCorrect = val === w.word.toLowerCase();
+  const feedback = document.getElementById('vocabQuizFeedback');
+  feedback.style.display = 'block';
+
+  if (isCorrect) {
+    vocabQuizScore++;
+    const key = `${currentVocabLevel}_${currentVocabDay}_${w.idx}`;
+    if (!state.vocabLearned.includes(key)) {
+      state.vocabLearned.push(key);
+      addXP(15);
+    }
+    saveState();
+    feedback.innerHTML = `<div class="card card-xs" style="background:var(--emerald-dim);border-color:var(--emerald)"><strong style="color:var(--emerald-light)">✅ ถูกต้อง!</strong></div>`;
+  } else {
+    feedback.innerHTML = `<div class="card card-xs" style="background:var(--rose-dim);border-color:var(--rose)"><strong style="color:var(--rose-light)">❌ ยังไม่ถูก</strong> — คำตอบคือ <strong>${w.word}</strong></div>`;
+  }
+  input.disabled = true;
+  document.getElementById('vocabQuizCheckBtn').style.display = 'none';
+  document.getElementById('vocabQuizNextBtn').style.display = 'inline-flex';
+}
+
+function nextVocabQuizQuestion() {
+  vocabQuizIdx++;
+  if (vocabQuizIdx >= vocabQuizWords.length) {
+    finishVocabQuiz();
+  } else {
+    renderVocabQuizQuestion();
+  }
+}
+
+function finishVocabQuiz() {
+  document.getElementById('vocabQuizQuestion').style.display = 'none';
+  document.getElementById('vocabQuizResultActions').style.display = 'flex';
+  const result = document.getElementById('vocabQuizResult');
+  result.style.display = 'block';
+  const total = vocabQuizWords.length;
+  const pct = Math.round((vocabQuizScore / total) * 100);
+  result.innerHTML = `
+    <div style="text-align:center">
+      <div class="font-display fw-800" style="font-size:36px;color:${pct >= 80 ? 'var(--emerald-light)' : pct >= 50 ? 'var(--amber-light)' : 'var(--rose-light)'}">${pct}%</div>
+      <div class="fw-700 mb-sm">${vocabQuizScore}/${total} คำถูก</div>
+      <div class="fs-sm text-muted">${pct >= 80 ? '🎉 เยี่ยมมาก! จำได้แม่นแล้ว' : pct >= 50 ? '👍 พอใช้ได้ ลองทดสอบซ้ำอีกรอบ' : '💪 ยังไม่แม่น กลับไปอ่านคำศัพท์แล้วลองใหม่'}</div>
+    </div>
+  `;
+  showToast(`🧠 ทดสอบเสร็จ: ${vocabQuizScore}/${total} ถูก`, pct >= 50 ? 'success' : 'info');
+}
+
+function exitVocabQuiz() {
+  document.getElementById('vocabQuizPanel').style.display = 'none';
+  document.getElementById('vocabCard').style.display = 'block';
   loadVocabWord();
 }
 

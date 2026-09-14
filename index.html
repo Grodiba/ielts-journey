@@ -222,7 +222,37 @@
 
       <div class="flex-between mb-lg flex-wrap gap-md">
         <div class="tab-bar" id="vocabDayTabs"></div>
-        <div class="badge badge-indigo" id="vocabProgressBadge">0/8 คำ</div>
+        <div class="flex gap-sm items-center">
+          <div class="badge badge-indigo" id="vocabProgressBadge">0/8 คำ</div>
+          <button class="btn btn-amber btn-sm" onclick="startVocabQuiz()">🧠 ทดสอบคำศัพท์วันนี้</button>
+        </div>
+      </div>
+
+      <!-- Vocab Quiz Panel — real recall test, not a self-report click -->
+      <div class="card card-amber mb-xl" id="vocabQuizPanel" style="display:none">
+        <div id="vocabQuizQuestion">
+          <div class="flex-between mb-lg">
+            <div class="fw-800" style="color:var(--amber-light)">🧠 ทดสอบความจำ</div>
+            <div class="flex gap-sm items-center">
+              <span class="badge badge-amber" id="vocabQuizProgress">1 / 8</span>
+              <button class="btn btn-ghost btn-sm" onclick="exitVocabQuiz()">✕</button>
+            </div>
+          </div>
+          <div class="fs-sm text-muted mb-sm">คำนี้แปลว่าอะไร?</div>
+          <div class="vocab-word-big" id="vocabQuizThai" style="font-size:32px"></div>
+          <div class="chunk-example mb-lg" id="vocabQuizChunkHint" style="text-align:center"></div>
+          <div class="flex gap-sm">
+            <input type="text" class="input-field" id="vocabQuizInput" placeholder="พิมพ์คำศัพท์ภาษาอังกฤษ..." onkeydown="if(event.key==='Enter')checkVocabQuizAnswer()"/>
+            <button class="btn btn-primary" id="vocabQuizCheckBtn" onclick="checkVocabQuizAnswer()">ตรวจ</button>
+            <button class="btn btn-emerald" id="vocabQuizNextBtn" style="display:none" onclick="nextVocabQuizQuestion()">ถัดไป →</button>
+          </div>
+          <div id="vocabQuizFeedback" style="display:none;margin-top:var(--sp-md)"></div>
+        </div>
+        <div id="vocabQuizResult" style="display:none"></div>
+        <div class="flex gap-sm mt-lg" id="vocabQuizResultActions" style="display:none">
+          <button class="btn btn-primary" onclick="startVocabQuiz()">🔄 ทดสอบใหม่</button>
+          <button class="btn btn-ghost" onclick="exitVocabQuiz()">กลับไปเรียน</button>
+        </div>
       </div>
 
       <div class="card card-indigo mb-xl" id="vocabCard">
@@ -249,9 +279,10 @@
         <div>
           <label class="fs-sm fw-700 mb-sm" style="display:block">✏️ แต่งประโยคของตัวเองด้วยคำนี้:</label>
           <textarea class="input-field" id="myVocabSentence" placeholder="พิมพ์ประโยคที่คุณสร้างเอง..." rows="3"></textarea>
-          <div class="flex gap-sm mt-md">
+          <div class="flex gap-sm mt-md items-center">
             <button class="btn btn-primary" onclick="saveVocabSentence()">💾 บันทึก</button>
-            <button class="btn btn-ghost" onclick="markVocabLearned()">✅ จำได้แล้ว</button>
+            <span class="badge badge-emerald" id="vocabLearnedBadge" style="display:none">✅ จำได้แล้ว (ผ่านทดสอบ)</span>
+            <span class="fs-xs text-muted" id="vocabNotLearnedHint">💡 กด "ทดสอบคำศัพท์วันนี้" ด้านบนเพื่อยืนยันว่าจำได้จริง</span>
           </div>
           <div class="card card-sm mt-md" id="savedVocabSentence" style="display:none">
             <div class="fs-xs text-emerald fw-700 mb-sm">ประโยคที่คุณบันทึก:</div>
